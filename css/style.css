@@ -450,10 +450,14 @@ strong { font-weight: 600; }
 .filter__btn:hover { color: var(--text); border-color: var(--text); }
 .filter__btn.active { background: var(--text); border-color: var(--text); color: var(--bg); }
 
-/* Grid — masonry columns */
+/* Grid — masonry */
 .portfolio-grid {
-  columns: 3;
-  column-gap: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1px;
+  column-gap: clamp(1.25rem, 2.5vw, 2rem);
+  row-gap: 0;
+  align-items: start;
 }
 
 
@@ -465,13 +469,10 @@ strong { font-weight: 600; }
   overflow: hidden;
   transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease), border-color 0.25s;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   width: 100%;
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  margin-bottom: var(--gap);
-  vertical-align: top;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
 }
 .card:hover {
   transform: translateY(-10px);
@@ -540,7 +541,6 @@ strong { font-weight: 600; }
 .thumb--neve    { aspect-ratio: 1/1; }
 .thumb--logos   { aspect-ratio: 3/4; }
 .thumb--moh     { aspect-ratio: 1/1; }
-.thumb--sharekit{ aspect-ratio: 3/4; }
 
 /* Shared thumb number */
 .thumb__num {
@@ -789,9 +789,23 @@ strong { font-weight: 600; }
   border: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ── 10 ShareKit ── */
+/* ── 02 Gymverse ── */
+.thumb--gymverse {
+  background: #0D1020;
+  aspect-ratio: 4/3;
+}
+.thumb__cover {
+  position: absolute; inset: 0.5rem;
+  width: calc(100% - 1rem); height: calc(100% - 1rem);
+  object-fit: contain;
+  transition: transform 0.5s var(--ease);
+}
+.card:hover .thumb__cover { transform: scale(1.04); }
+
+/* ── 01 ShareKit ── */
 .thumb--sharekit {
   background: #171E28;
+  aspect-ratio: 9 / 16;
 }
 .thumb__video {
   position: absolute;
@@ -873,7 +887,7 @@ strong { font-weight: 600; }
 
 /* Card body */
 .card__body {
-  padding: 1.375rem 1.5rem 1.625rem;
+  padding: 1.5rem 1.5rem 2rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1295,7 +1309,7 @@ strong { font-weight: 600; }
    RESPONSIVE
    ════════════════════════════════════════ */
 @media (max-width: 1100px) {
-  .portfolio-grid { columns: 2; }
+  .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
   .resume__cols { grid-template-columns: 1fr; }
   .about__grid { grid-template-columns: 220px 1fr; gap: 3rem; }
 }
@@ -1320,7 +1334,7 @@ strong { font-weight: 600; }
   .hero__scroll { display: none; }
   .hero__bg-text { font-size: 40vw; opacity: 0.4 !important; }
 
-  .portfolio-grid { columns: 1; }
+  .portfolio-grid { grid-template-columns: 1fr; }
 
   .about__grid { grid-template-columns: 1fr; }
   .about__left { display: grid; grid-template-columns: 160px 1fr; gap: 1.5rem; align-items: start; }

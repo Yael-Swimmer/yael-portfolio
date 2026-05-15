@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -103,43 +103,54 @@
         </div>
         <div class="filter reveal" role="group">
           <button class="filter__btn active" data-filter="all">All</button>
-          <button class="filter__btn" data-filter="infographic">Infographic</button>
           <button class="filter__btn" data-filter="editorial">Editorial</button>
           <button class="filter__btn" data-filter="branding">Branding</button>
-          <button class="filter__btn" data-filter="illustration">Illustration</button>
           <button class="filter__btn" data-filter="digital">Digital</button>
         </div>
       </div>
 
       <div class="portfolio-grid" id="portfolioGrid">
 
-        <!-- 01 · Focus Column — FEATURED -->
-        <article class="card reveal" data-category="infographic editorial">
-          <div class="card__thumb thumb--focus">
+        <!-- 01 · ShareKit — Fitness22 -->
+        <article class="card reveal" data-category="digital" onclick="window.location.href='sharekit.html'" style="cursor:pointer;">
+          <div class="card__thumb thumb--sharekit">
             <span class="thumb__num">01</span>
-            <div class="thumb__bars">
-              <div style="height:85%"></div><div style="height:60%"></div>
-              <div style="height:95%"></div><div style="height:45%"></div>
-              <div style="height:70%"></div><div style="height:55%"></div>
-              <div style="height:80%"></div><div style="height:40%"></div>
-            </div>
-            <p class="thumb__word">FOCUS</p>
+            <video class="thumb__video" autoplay loop muted playsinline webkit-playsinline>
+              <source src="assets/videos/sharekit.mp4" type="video/mp4">
+            </video>
             <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
           </div>
           <div class="card__body">
             <div class="card__meta">
-              <span class="card__tag">Infographic · Editorial</span>
-              <span class="card__year">2016–2022</span>
+              <span class="card__tag">UX/UI · Digital</span>
+              <span class="card__year">2022–2026</span>
             </div>
-            <h3 class="card__title">Focus Column</h3>
-            <p class="card__desc">Weekly infographic column at <em>Mekor Rishon</em> — translating current events into bold visual stories. Published 300+ editions.</p>
+            <h3 class="card__title">Fitness22 — ShareKit</h3>
+            <p class="card__desc">Social sharing feature for fitness and running apps — 100 custom stickers designed in collaboration with AI, covering every workout mood and milestone.</p>
           </div>
         </article>
 
-        <!-- 02 · YOYO HATS -->
+        <!-- 02 · Gymverse Ebook -->
+        <article class="card reveal" data-category="editorial" onclick="window.location.href='gymverse.html'" style="cursor:pointer;">
+          <div class="card__thumb thumb--gymverse">
+            <span class="thumb__num">02</span>
+            <img class="thumb__cover" src="assets/ebook/Gymverse.png" alt="The Gymverse Method">
+            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
+          </div>
+          <div class="card__body">
+            <div class="card__meta">
+              <span class="card__tag">Ebook · Editorial</span>
+              <span class="card__year">Print</span>
+            </div>
+            <h3 class="card__title">The Gymverse Method</h3>
+            <p class="card__desc">Full ebook design for an advanced fitness training program — structured chapter architecture, bold editorial layout, and a visual identity built around performance.</p>
+          </div>
+        </article>
+
+        <!-- 03 · YOYO HATS -->
         <article class="card reveal" data-category="branding">
           <div class="card__thumb thumb--yoyo">
-            <span class="thumb__num">02</span>
+            <span class="thumb__num">03</span>
             <p class="thumb__big">YO<br>YO</p>
             <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
           </div>
@@ -152,10 +163,10 @@
           </div>
         </article>
 
-        <!-- 03 · Pirates -->
-        <article class="card reveal" data-category="illustration">
+        <!-- 04 · Pirates -->
+        <article class="card reveal" data-category="branding">
           <div class="card__thumb thumb--pirates">
-            <span class="thumb__num">03</span>
+            <span class="thumb__num">04</span>
             <div class="thumb__flag">⚑</div>
             <p class="thumb__word">PIRATES</p>
             <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
@@ -169,10 +180,10 @@
           </div>
         </article>
 
-        <!-- 04 · Portrait Supplement — WIDE -->
+        <!-- 05 · Portrait Supplement -->
         <article class="card reveal" data-category="editorial">
           <div class="card__thumb thumb--portrait">
-            <span class="thumb__num">04</span>
+            <span class="thumb__num">05</span>
             <p class="thumb__big-italic">Port<br>rait</p>
             <div class="thumb__dots">
               <div></div><div></div><div></div>
@@ -190,10 +201,10 @@
           </div>
         </article>
 
-        <!-- 05 · Tel Aviv–Damascus -->
-        <article class="card reveal" data-category="infographic">
+        <!-- 06 · Tel Aviv–Damascus -->
+        <article class="card reveal" data-category="editorial">
           <div class="card__thumb thumb--tad">
-            <span class="thumb__num">05</span>
+            <span class="thumb__num">06</span>
             <div class="thumb__tad-text">
               <span>TLV</span>
               <span class="thumb__tad-vs">vs</span>
@@ -210,10 +221,10 @@
           </div>
         </article>
 
-        <!-- 06 · Neve Tzedek -->
-        <article class="card reveal" data-category="illustration">
+        <!-- 07 · Neve Tzedek -->
+        <article class="card reveal" data-category="branding">
           <div class="card__thumb thumb--neve">
-            <span class="thumb__num">06</span>
+            <span class="thumb__num">07</span>
             <div class="thumb__window">
               <div class="thumb__window-frame">
                 <div></div><div></div>
@@ -231,10 +242,10 @@
           </div>
         </article>
 
-        <!-- 07 · Sabta Megiba -->
-        <article class="card reveal" data-category="illustration branding">
+        <!-- 08 · Sabta Megiba -->
+        <article class="card reveal" data-category="branding">
           <div class="card__thumb thumb--sabta">
-            <span class="thumb__num">07</span>
+            <span class="thumb__num">08</span>
             <p class="thumb__big-italic">סבתא<br>מגיבה</p>
             <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
           </div>
@@ -247,10 +258,10 @@
           </div>
         </article>
 
-        <!-- 08 · Logo Collection -->
+        <!-- 09 · Logo Collection -->
         <article class="card reveal" data-category="branding">
           <div class="card__thumb thumb--logos">
-            <span class="thumb__num">08</span>
+            <span class="thumb__num">09</span>
             <div class="thumb__logo-grid">
               <div class="thumb__logo-item tl--circle"></div>
               <div class="thumb__logo-item tl--square"></div>
@@ -268,10 +279,10 @@
           </div>
         </article>
 
-        <!-- 09 · Ministry of Health — WIDE -->
+        <!-- 10 · Ministry of Health -->
         <article class="card reveal" data-category="branding editorial">
           <div class="card__thumb thumb--moh">
-            <span class="thumb__num">09</span>
+            <span class="thumb__num">10</span>
             <div class="thumb__star">★</div>
             <p class="thumb__award">Award Winner</p>
             <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
@@ -283,25 +294,6 @@
             </div>
             <h3 class="card__title">Ministry of Health Campaign</h3>
             <p class="card__desc">National award-winning breastfeeding awareness campaign — winner of the Ministry of Health advertising competition. Ran nationally across all media.</p>
-          </div>
-        </article>
-
-        <!-- 10 · ShareKit — Fitness22 -->
-        <article class="card reveal" data-category="digital" onclick="window.location.href='sharekit.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--sharekit">
-            <span class="thumb__num">10</span>
-            <video class="thumb__video" autoplay loop muted playsinline webkit-playsinline>
-              <source src="assets/videos/sharekit.mp4" type="video/mp4">
-            </video>
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">UX/UI · Digital</span>
-              <span class="card__year">2022–2026</span>
-            </div>
-            <h3 class="card__title">Fitness22 — ShareKit</h3>
-            <p class="card__desc">Social sharing feature for fitness and running apps — 100 custom stickers designed in collaboration with AI, covering every workout mood and milestone.</p>
           </div>
         </article>
 
@@ -544,6 +536,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=2"></script>
 </body>
 </html>

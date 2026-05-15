@@ -82,13 +82,30 @@ revealEls.forEach((el, i) => {
 });
 
 
+/* ──────────────── Masonry layout ──────────────── */
+function runMasonry() {
+  const grid = document.querySelector('.portfolio-grid');
+  if (!grid) return;
+  const gap = parseFloat(getComputedStyle(grid).columnGap) || 28;
+  grid.querySelectorAll('.card').forEach(card => {
+    card.style.gridRowEnd = 'auto';
+  });
+  grid.querySelectorAll('.card:not(.hidden)').forEach(card => {
+    const h = card.getBoundingClientRect().height;
+    card.style.gridRowEnd = `span ${Math.ceil(h + gap)}`;
+  });
+}
+
+window.addEventListener('load', runMasonry);
+window.addEventListener('resize', runMasonry);
+
+
 /* ──────────────── Portfolio filter ──────────────── */
 const filterBtns = document.querySelectorAll('.filter__btn');
 const cards      = document.querySelectorAll('.card');
 
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    // Update active button
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
@@ -99,6 +116,8 @@ filterBtns.forEach(btn => {
       const show = filter === 'all' || cat.includes(filter);
       card.classList.toggle('hidden', !show);
     });
+
+    requestAnimationFrame(runMasonry);
   });
 });
 
