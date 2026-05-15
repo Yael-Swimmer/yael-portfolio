@@ -541,6 +541,7 @@ strong { font-weight: 600; }
 .thumb--neve    { aspect-ratio: 1/1; }
 .thumb--logos   { aspect-ratio: 3/4; }
 .thumb--moh     { aspect-ratio: 1/1; }
+.thumb--nocolor { background: #D2AEB2; aspect-ratio: 4/3; }
 
 /* Shared thumb number */
 .thumb__num {
@@ -801,6 +802,14 @@ strong { font-weight: 600; }
   transition: transform 0.5s var(--ease);
 }
 .card:hover .thumb__cover { transform: scale(1.04); }
+
+.thumb--nocolor .thumb__cover {
+  object-fit: contain;
+  inset: 0.75rem;
+  width: calc(100% - 1.5rem);
+  height: calc(100% - 1.5rem);
+  transform-origin: center;
+}
 
 /* ── 01 ShareKit ── */
 .thumb--sharekit {
