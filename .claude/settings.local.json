@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"/Users/yaelswimmer/Desktop/YAEL_ALL_DESIGN/Claude code project/index.html\" /tmp/portfolio_preview/)",
+      "Bash(cp \"/Users/yaelswimmer/Desktop/YAEL_ALL_DESIGN/Claude code project/css/style.css\" /tmp/portfolio_preview/css/)",
+      "Bash(cp \"/Users/yaelswimmer/Desktop/YAEL_ALL_DESIGN/Claude code project/js/main.js\" /tmp/portfolio_preview/js/)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless --disable-gpu --screenshot=/tmp/stickers_preview.png --window-size=1300,5000 --virtual-time-budget=5000 http://localhost:3456/stickers_only.html)",
+      "Read(//tmp/**)"
+    ]
+  }
+}
