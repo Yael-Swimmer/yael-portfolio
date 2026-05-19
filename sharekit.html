@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness22 — ShareKit · Yael Swimmer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #171E28;
+      --bg2:     #1E2737;
+      --surface: #232D3F;
+      --cream:   #F2EDE4;
+      --accent:  #B07D4A;
+      --muted:   rgba(242,237,228,0.45);
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(23,30,40,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav__back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav__back:hover { color: var(--cream); }
+    .nav__back svg { flex-shrink: 0; }
+    .nav__label {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Floating glow blobs */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(176,125,74,0.12) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(100,140,220,0.10) 0%, transparent 70%);
+      bottom: 0; left: -80px;
+      pointer-events: none;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .hero__title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .hero__desc {
+      max-width: 560px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+    .hero__desc strong { color: var(--cream); font-weight: 500; }
+
+    /* Tags */
+    .hero__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 3.5rem;
+    }
+    .hero__tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(242,237,228,0.18);
+      border-radius: 20px;
+      padding: 0.35rem 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Video */
+    .hero__video-wrap {
+      position: relative;
+      width: min(260px, 60vw);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .hero__video-wrap video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── STICKER SECTION ── */
+    .stickers-section {
+      padding: 5rem 2rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .section-sub {
+      margin-top: 0.8rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* Category tabs */
+    .cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .cat-tab {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border: 1px solid rgba(242,237,228,0.15);
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-tab:hover, .cat-tab.active {
+      background: rgba(242,237,228,0.08);
+      border-color: rgba(242,237,228,0.35);
+      color: var(--cream);
+    }
+    .cat-tab.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(176,125,74,0.08);
+    }
+
+    /* Sticker grid */
+    .sticker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 1rem;
+    }
+
+    .sticker-item {
+      aspect-ratio: 1;
+      background: var(--surface);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.25s ease,
+                  border-color 0.25s ease;
+      opacity: 0;
+      animation: fadeUp 0.4s ease forwards;
+    }
+    .sticker-item:hover {
+      transform: scale(1.12) rotate(-2deg);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      border-color: rgba(242,237,228,0.15);
+      z-index: 2;
+    }
+    .sticker-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+    }
+    .sticker-item.hidden { display: none; }
+
+    /* + more card */
+    .sticker-more {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px dashed rgba(242,237,228,0.18);
+      gap: 2px;
+      opacity: 0;
+      animation: fadeUp 0.4s ease forwards;
+      pointer-events: none;
+      user-select: none;
+    }
+    .sticker-more__plus {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(242,237,228,0.35);
+      line-height: 1;
+    }
+    .sticker-more__label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(242,237,228,0.2);
+    }
+    .sticker-more.hidden { display: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .sticker-grid {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 0.7rem;
+      }
+      .hero__video-wrap { width: min(220px, 70vw); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <span class="nav__label">Fitness22</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero__eyebrow">Fitness22 · 2022–2026</p>
+  <h1 class="hero__title">Share<em>Kit</em></h1>
+  <p class="hero__desc">
+    A social sharing feature built into fitness and running apps — triggered after a workout or any in-app moment.
+    Designed <strong>100 custom stickers</strong> in collaboration with AI, covering every mood and milestone.
+  </p>
+  <div class="hero__tags">
+    <span class="hero__tag">Mobile App</span>
+    <span class="hero__tag">AI-Assisted Design</span>
+    <span class="hero__tag">100 Stickers</span>
+    <span class="hero__tag">Social Sharing</span>
+    <span class="hero__tag">iOS &amp; Android</span>
+  </div>
+  <div class="hero__video-wrap">
+    <video autoplay loop muted playsinline webkit-playsinline id="heroVideo">
+      <source src="assets/videos/sharekit.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="scroll-cue">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Scroll
+  </div>
+</section>
+
+<!-- STICKERS -->
+<section class="stickers-section">
+  <div class="section-header">
+    <p class="section-eyebrow">The Sticker Set</p>
+    <h2 class="section-title">100 <em>custom stickers</em></h2>
+    <p class="section-sub">Designed entirely in collaboration with AI — four collections, every mood.</p>
+  </div>
+
+  <div class="cat-tabs">
+    <button class="cat-tab active" data-cat="all">All</button>
+    <button class="cat-tab" data-cat="text">Knit Style</button>
+    <button class="cat-tab" data-cat="gradi">Gradient</button>
+    <button class="cat-tab" data-cat="ani">Animated</button>
+    <button class="cat-tab" data-cat="pixnew">Pixel</button>
+    <button class="cat-tab" data-cat="insta">Social</button>
+  </div>
+
+  <div class="sticker-grid" id="stickerGrid">
+    <!-- text / Knit Style — FIRST -->
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.02s"><img src="assets/images/stickers/text_1.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.04s"><img src="assets/images/stickers/text_2.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.06s"><img src="assets/images/stickers/text_3.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.08s"><img src="assets/images/stickers/text_4.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.10s"><img src="assets/images/stickers/text_5.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.12s"><img src="assets/images/stickers/text_6.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.14s"><img src="assets/images/stickers/text_7.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.16s"><img src="assets/images/stickers/text_8.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.18s"><img src="assets/images/stickers/text_9.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.20s"><img src="assets/images/stickers/text_10.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.22s"><img src="assets/images/stickers/text_11.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.24s"><img src="assets/images/stickers/text_12.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.26s"><img src="assets/images/stickers/text_13.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.28s"><img src="assets/images/stickers/text_14.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.30s"><img src="assets/images/stickers/text_15.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.32s"><img src="assets/images/stickers/text_16.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.34s"><img src="assets/images/stickers/text_17.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.36s"><img src="assets/images/stickers/text_18.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.38s"><img src="assets/images/stickers/text_19.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.40s"><img src="assets/images/stickers/text_20.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.42s"><img src="assets/images/stickers/text_21.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.44s"><img src="assets/images/stickers/text_22.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.46s"><img src="assets/images/stickers/text_23.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.48s"><img src="assets/images/stickers/text_24.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.50s"><img src="assets/images/stickers/text_25.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.52s"><img src="assets/images/stickers/text_26.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.54s"><img src="assets/images/stickers/text_27.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.56s"><img src="assets/images/stickers/text_28.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.58s"><img src="assets/images/stickers/text_29.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.60s"><img src="assets/images/stickers/text_30.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.62s"><img src="assets/images/stickers/text_31.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.64s"><img src="assets/images/stickers/text_32.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.66s"><img src="assets/images/stickers/text_33.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.68s"><img src="assets/images/stickers/text_34.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.70s"><img src="assets/images/stickers/text_35.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.72s"><img src="assets/images/stickers/text_36.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.74s"><img src="assets/images/stickers/text_37.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.76s"><img src="assets/images/stickers/text_38.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.78s"><img src="assets/images/stickers/text_39.png" alt=""></div>
+    <div class="sticker-item" data-cat="text" style="animation-delay:0.80s"><img src="assets/images/stickers/text_40.png" alt=""></div>
+    <!-- gradi -->
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.82s"><img src="assets/images/stickers/gradi_1.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.84s"><img src="assets/images/stickers/gradi_2.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.86s"><img src="assets/images/stickers/gradi_3.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.88s"><img src="assets/images/stickers/gradi_4.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.90s"><img src="assets/images/stickers/gradi_5.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.92s"><img src="assets/images/stickers/gradi_6.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.94s"><img src="assets/images/stickers/gradi_7.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.96s"><img src="assets/images/stickers/gradi_8.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:0.98s"><img src="assets/images/stickers/gradi_10.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:1.00s"><img src="assets/images/stickers/gradi_11.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:1.02s"><img src="assets/images/stickers/gradi_12.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:1.04s"><img src="assets/images/stickers/gradi_14.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:1.06s"><img src="assets/images/stickers/gradi_15.png" alt=""></div>
+    <div class="sticker-item" data-cat="gradi" style="animation-delay:1.08s"><img src="assets/images/stickers/gradi_23.png" alt=""></div>
+    <!-- ani -->
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.10s"><img src="assets/images/stickers/ani_1.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.12s"><img src="assets/images/stickers/ani_2.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.14s"><img src="assets/images/stickers/ani_3.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.16s"><img src="assets/images/stickers/ani_4.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.18s"><img src="assets/images/stickers/ani_5.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.20s"><img src="assets/images/stickers/ani_6.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.22s"><img src="assets/images/stickers/ani_7.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.24s"><img src="assets/images/stickers/ani_9.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.26s"><img src="assets/images/stickers/ani_10.png" alt=""></div>
+    <div class="sticker-item" data-cat="ani" style="animation-delay:1.28s"><img src="assets/images/stickers/ani_11.png" alt=""></div>
+    <!-- insta -->
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.30s"><img src="assets/images/stickers/insta_1.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.32s"><img src="assets/images/stickers/insta_2.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.34s"><img src="assets/images/stickers/insta_3.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.36s"><img src="assets/images/stickers/insta_4.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.38s"><img src="assets/images/stickers/insta_5.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.40s"><img src="assets/images/stickers/insta_6.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.42s"><img src="assets/images/stickers/insta_7.png" alt=""></div>
+    <div class="sticker-item" data-cat="insta" style="animation-delay:1.44s"><img src="assets/images/stickers/insta_8.png" alt=""></div>
+    <!-- pixnew -->
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.46s"><img src="assets/images/stickers/pixnew_1.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.48s"><img src="assets/images/stickers/pixnew_2.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.50s"><img src="assets/images/stickers/pixnew_3.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.52s"><img src="assets/images/stickers/pixnew_4.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.54s"><img src="assets/images/stickers/pixnew_5.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.56s"><img src="assets/images/stickers/pixnew_6.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.58s"><img src="assets/images/stickers/pixnew_7.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.60s"><img src="assets/images/stickers/pixnew_8.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.62s"><img src="assets/images/stickers/pixnew_9.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.64s"><img src="assets/images/stickers/pixnew_10.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.66s"><img src="assets/images/stickers/pixnew_11.png" alt=""></div>
+    <div class="sticker-item" data-cat="pixnew" style="animation-delay:1.68s"><img src="assets/images/stickers/pixnew_12.png" alt=""></div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p><a href="index.html">← Back to portfolio</a> &nbsp;·&nbsp; Yael Swimmer © 2026</p>
+</footer>
+
+<script>
+  // ── Category filter ──
+  const tabs  = document.querySelectorAll('.cat-tab');
+  const items = document.querySelectorAll('.sticker-item');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.cat;
+      items.forEach((item, i) => {
+        const match = cat === 'all' || item.dataset.cat === cat;
+        item.classList.toggle('hidden', !match);
+        if (match) {
+          // Re-trigger animation
+          item.style.animation = 'none';
+          item.offsetHeight; // reflow
+          item.style.animation = '';
+          item.style.animationDelay = (i * 0.015) + 's';
+        }
+      });
+    });
+  });
+
+  // ── Mobile video autoplay fix ──
+  const heroVideo = document.getElementById('heroVideo');
+  function tryPlay() {
+    heroVideo.play().catch(() => {});
+  }
+  document.addEventListener('touchstart', tryPlay, { once: true });
+  document.addEventListener('scroll', tryPlay, { once: true });
+  tryPlay();
+</script>
+
+</body>
+</html>
