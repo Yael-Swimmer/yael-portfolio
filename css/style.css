@@ -818,6 +818,15 @@ strong { font-weight: 600; }
   transform-origin: center;
 }
 
+.thumb--neve .thumb__cover,
+.thumb--sabta .thumb__cover,
+.thumb--logos .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ── 01 ShareKit ── */
 .thumb--sharekit {
   background: #171E28;
