@@ -793,7 +793,7 @@ strong { font-weight: 600; }
 /* ── 02 Gymverse ── */
 .thumb--gymverse {
   background: #0a0e1a;
-  aspect-ratio: 4/3;
+  aspect-ratio: 2828/1540;
 }
 .thumb__cover {
   position: absolute; inset: 0.5rem;
