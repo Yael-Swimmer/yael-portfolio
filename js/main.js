@@ -99,6 +99,16 @@ function runMasonry() {
 window.addEventListener('load', runMasonry);
 window.addEventListener('resize', runMasonry);
 
+// Re-run masonry whenever any thumb image finishes loading
+document.querySelectorAll('.card img').forEach(img => {
+  if (img.complete) return;
+  img.addEventListener('load', runMasonry);
+  img.addEventListener('error', runMasonry);
+});
+// Initial run after DOM ready (in case images already cached)
+if (document.readyState !== 'loading') runMasonry();
+else document.addEventListener('DOMContentLoaded', runMasonry);
+
 
 /* ──────────────── Portfolio filter ──────────────── */
 const filterBtns = document.querySelectorAll('.filter__btn');
