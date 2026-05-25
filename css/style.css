@@ -346,6 +346,8 @@ strong { font-weight: 600; }
   font-weight: 600;
   line-height: 1;
   color: var(--text);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 .hero__meta-label {
   font-size: 0.625rem;
