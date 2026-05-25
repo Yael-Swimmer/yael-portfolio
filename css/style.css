@@ -829,6 +829,14 @@ strong { font-weight: 600; }
   object-position: center;
 }
 
+.thumb--yoyo .thumb__cover {
+  object-fit: cover;
+  object-position: 70% 18%;
+  transform: scale(2.1);
+  transform-origin: 70% 18%;
+}
+.card:hover .thumb--yoyo .thumb__cover { transform: scale(2.15); }
+
 .thumb--neve, .thumb--sabta, .thumb--logos, .thumb--yoyo {
   padding: 0;
 }
