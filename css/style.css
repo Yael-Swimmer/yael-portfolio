@@ -677,7 +677,7 @@ strong { font-weight: 600; }
 
 /* ── 06 Neve Tzedek ── */
 .thumb--neve {
-  background: linear-gradient(150deg, #3D2010 0%, #8C5030 100%);
+  background: #317579;
 }
 .thumb__window {
   width: 55%;
@@ -825,6 +825,11 @@ strong { font-weight: 600; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+}
+
+.thumb--neve, .thumb--sabta, .thumb--logos {
+  padding: 0;
 }
 
 /* ── 01 ShareKit ── */
