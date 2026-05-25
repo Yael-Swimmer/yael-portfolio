@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survivor Grandma — Yael Swimmer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #F8F5F0;
+      --text:    #1A1A1A;
+      --muted:   #6B6B6B;
+      --accent:  #C07840;
+      --yellow:  #F4C430;
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248,245,240,0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav__back:hover { color: var(--accent); }
+    .nav__brand { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; letter-spacing: 0.05em; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HERO */
+    .hero {
+      padding: 9rem 0 3rem;
+      text-align: center;
+    }
+    .hero__tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .hero__sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* MAIN VISUAL */
+    .visual {
+      padding: 3rem 0 5rem;
+    }
+    .visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+    }
+
+    /* META BAR */
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 4rem;
+    }
+    .meta__item-label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .meta__item-value {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    /* ARTICLE */
+    .article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding-bottom: 6rem;
+    }
+    .article h2 {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 500;
+      margin: 2.5rem 0 1.2rem;
+      line-height: 1.15;
+    }
+    .article h2:first-child { margin-top: 0; }
+    .article p {
+      font-size: 1.1rem;
+      color: #2A2A2A;
+      margin-bottom: 1.3rem;
+    }
+    .article p strong { color: var(--text); }
+    .article .lead {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .pull-quote {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.5rem;
+      margin: 2.5rem 0;
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 4rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+    @media (max-width: 640px) {
+      .nav { padding: 1rem 1.25rem; }
+      .container { padding: 0 1.25rem; }
+      .hero { padding: 7rem 0 2rem; }
+      .article h2 { font-size: 1.8rem; }
+      .article .lead { font-size: 1.3rem; }
+      .pull-quote { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="nav__back" href="index.html">← Back to Portfolio</a>
+    <span class="nav__brand">YS</span>
+  </nav>
+
+  <header class="hero container">
+    <span class="hero__tag">Editorial · Illustration · Makor Rishon</span>
+    <h1 class="hero__title">Survivor Grandma</h1>
+    <p class="hero__sub">A magazine feature spotlighting grandmothers who refuse to slow down — illustrated with handcrafted paper cutouts.</p>
+  </header>
+
+  <section class="visual container">
+    <img src="assets/projects/sabta.jpg" alt="Survivor Grandma paper-cutout illustration">
+  </section>
+
+  <section class="container">
+    <div class="meta">
+      <div class="meta__item">
+        <span class="meta__item-label">Client</span>
+        <span class="meta__item-value">Makor Rishon</span>
+      </div>
+      <div class="meta__item">
+        <span class="meta__item-label">Section</span>
+        <span class="meta__item-value">Focus Magazine</span>
+      </div>
+      <div class="meta__item">
+        <span class="meta__item-label">Discipline</span>
+        <span class="meta__item-value">Editorial Illustration</span>
+      </div>
+      <div class="meta__item">
+        <span class="meta__item-label">Technique</span>
+        <span class="meta__item-value">Paper Cutouts</span>
+      </div>
+    </div>
+  </section>
+
+  <article class="article container">
+    <p class="lead">She isn't sitting in a rocking chair. She's spinning a hula hoop — and rewriting what it means to grow old.</p>
+
+    <h2>About the project</h2>
+    <p>"Survivor Grandma" is a feature spread designed for the weekly Focus magazine in <strong>Makor Rishon</strong>, exploring how today's grandmothers are redefining the chapter once labelled "old age." Instead of fading quietly into the background, they are travelling, exercising, building businesses, and showing up loud.</p>
+    <p>The illustration was built entirely from <strong>handcrafted paper cutouts</strong> — fabric prints for dresses, lined notebook paper for sleeves, magazine clippings for skin tones. The tactile collage technique was chosen deliberately: each layer is a small act of construction, mirroring the way these women have built their lives piece by piece.</p>
+
+    <div class="pull-quote">
+      "Aging isn't a quiet retreat — it's an active reinvention."
+    </div>
+
+    <h2>Visual approach</h2>
+    <p>The composition centres a single character against a saturated yellow field — a colour chosen for its warmth and optimism. The hula hoop forms an unbroken oval of movement around her, while the floral skirt and striped blouse echo the layered textures of memory and identity.</p>
+    <p>Type direction was kept editorial and grounded: a strong Hebrew display face for the title, with body text running in clear columns alongside the artwork. The result is a feature that feels both contemporary and timeless — exactly like the women it portrays.</p>
+
+    <h2>Outcome</h2>
+    <p>The spread ran nationally as part of <em>Focus</em>'s weekly feature in Makor Rishon, reaching hundreds of thousands of print readers. The illustration was later highlighted as one of the section's signature visuals of the year.</p>
+  </article>
+
+  <footer class="footer">
+    <p>Yael Swimmer · Marketing &amp; Creative Designer</p>
+    <p style="margin-top:0.5rem;"><a href="index.html">← Back to all projects</a></p>
+  </footer>
+
+</body>
+</html>

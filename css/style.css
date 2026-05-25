@@ -820,7 +820,8 @@ strong { font-weight: 600; }
 
 .thumb--neve .thumb__cover,
 .thumb--sabta .thumb__cover,
-.thumb--logos .thumb__cover {
+.thumb--logos .thumb__cover,
+.thumb--yoyo .thumb__cover {
   inset: 0;
   width: 100%;
   height: 100%;
@@ -828,7 +829,7 @@ strong { font-weight: 600; }
   object-position: center;
 }
 
-.thumb--neve, .thumb--sabta, .thumb--logos {
+.thumb--neve, .thumb--sabta, .thumb--logos, .thumb--yoyo {
   padding: 0;
 }
 
