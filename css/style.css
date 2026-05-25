@@ -341,13 +341,13 @@ strong { font-weight: 600; }
 }
 .hero__meta-item { display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem; }
 .hero__meta-num {
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 500;
   line-height: 1;
   color: var(--text);
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 .hero__meta-label {
   font-size: 0.625rem;
