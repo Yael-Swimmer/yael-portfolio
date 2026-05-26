@@ -827,6 +827,19 @@ strong { font-weight: 600; }
 }
 .thumb--portrait { padding: 0; aspect-ratio: 4020/2723; background: #CCD8CC; }
 
+.thumb--5k {
+  padding: 0;
+  aspect-ratio: 758/1066;
+  background: #6DBDF1;
+}
+.thumb--5k .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .thumb--neve .thumb__cover,
 .thumb--sabta .thumb__cover,
 .thumb--logos .thumb__cover,
