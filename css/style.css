@@ -818,6 +818,15 @@ strong { font-weight: 600; }
   transform-origin: center;
 }
 
+.thumb--portrait .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.thumb--portrait { padding: 0; aspect-ratio: 4020/2723; }
+
 .thumb--neve .thumb__cover,
 .thumb--sabta .thumb__cover,
 .thumb--logos .thumb__cover,
