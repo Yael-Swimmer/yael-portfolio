@@ -110,6 +110,46 @@
       margin: 0 auto;
     }
 
+    /* COVER SHOWCASE */
+    .cover-showcase {
+      padding: 2rem 0 1rem;
+      perspective: 1500px;
+    }
+    .cover-showcase__wrap {
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #5774F4 0%, #6E58F4 50%, #5774F4 100%);
+      padding: 2rem 2rem 0;
+      box-shadow:
+        0 50px 120px rgba(87,116,244,0.35),
+        0 25px 60px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      animation: tiltIn 1.2s var(--ease) both;
+    }
+    .cover-showcase__wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,59,92,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .cover-showcase__wrap img {
+      width: 100%;
+      display: block;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+    }
+    @keyframes tiltIn {
+      from { opacity: 0; transform: translateY(50px) rotateX(8deg) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
+    }
+
     /* INTRO COPY */
     .intro {
       max-width: 720px;
@@ -274,6 +314,12 @@
       <span class="hero__tag">Social · Instagram · Gymverse</span>
       <h1 class="hero__title">Where users<br><em>show up.</em></h1>
       <p class="hero__sub">A wall of motivation — Instagram posts spotlighting Gymverse's happiest, hardest-working users.</p>
+    </section>
+
+    <section class="cover-showcase container">
+      <div class="cover-showcase__wrap">
+        <img src="assets/posts/cover.png" alt="Gymverse Instagram posts cover">
+      </div>
     </section>
 
     <section class="intro container">
