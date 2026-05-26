@@ -536,7 +536,7 @@ strong { font-weight: 600; }
 .card:hover .card__overlay-label { transform: translateY(0); }
 /* varied aspect ratios per project for masonry variety */
 .thumb--yoyo    { aspect-ratio: 1494/1383; }
-.thumb--pirates { aspect-ratio: 1/1; }
+.thumb--pirates { aspect-ratio: 495/373; }
 .thumb--tad     { aspect-ratio: 3/4; }
 .thumb--neve    { aspect-ratio: 1/1; }
 .thumb--logos   { aspect-ratio: 3/4; }
@@ -602,9 +602,18 @@ strong { font-weight: 600; }
 }
 .card:hover .thumb__big { color: rgba(255,255,255,0.28); }
 
-/* ── 03 Pirates ── */
+/* ── 03 Pirates / Gymverse Posts ── */
 .thumb--pirates {
-  background: linear-gradient(150deg, #0D2B1A 0%, #1A5C35 100%);
+  background: #5774F4;
+  padding: 0;
+  aspect-ratio: 495/373;
+}
+.thumb--pirates .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .thumb__flag {
   font-size: 4.5rem;

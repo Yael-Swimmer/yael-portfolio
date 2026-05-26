@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gymverse Instagram — Yael Swimmer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0F1428;
+      --bg2:     #5774F4;
+      --accent:  #FF3B5C;
+      --fire:    #FFB13B;
+      --cream:   #F2EDE4;
+      --muted:   rgba(242,237,228,0.6);
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+      --ease:    cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--cream);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(87,116,244,0.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(255,59,92,0.12) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,20,40,0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav__back {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s var(--ease);
+    }
+    .nav__back:hover { color: var(--bg2); }
+    .nav__brand { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; }
+
+    main { position: relative; z-index: 1; }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HERO */
+    .hero {
+      padding: 9rem 0 3rem;
+      text-align: center;
+      position: relative;
+    }
+    .hero__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(87,116,244,0.18);
+      border: 1px solid rgba(87,116,244,0.4);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: #B8C5FF;
+    }
+    .hero__tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--bg2);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--bg2);
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .hero__title em { color: var(--bg2); font-style: italic; }
+    .hero__sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* INTRO COPY */
+    .intro {
+      max-width: 720px;
+      margin: 4rem auto 5rem;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .intro p {
+      font-size: 1.15rem;
+      color: rgba(242,237,228,0.85);
+      margin-bottom: 1.3rem;
+    }
+    .intro p strong { color: var(--bg2); font-weight: 500; }
+
+    /* ── INSTAGRAM-STYLE GRID ── */
+    .posts {
+      padding: 0 0 6rem;
+      position: relative;
+    }
+    .posts__heading {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .posts__heading__label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bg2);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .posts__heading h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    .posts__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .post {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.6s var(--ease);
+      animation: postFade 6s infinite;
+    }
+    /* Stagger animation delays so they don't all blink together */
+    .post:nth-child(1) { animation-delay: 0s; }
+    .post:nth-child(2) { animation-delay: 1.2s; }
+    .post:nth-child(3) { animation-delay: 2.4s; }
+    .post:nth-child(4) { animation-delay: 3.6s; }
+    .post:nth-child(5) { animation-delay: 4.8s; }
+    .post:nth-child(6) { animation-delay: 0.6s; }
+
+    .post img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--ease);
+    }
+    .post:hover img { transform: scale(1.06); }
+
+    .post__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.9rem;
+      gap: 0.8rem;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+    .post:hover .post__overlay { opacity: 1; }
+    .post__overlay span { display: inline-flex; align-items: center; gap: 0.3rem; }
+
+    @keyframes postFade {
+      0%, 88%, 100% { opacity: 1; transform: scale(1); }
+      92%           { opacity: 0; transform: scale(0.96); }
+      96%           { opacity: 1; transform: scale(1); }
+    }
+
+    /* Floating emoji animations rising from posts */
+    .emoji-float {
+      position: absolute;
+      font-size: 1.8rem;
+      pointer-events: none;
+      opacity: 0;
+      animation: emojiRise 3s ease-out infinite;
+      z-index: 5;
+    }
+    @keyframes emojiRise {
+      0%   { opacity: 0; transform: translate(0, 0) scale(0.6) rotate(-10deg); }
+      20%  { opacity: 1; transform: translate(-15px, -40px) scale(1) rotate(0deg); }
+      80%  { opacity: 0.7; transform: translate(-25px, -160px) scale(1.1) rotate(15deg); }
+      100% { opacity: 0; transform: translate(-30px, -200px) scale(0.8) rotate(20deg); }
+    }
+
+    /* META */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+      padding: 4rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 4rem;
+    }
+    .meta-item__label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+    .meta-item__value {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .footer {
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    @media (max-width: 700px) {
+      .posts__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .hero { padding: 7rem 0 2rem; }
+      .intro { margin: 2.5rem auto 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="nav__back" href="index.html">← Back to Portfolio</a>
+    <span class="nav__brand">YS</span>
+  </nav>
+
+  <main>
+
+    <section class="hero container">
+      <span class="hero__tag">Social · Instagram · Gymverse</span>
+      <h1 class="hero__title">Where users<br><em>show up.</em></h1>
+      <p class="hero__sub">A wall of motivation — Instagram posts spotlighting Gymverse's happiest, hardest-working users.</p>
+    </section>
+
+    <section class="intro container">
+      <p>These posts went out on the <strong>Gymverse</strong> Instagram feed — short, punchy clips and stills celebrating the people who actually use the app every day.</p>
+      <p>Each card features a real user who's transformed their training with Gymverse — designed to feel less like advertising, more like a friend's recommendation.</p>
+    </section>
+
+    <section class="posts container">
+      <div class="posts__heading">
+        <span class="posts__heading__label">The Feed</span>
+        <h2>Built by real people. Posted with love.</h2>
+      </div>
+
+      <div class="posts__grid" id="postsGrid">
+        <div class="post"><img src="assets/posts/post-1.png" alt="Gymverse post 1"><div class="post__overlay"><span>❤ 12.4K</span><span>💬 320</span></div></div>
+        <div class="post"><img src="assets/posts/post-2.png" alt="Gymverse post 2"><div class="post__overlay"><span>❤ 8.7K</span><span>💬 210</span></div></div>
+        <div class="post"><img src="assets/posts/post-3.png" alt="Gymverse post 3"><div class="post__overlay"><span>❤ 15.2K</span><span>💬 480</span></div></div>
+        <div class="post"><img src="assets/posts/post-4.png" alt="Gymverse post 4"><div class="post__overlay"><span>❤ 9.1K</span><span>💬 175</span></div></div>
+        <div class="post"><img src="assets/posts/post-5.png" alt="Gymverse post 5"><div class="post__overlay"><span>❤ 11.6K</span><span>💬 290</span></div></div>
+        <div class="post"><img src="assets/posts/post-6.png" alt="Gymverse post 6"><div class="post__overlay"><span>❤ 13.8K</span><span>💬 350</span></div></div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-item__label">Client</span>
+          <span class="meta-item__value">Gymverse App</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Platform</span>
+          <span class="meta-item__value">Instagram</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Format</span>
+          <span class="meta-item__value">Reels &amp; Stills</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Role</span>
+          <span class="meta-item__value">Visual Design</span>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>Yael Swimmer · Marketing &amp; Creative Designer</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // Floating heart/fire emojis that rise from the posts grid
+    const grid = document.getElementById('postsGrid');
+    const emojis = ['❤', '🔥', '💪', '⭐', '❤', '🔥'];
+
+    function spawnEmoji() {
+      if (!grid) return;
+      const e = document.createElement('span');
+      e.className = 'emoji-float';
+      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      // Pick a random post location to start from
+      const posts = grid.querySelectorAll('.post');
+      if (!posts.length) return;
+      const post = posts[Math.floor(Math.random() * posts.length)];
+      const rect = post.getBoundingClientRect();
+      const gridRect = grid.getBoundingClientRect();
+      e.style.left = (rect.left - gridRect.left + rect.width * (0.3 + Math.random() * 0.4)) + 'px';
+      e.style.top = (rect.top - gridRect.top + rect.height - 30) + 'px';
+      e.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
+      grid.appendChild(e);
+      setTimeout(() => e.remove(), 3500);
+    }
+
+    // Make grid positioned for emoji absolute placement
+    if (grid) {
+      grid.style.position = 'relative';
+      setInterval(spawnEmoji, 600);
+    }
+  </script>
+</body>
+</html>
