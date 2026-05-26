@@ -110,44 +110,44 @@
       margin: 0 auto;
     }
 
-    /* COVER SHOWCASE */
+    /* COVER SHOWCASE — phones floating */
     .cover-showcase {
-      padding: 2rem 0 1rem;
+      padding: 2rem 0 3rem;
       perspective: 1500px;
+      position: relative;
+    }
+    .cover-showcase::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      height: 70%;
+      background: radial-gradient(ellipse at center, rgba(87,116,244,0.45) 0%, transparent 60%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
     }
     .cover-showcase__wrap {
       position: relative;
       max-width: 880px;
       margin: 0 auto;
-      border-radius: 28px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #5774F4 0%, #6E58F4 50%, #5774F4 100%);
-      padding: 2rem 2rem 0;
-      box-shadow:
-        0 50px 120px rgba(87,116,244,0.35),
-        0 25px 60px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-      animation: tiltIn 1.2s var(--ease) both;
-    }
-    .cover-showcase__wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255,59,92,0.15) 0%, transparent 50%);
-      pointer-events: none;
+      animation: tiltIn 1.2s var(--ease) both, floatY 6s ease-in-out infinite;
+      z-index: 1;
     }
     .cover-showcase__wrap img {
       width: 100%;
       display: block;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.55)) drop-shadow(0 10px 25px rgba(87,116,244,0.25));
     }
     @keyframes tiltIn {
       from { opacity: 0; transform: translateY(50px) rotateX(8deg) scale(0.96); }
       to   { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
     }
 
     /* INTRO COPY */
@@ -251,14 +251,14 @@
       font-size: 1.8rem;
       pointer-events: none;
       opacity: 0;
-      animation: emojiRise 3s ease-out infinite;
+      animation: emojiRise 1.8s ease-out forwards;
       z-index: 5;
     }
     @keyframes emojiRise {
-      0%   { opacity: 0; transform: translate(0, 0) scale(0.6) rotate(-10deg); }
-      20%  { opacity: 1; transform: translate(-15px, -40px) scale(1) rotate(0deg); }
-      80%  { opacity: 0.7; transform: translate(-25px, -160px) scale(1.1) rotate(15deg); }
-      100% { opacity: 0; transform: translate(-30px, -200px) scale(0.8) rotate(20deg); }
+      0%   { opacity: 0; transform: translate(0, 0) scale(0.5) rotate(-15deg); }
+      12%  { opacity: 1; transform: translate(-10px, -30px) scale(1.05) rotate(0deg); }
+      80%  { opacity: 0.85; transform: translate(-25px, -160px) scale(1.15) rotate(15deg); }
+      100% { opacity: 0; transform: translate(-30px, -220px) scale(0.8) rotate(25deg); }
     }
 
     /* META */
@@ -388,15 +388,16 @@
       const gridRect = grid.getBoundingClientRect();
       e.style.left = (rect.left - gridRect.left + rect.width * (0.3 + Math.random() * 0.4)) + 'px';
       e.style.top = (rect.top - gridRect.top + rect.height - 30) + 'px';
-      e.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
+      e.style.animationDuration = (1.5 + Math.random() * 0.8) + 's';
       grid.appendChild(e);
-      setTimeout(() => e.remove(), 3500);
+      setTimeout(() => e.remove(), 2400);
     }
 
     // Make grid positioned for emoji absolute placement
     if (grid) {
       grid.style.position = 'relative';
-      setInterval(spawnEmoji, 280);
+      // Spawn 2 emojis at a time, faster cadence
+      setInterval(() => { spawnEmoji(); spawnEmoji(); }, 200);
     }
 
     // Reveal posts on scroll
