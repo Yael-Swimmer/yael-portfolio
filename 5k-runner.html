@@ -207,9 +207,13 @@
       overflow: hidden;
       background: #000;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5);
+      aspect-ratio: 9 / 19.5;
     }
     .phone__screen img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       display: block;
     }
     /* Dynamic Island */
@@ -607,7 +611,7 @@
         <div class="phone">
           <div class="phone__screen">
             <div class="phone__island"></div>
-            <img src="assets/5k/Cover_5K.png" alt="5K Runner cover">
+            <img src="assets/5k/Cover_5K_2.png" alt="5K Runner cover">
           </div>
           <div class="phone__reflection"></div>
         </div>
