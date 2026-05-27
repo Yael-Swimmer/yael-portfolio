@@ -182,3 +182,43 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     window.scrollTo({ top, behavior: 'smooth' });
   });
 });
+
+
+/* ──────────────── Lightbox ──────────────── */
+(() => {
+  const lb       = document.getElementById('lightbox');
+  if (!lb) return;
+  const lbImg    = lb.querySelector('.lightbox__img');
+  const lbTitle  = lb.querySelector('.lightbox__title');
+  const lbDesc   = lb.querySelector('.lightbox__desc');
+  const lbClose  = lb.querySelector('.lightbox__close');
+
+  function open(card) {
+    lbImg.src        = card.dataset.lightbox;
+    lbImg.alt        = card.dataset.title || '';
+    lbTitle.textContent = card.dataset.title || '';
+    lbDesc.textContent  = card.dataset.desc  || '';
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+
+  document.querySelectorAll('.card[data-lightbox]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Don't trigger if user clicked an inner link/button
+      if (e.target.closest('a, button')) return;
+      open(card);
+    });
+  });
+
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('is-open')) close();
+  });
+})();

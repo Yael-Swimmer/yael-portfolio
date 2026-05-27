@@ -131,7 +131,7 @@
         </article>
 
         <!-- 02 · No Color -->
-        <article class="card reveal" data-category="editorial">
+        <article class="card reveal" data-category="editorial" data-lightbox="assets/nocolor/1.png" data-title="Focus Section · Makor Rishon" data-desc="Weekly infographic spread from the Focus section of Diukan magazine — a regular column that translates each issue's lead story into a single, richly illustrated visual essay. This particular spread explores the science behind sloths." style="cursor:pointer;">
           <div class="card__thumb thumb--nocolor">
             <span class="thumb__num">02</span>
             <img class="thumb__cover" src="assets/nocolor/1.png" alt="No Color spread">
@@ -197,7 +197,7 @@
         </article>
 
         <!-- 06 · Focus Page -->
-        <article class="card reveal" data-category="editorial">
+        <article class="card reveal" data-category="editorial" data-lightbox="assets/nocolor/3.png" data-title="Focus Page · Makor Rishon" data-desc="A weekly infographic feature published on the closing page of the Diukan supplement — each week translates the issue's lead topic into a single illustrated visual essay. This week: a deep-dive into global cola culture and its hold on modern consumers." style="cursor:pointer;">
           <div class="card__thumb thumb--portrait">
             <span class="thumb__num">06</span>
             <img class="thumb__cover" src="assets/nocolor/3.png" alt="Focus infographic spread — Pepsi-Cola">
@@ -231,7 +231,7 @@
         </article>
 
         <!-- 08 · Magazine Cover -->
-        <article class="card reveal" data-category="editorial">
+        <article class="card reveal" data-category="editorial" data-lightbox="assets/projects/rehavia.png" data-title="Magazine Cover · Rehavia Edition" data-desc="Cover design for the Diukan supplement of Makor Rishon — featuring a hand-built paper-cut illustration of Jerusalem's Rehavia neighbourhood. Tactile, editorial, and grounded in place." style="cursor:pointer;">
           <div class="card__thumb thumb--neve">
             <span class="thumb__num">08</span>
             <img class="thumb__cover" src="assets/projects/rehavia.png" alt="Magazine cover design">
@@ -246,8 +246,8 @@
           </div>
         </article>
 
-        <!-- 09 · Sabta Megiba -->
-        <article class="card reveal" data-category="branding">
+        <!-- 09 · Paper Cutouts -->
+        <article class="card reveal" data-category="branding" data-lightbox="assets/projects/paper-cutouts.jpg" data-title="Paper Cutouts · Handmade Card" data-desc="Handcrafted greeting card designed with paper-cutout figures — a tactile, three-dimensional take on the family portrait. Photographed in natural light against a fabric sofa." style="cursor:pointer;">
           <div class="card__thumb thumb--sabta">
             <span class="thumb__num">09</span>
             <img class="thumb__cover" src="assets/projects/paper-cutouts.jpg" alt="Paper cutout greeting card">
@@ -279,7 +279,7 @@
         </article>
 
         <!-- 11 · Love Postcard -->
-        <article class="card reveal" data-category="branding">
+        <article class="card reveal" data-category="branding" data-lightbox="assets/projects/girl-boy.jpg" data-title="Love Postcard" data-desc="Hand-illustrated greeting card — two figures, one heart, printed on tactile fine art paper. A small object designed to be held, kept, and passed on." style="cursor:pointer;">
           <div class="card__thumb thumb--postcard">
             <span class="thumb__num">11</span>
             <img class="thumb__cover" src="assets/projects/girl-boy.jpg" alt="Love postcard illustration">
@@ -295,7 +295,7 @@
         </article>
 
         <!-- 12 · Newspaper Sketch -->
-        <article class="card reveal" data-category="editorial">
+        <article class="card reveal" data-category="editorial" data-lightbox="assets/projects/newspaper-sketch.jpg" data-title="Newspaper Sketch" data-desc="Quick line drawing in pen over newsprint — a personal warm-up that grew into a series. Each piece responds to whichever article happened to be open that morning." style="cursor:pointer;">
           <div class="card__thumb thumb--sketch">
             <span class="thumb__num">12</span>
             <img class="thumb__cover" src="assets/projects/newspaper-sketch.jpg" alt="Quick newspaper sketch">
@@ -524,6 +524,20 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=2"></script>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Close">&times;</button>
+    <div class="lightbox__inner">
+      <div class="lightbox__img-wrap">
+        <img class="lightbox__img" src="" alt="">
+      </div>
+      <div class="lightbox__info">
+        <h3 class="lightbox__title"></h3>
+        <p class="lightbox__desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
