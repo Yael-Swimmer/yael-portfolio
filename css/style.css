@@ -849,6 +849,34 @@ strong { font-weight: 600; }
   object-position: center;
 }
 
+/* ── 12 Love Postcard ── */
+.thumb--postcard {
+  padding: 0;
+  aspect-ratio: 3/4;
+  background: #E8DECF;
+}
+.thumb--postcard .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── 13 Newspaper Sketch ── */
+.thumb--sketch {
+  padding: 0;
+  aspect-ratio: 1/1;
+  background: #1A1A1A;
+}
+.thumb--sketch .thumb__cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .thumb--neve .thumb__cover,
 .thumb--sabta .thumb__cover,
 .thumb--logos .thumb__cover,
