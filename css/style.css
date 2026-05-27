@@ -220,7 +220,6 @@ strong { font-weight: 600; }
 .hero__content {
   position: relative;
   z-index: 1;
-  max-width: 900px;
 }
 
 /* Eyebrow badge */
