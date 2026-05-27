@@ -179,8 +179,7 @@ strong { font-weight: 600; }
   background-image: radial-gradient(var(--border) 1px, transparent 1px);
   background-size: 32px 32px;
 }
-.hero__content,
-.hero__meta {
+.hero__content {
   max-width: var(--max);
   width: 100%;
   margin-inline: auto;
@@ -338,9 +337,14 @@ strong { font-weight: 600; }
 .hero__meta {
   position: absolute;
   bottom: 3rem;
-  right: var(--pad);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max);
+  padding-inline: var(--pad);
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 2rem;
   z-index: 1;
   opacity: 0;
