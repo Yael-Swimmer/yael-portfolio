@@ -538,7 +538,7 @@ strong { font-weight: 600; }
 .thumb--yoyo    { aspect-ratio: 1494/1383; }
 .thumb--pirates { aspect-ratio: 495/373; }
 .thumb--tad     { aspect-ratio: 3/4; }
-.thumb--neve    { aspect-ratio: 1/1; }
+.thumb--neve    { aspect-ratio: 1889/2706; }
 .thumb--logos   { aspect-ratio: 3/4; }
 .thumb--moh     { aspect-ratio: 1/1; }
 .thumb--nocolor { background: #D2AEB2; aspect-ratio: 4/3; }
@@ -684,9 +684,9 @@ strong { font-weight: 600; }
 }
 .card:hover .thumb__tad-text { color: rgba(255,255,255,0.35); }
 
-/* ── 06 Neve Tzedek ── */
+/* ── 06 Magazine Cover ── */
 .thumb--neve {
-  background: #317579;
+  background: #C1DBDA;
 }
 .thumb__window {
   width: 55%;
@@ -858,6 +858,10 @@ strong { font-weight: 600; }
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.thumb--neve .thumb__cover {
+  object-fit: contain;
 }
 
 .thumb--yoyo .thumb__cover {
