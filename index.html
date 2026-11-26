@@ -898,11 +898,17 @@
           heroInner.style.opacity = (1 - 0.55 * q).toFixed(3);
         }
 
+        /* About text: each word lights up as it crosses a reading line, so the paragraphs fill in top-to-bottom, left-to-right, in step with the scroll */
+        var readLine = vh * 0.78, fadeBand = vh * 0.12;
         scrubs.forEach(function (s) {
           var r = s.el.getBoundingClientRect();
-          if (r.bottom < -150 || r.top > vh + 150) return;
-          var p = clamp((vh * 0.9 - r.top) / (vh * 0.5 + r.height * 0.4)), n = s.words.length;
-          for (var i = 0; i < n; i++) s.words[i].style.opacity = (0.2 + 0.8 * clamp(p * (n + 3) - i)).toFixed(3);
+          if (r.bottom < -100 || r.top > vh + 100) return;
+          var ws = s.words, rects = [], i;
+          for (i = 0; i < ws.length; i++) rects.push(ws[i].getBoundingClientRect());
+          for (i = 0; i < ws.length; i++) {
+            var xf = (rects[i].left - r.left) / Math.max(r.width, 1);
+            ws[i].style.opacity = (0.2 + 0.8 * clamp((readLine - (rects[i].top + xf * 36)) / fadeBand)).toFixed(3);
+          }
         });
 
         if (colEls.length === 3) {
