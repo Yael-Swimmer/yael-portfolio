@@ -197,6 +197,7 @@
     .badge { position: fixed; right: 20px; bottom: 20px; z-index: 30; width: 96px; height: 96px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; }
     .badge svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 14s linear infinite; }
     .badge text { font-size: 10.5px; letter-spacing: .16em; fill: #fff; font-family: var(--sans); font-weight: 500; }
+    .badge .hrt { fill: var(--fuchsia); font-size: 12px; }
     .badge .face { width: 38px; height: 38px; transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
     .badge:hover .face { transform: rotate(-12deg) scale(1.12); }
     .badge .eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
@@ -250,6 +251,29 @@
       .pill button.active { padding: 8px 9px; font-size: 16px; }
     }
 
+
+    /* INTRO SPLASH — winking face logo animation, once per visit */
+    .intro { position: fixed; inset: 0; z-index: 300; background: var(--fuchsia); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 30px); clip-path: inset(0 0 0 0); transition: clip-path .8s cubic-bezier(.7, 0, .2, 1); animation: introFailsafe 0s 4.5s forwards; }
+    .intro.out { clip-path: inset(0 0 100% 0); pointer-events: none; }
+    .intro.out .intro__face, .intro.out .intro__word { opacity: 0; transform: scale(1.18); transition: opacity .35s, transform .6s var(--ease); }
+    .no-intro .intro { display: none; }
+    html.intro-on { overflow: hidden; }
+    @keyframes introFailsafe { to { visibility: hidden; pointer-events: none; } }
+    .intro__face { width: clamp(120px, 22vw, 190px); height: auto; overflow: visible; animation: facePop .7s cubic-bezier(.3, 1.5, .5, 1) both, faceTilt .5s ease-in-out 1s both; }
+    @keyframes facePop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
+    @keyframes faceTilt { 0%, 100% { transform: rotate(0); } 45% { transform: rotate(-11deg) scale(1.04); } }
+    .intro__face .f-eye { transform-box: fill-box; transform-origin: center; animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .45s both; }
+    .intro__face .f-eye2 { transform-box: fill-box; transform-origin: center; animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .5s both, eyeClose .22s ease-in 1s forwards; }
+    @keyframes eyeIn { from { transform: scale(0); } to { transform: scale(1); } }
+    @keyframes eyeClose { to { transform: scaleY(.05); opacity: 0; } }
+    .intro__face .f-wink { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw .25s ease-out 1.05s forwards; }
+    .intro__face .f-smile { stroke-dasharray: 90; stroke-dashoffset: 90; animation: draw .5s ease-out .6s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .intro__face .f-heart { transform-box: fill-box; transform-origin: center; opacity: 0; animation: heartPop .9s cubic-bezier(.2, .8, .3, 1) 1.05s forwards; }
+    @keyframes heartPop { 0% { opacity: 0; transform: translate(0, 6px) scale(0) rotate(-12deg); } 35% { opacity: 1; transform: translate(10px, -14px) scale(1.3) rotate(8deg); } 100% { opacity: 0; transform: translate(26px, -54px) scale(.85) rotate(14deg); } }
+    .intro__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; letter-spacing: -0.01em; line-height: 1; animation: wordIn .7s var(--ease) 1.05s both; }
+    @keyframes wordIn { from { opacity: 0; transform: translateY(18px); letter-spacing: .08em; } to { opacity: 1; transform: none; letter-spacing: -0.01em; } }
+
     /* reduced motion: static, fully visible */
     .rm .hero-wrap { height: auto; }
     .rm .hero { position: relative; height: auto; min-height: 100svh; }
@@ -262,8 +286,21 @@
     .rm .strip { overflow-x: auto; }
     .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i { animation: none; }
   </style>
+  <script>try { if (sessionStorage.getItem('ys-intro') || matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('no-intro'); } catch (e) {}</script>
 </head>
 <body>
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <svg class="intro__face" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="54" fill="#fff"/>
+      <circle class="f-eye" cx="42" cy="48.6" r="7.5" fill="#2A0A1E"/>
+      <circle class="f-eye2" cx="78" cy="48.6" r="7.5" fill="#2A0A1E"/>
+      <path class="f-wink" d="M69 50.4 Q78.9 39 88.8 50.4" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
+      <path class="f-smile" d="M34.5 69.6 Q60 96.6 85.5 69.6" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
+      <g class="f-heart"><path transform="translate(88 14) scale(1.5)" fill="#fff" d="M12 21s-7.5-4.6-9.6-9.1C.8 8.6 2.7 5 6.2 5c2 0 3.5 1 4.3 2.3C11.3 6 12.8 5 14.8 5c3.5 0 5.4 3.6 3.8 6.9C19.5 16.4 12 21 12 21z"/></g>
+    </svg>
+    <div class="intro__word">Yael Swimmer</div>
+  </div>
 
   <div class="progress" id="progress"></div>
 
@@ -633,7 +670,7 @@
   <a class="badge" href="mailto:yaelyaels@gmail.com" aria-label="Let's talk — email Yael">
     <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
       <defs><path id="circ" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
-      <text><textPath href="#circ">LET'S TALK → LET'S TALK → LET'S TALK →</textPath></text>
+      <text><textPath href="#circ">LET'S TALK <tspan class="hrt">♥</tspan> LET'S TALK <tspan class="hrt">♥</tspan> LET'S TALK <tspan class="hrt">♥</tspan></textPath></text>
     </svg>
     <svg class="face" viewBox="0 0 40 40" aria-hidden="true">
       <circle cx="20" cy="20" r="18" fill="#fff"/>
@@ -874,6 +911,24 @@
       });
 
       var lastY = window.scrollY, lastT = performance.now(), t0 = lastT;
+      var splash = document.getElementById('intro');
+      if (splash && !document.documentElement.classList.contains('no-intro')) {
+        var splashDone = false;
+        t0 = Infinity;
+        document.documentElement.classList.add('intro-on');
+        var endSplash = function () {
+          if (splashDone) return; splashDone = true;
+          splash.classList.add('out');
+          try { sessionStorage.setItem('ys-intro', '1'); } catch (e) {}
+          setTimeout(function () {
+            t0 = performance.now();
+            document.documentElement.classList.remove('intro-on');
+            splash.remove();
+          }, 750);
+        };
+        setTimeout(endSplash, 2000);
+        ['pointerdown', 'keydown'].forEach(function (ev) { splash.addEventListener(ev, endSplash, { once: true }); document.addEventListener(ev, endSplash, { once: true }); });
+      } else if (splash) { splash.remove(); }
       var stableVh = window.innerHeight, stableW = window.innerWidth, smoothBase = null;
       window.addEventListener('resize', function () {
         if (window.innerWidth !== stableW) { stableW = window.innerWidth; stableVh = window.innerHeight; smoothBase = null; }
