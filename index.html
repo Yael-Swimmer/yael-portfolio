@@ -7,541 +7,869 @@
   <meta name="description" content="Portfolio of Yael Swimmer — marketing and creative designer. Infographics, editorial, branding, UX/UI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fuchsia: #E6007E;
+      --fuchsia-deep: #C4006B;
+      --ink: #2A0A1E;
+      --paper: #FFF5FA;
+      --blush: #FFD3E9;
+      --sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --gutter: clamp(16px, 4vw, 48px);
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    em, .it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+    .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--ink); transform-origin: left; transform: scaleX(0); z-index: 60; }
+
+    /* NAV */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--gutter); color: #fff; transition: color .3s; }
+    .nav.on-light { color: var(--fuchsia); }
+    .nav.menu-open { color: #fff; }
+    .nav__logo { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 30px; letter-spacing: -0.01em; line-height: 1; }
+    .nav__toggle { width: 44px; height: 44px; display: grid; place-content: center; gap: 7px; }
+    .nav__toggle span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .3s; }
+    .nav.menu-open .nav__toggle span:first-child { transform: translateY(4.5px) rotate(45deg); }
+    .nav.menu-open .nav__toggle span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
+
+    .menu { position: fixed; inset: 0; z-index: 40; background: var(--fuchsia); color: #fff; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 var(--gutter); clip-path: circle(0 at calc(100% - 40px) 40px); transition: clip-path .6s cubic-bezier(.7,0,.2,1); visibility: hidden; }
+    .menu.open { clip-path: circle(150% at calc(100% - 40px) 40px); visibility: visible; }
+    .menu a { font-size: clamp(2.6rem, 9vw, 6rem); letter-spacing: -0.04em; line-height: 1.05; width: fit-content; }
+    .menu a:hover { font-family: var(--serif); font-style: italic; }
+
+    /* HERO — pinned, words light up as you scroll */
+    .hero-wrap { height: 200vh; height: 200svh; position: relative; }
+    .hero { position: sticky; top: 0; height: 100vh; height: 100svh; background: var(--fuchsia); color: #fff; overflow: hidden; }
+    .hero__inner { height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 110px var(--gutter) 28px; will-change: transform, opacity; transform-origin: 50% 40%; }
+    .hero__eyebrow { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+    .hero__dot { width: 9px; height: 9px; border-radius: 50%; background: #fff; animation: pulse 2s infinite; }
+    @keyframes pulse { 50% { opacity: .25; } }
+    .hero__title { font-size: clamp(2.4rem, 7.8vw, 7.4rem); font-weight: 400; line-height: 1.02; letter-spacing: -0.045em; max-width: 15ch; }
+    .hero__title em { font-size: 1.08em; }
+    .w { opacity: .16; }
+    .hero__foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; padding-right: 120px; }
+    .hero__stats { display: flex; gap: clamp(20px, 4vw, 56px); opacity: 0; }
+    .hero__stat b { display: block; font-size: clamp(1.8rem, 3.4vw, 3rem); font-weight: 400; letter-spacing: -0.04em; line-height: 1; }
+    .hero__stat span { font-size: 14px; opacity: .85; }
+    .hero__scroll { font-size: 14px; letter-spacing: .02em; }
+    .hero__scroll i { display: inline-block; font-style: normal; animation: bob 1.6s ease-in-out infinite; }
+    @keyframes bob { 50% { transform: translateY(5px); } }
+
+    /* CURTAIN — everything after the hero slides over it */
+    .after { position: relative; z-index: 5; margin-top: -100vh; margin-top: -100svh; background: var(--paper); overflow: clip; }
+
+    /* MARQUEE */
+    .marquee { background: var(--ink); color: var(--paper); overflow: hidden; padding: 18px 0; white-space: nowrap; }
+    .marquee__track { display: inline-flex; gap: 36px; padding-right: 36px; will-change: transform; }
+    .marquee__track span { font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
+    .marquee__track i { font-family: var(--sans); font-style: normal; font-weight: 500; color: var(--fuchsia); font-size: clamp(1.4rem, 3vw, 2.4rem); }
+
+    /* SECTIONS */
+    .section { padding: clamp(56px, 8vw, 110px) var(--gutter); }
+    .label { font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 2.2vw, 2rem); color: var(--fuchsia); margin-bottom: 14px; }
+    .big { font-size: clamp(2rem, 5vw, 4.4rem); font-weight: 400; line-height: 1.06; letter-spacing: -0.04em; max-width: 22ch; }
+    .big em { font-size: 1.06em; }
+
+    /* word-mask rise */
+    .mw { display: inline-block; overflow: hidden; vertical-align: top; padding: .06em .12em .16em; margin: -.06em -.12em -.16em; }
+    .mi { display: inline-block; transform: translateY(125%); transition: transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 55ms); }
+    .in .mi { transform: none; }
+
+    /* WORK */
+    .work__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 48px); }
+    .pill { display: inline-flex; background: var(--fuchsia); border-radius: 999px; padding: 4px; flex-wrap: wrap; }
+    .pill button { padding: 11px 22px; border-radius: 999px; color: #fff; font-size: 16px; transition: background .25s, color .25s; }
+    .pill button.active { background: var(--paper); color: var(--fuchsia); font-family: var(--serif); font-style: italic; font-size: 19px; padding: 9px 22px; }
+
+    .grid { display: flex; gap: clamp(18px, 2.4vw, 32px); align-items: flex-start; }
+    .col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: clamp(26px, 3.4vw, 48px); will-change: transform; }
+    .card { cursor: pointer; display: block; transition: transform .5s var(--ease); }
+    .card[hidden] { display: none; }
+    .card.reveal.in:hover { transform: translateY(-8px); }
+    .card__media { position: relative; aspect-ratio: var(--ar); background: var(--bg); border-radius: 18px; overflow: hidden; clip-path: inset(14% 0 0 0 round 18px); transition: clip-path 1.2s var(--ease); }
+    .card.in .card__media { clip-path: inset(0 0 0 0 round 18px); }
+    .card__media img, .card__media video { position: absolute; inset: var(--pad, 0px); width: calc(100% - 2 * var(--pad, 0px)); height: calc(100% - 2 * var(--pad, 0px)); object-fit: var(--fit, cover); }
+    .card__num { position: absolute; top: 14px; left: 16px; z-index: 2; font-size: 13px; color: #fff; mix-blend-mode: difference; }
+    .card__go { position: absolute; right: 14px; bottom: 14px; z-index: 2; width: 56px; height: 56px; border-radius: 50%; background: var(--fuchsia); color: #fff; display: grid; place-content: center; font-size: 22px; transform: scale(0); transition: transform .35s cubic-bezier(.3,1.5,.5,1); }
+    .card:hover .card__go, .card:focus-visible .card__go { transform: scale(1); }
+    .card__body { padding: 16px 4px 0; opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease) .35s, transform .8s var(--ease) .35s; }
+    .card.in .card__body { opacity: 1; transform: none; }
+    .card__row { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 14px; flex-wrap: wrap; }
+    .card__title { font-size: clamp(1.3rem, 1.8vw, 1.65rem); font-weight: 400; letter-spacing: -0.035em; line-height: 1.1; }
+    .card__tag { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--fuchsia); white-space: nowrap; }
+    .card__desc { margin-top: 8px; font-size: 15px; line-height: 1.5; max-width: 52ch; opacity: .78; }
+
+
+    /* ILLUSTRATIONS — strip drifts sideways on scroll, hover swaps art -> room mockup */
+    .illu { background: #FFEAF4; overflow: hidden; }
+    .illu__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 48px); }
+    .illu__sub { margin-top: 18px; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.5; max-width: 34em; opacity: .8; }
+    .shoplink { display: inline-flex; align-items: center; gap: 10px; background: var(--fuchsia); color: #fff; border-radius: 999px; padding: 14px 26px; font-size: 17px; transition: background .25s; }
+    .shoplink:hover { background: var(--ink); }
+    .strip { overflow: hidden; margin: 0 calc(var(--gutter) * -1); }
+    .track { display: flex; gap: clamp(14px, 1.6vw, 24px); width: max-content; padding: 0 var(--gutter) 8px; will-change: transform; }
+    .tile { display: block; flex: none; width: clamp(210px, 23vw, 330px); }
+    .tile:nth-child(even) { margin-top: clamp(24px, 3.5vw, 56px); }
+    .tile__img { position: relative; aspect-ratio: 5 / 7; border-radius: 18px; overflow: hidden; background: #f3e6ee; box-shadow: 0 22px 44px -26px rgba(42,10,30,.45); }
+    .tile__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .tile__room { opacity: 0; transition: opacity .7s var(--ease); }
+    .tile__pill { position: absolute; left: 12px; bottom: 12px; z-index: 2; background: rgba(255,255,255,.94); color: var(--ink); border-radius: 999px; padding: 6px 13px; font-size: 13px; letter-spacing: .01em; }
+    .tile__pill .b { display: none; }
+    .tile.show-room .tile__room { opacity: 1; }
+    .tile.show-room .tile__pill .a { display: none; }
+    .tile.show-room .tile__pill .b { display: inline; }
+    @media (hover: hover) {
+      .tile:hover .tile__room { opacity: 1; }
+      .tile:hover .tile__pill .a { display: none; }
+      .tile:hover .tile__pill .b { display: inline; }
+    }
+    .tile__cap { margin-top: 12px; font-size: 16px; opacity: .85; unicode-bidi: plaintext; text-align: left; }
+
+    /* ABOUT */
+    .about { background: var(--fuchsia); color: #fff; border-radius: 40px 40px 0 0; }
+    .about .label { color: var(--blush); }
+    .about__grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(32px, 6vw, 96px); margin-top: clamp(40px, 6vw, 80px); align-items: start; }
+    .about__photo-col { position: sticky; top: 90px; }
+    .about__photo { width: min(100%, 300px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--fuchsia-deep); box-shadow: 0 0 0 8px rgba(255,255,255,.18); will-change: transform; }
+    .about__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+    .about__quick { margin-top: 24px; display: grid; gap: 14px; }
+    .about__quick small { display: block; font-size: 13px; opacity: .75; }
+    .about__quick a, .about__quick span.v { font-size: 20px; letter-spacing: -0.02em; }
+    .about__body p { font-size: clamp(1.25rem, 2.1vw, 1.9rem); line-height: 1.32; letter-spacing: -0.025em; margin-bottom: 1.1em; max-width: 30em; }
+    .about__body strong { font-weight: 500; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 48px 0; padding: 28px 0; border-block: 1px solid rgba(255,255,255,.4); }
+    .stats b { display: block; font-size: clamp(2rem, 4.4vw, 4rem); font-weight: 400; letter-spacing: -0.05em; line-height: 1; }
+    .stats span.l { display: block; margin-top: 8px; font-size: 14px; opacity: .9; }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skills span { border: 1.5px solid rgba(255,255,255,.7); border-radius: 999px; padding: 9px 18px; font-size: 16px; opacity: 0; transform: translateY(16px) scale(.92); transition: opacity .6s var(--ease), transform .6s var(--ease), background .2s, color .2s; }
+    .skills.in span { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 45ms), calc(var(--i, 0) * 45ms), 0s, 0s; }
+    .skills.in span:hover { background: #fff; color: var(--fuchsia); }
+
+    /* EXPERIENCE */
+    .exp__list { margin-top: clamp(36px, 5vw, 64px); border-top: 1px solid var(--ink); }
+    .exp__row { position: relative; display: grid; grid-template-columns: minmax(120px, 2fr) 4fr 6fr; gap: 24px; padding: 30px 0; transition: padding .3s, opacity .8s var(--ease), transform .8s var(--ease); }
+    .exp__row::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(42,10,30,.3); transform: scaleX(0); transform-origin: left; transition: transform 1.3s var(--ease) .15s; }
+    .exp__row.in::after { transform: none; }
+    .exp__row:hover { padding-left: 14px; }
+    .exp__year { font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: var(--fuchsia); }
+    .exp__role { font-size: clamp(1.3rem, 2.2vw, 2rem); font-weight: 400; letter-spacing: -0.035em; line-height: 1.1; }
+    .exp__org { display: block; font-size: 16px; opacity: .7; margin-top: 6px; letter-spacing: 0; }
+    .exp__desc { font-size: 17px; line-height: 1.5; opacity: .85; max-width: 46em; }
+    .edu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: clamp(48px, 7vw, 96px); }
+    .edu__item { background: var(--blush); border-radius: 22px; padding: 28px; }
+    .edu__item small { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--fuchsia-deep); }
+    .edu__item strong { display: block; font-weight: 500; font-size: 1.35rem; letter-spacing: -0.03em; margin: 8px 0 6px; line-height: 1.2; }
+    .edu__item span { font-size: 15px; opacity: .75; }
+    .cv { margin-top: 40px; display: inline-flex; align-items: center; gap: 12px; background: var(--fuchsia); color: #fff; border-radius: 999px; padding: 16px 28px; font-size: 18px; transition: background .25s; }
+    .cv:hover { background: var(--ink); }
+
+    /* CONTACT / FOOTER */
+    .contact { background: var(--fuchsia); color: #fff; padding-bottom: 36px; overflow: hidden; border-radius: 40px 40px 0 0; position: relative; z-index: 6; }
+    .contact__ticker { white-space: nowrap; margin: 0 calc(var(--gutter) * -1) 56px; overflow: hidden; }
+    .contact__ticker > div { display: inline-flex; will-change: transform; }
+    .contact__ticker span { font-size: clamp(3rem, 10vw, 9rem); letter-spacing: -0.05em; line-height: 1.05; padding-right: .5em; }
+    .contact__cols { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .contact__links a { display: block; font-size: clamp(1.8rem, 3.4vw, 3rem); letter-spacing: -0.035em; line-height: 1.25; width: fit-content; }
+    .contact__links a:hover, .contact__nav a:hover { font-family: var(--serif); font-style: italic; }
+    .contact__small { margin-top: 28px; font-size: 16px; opacity: .85; line-height: 1.7; }
+    .contact__nav { text-align: right; display: grid; gap: 6px; align-content: start; font-size: 18px; }
+    .contact__brand { margin-top: 64px; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 17vw; letter-spacing: -0.03em; line-height: .95; white-space: nowrap; }
+    .contact__brand .mw { padding: .16em .2em .22em; margin: -.16em -.2em -.22em; }
+    .contact__brand:not(.in) .mi { transform: translateY(150%); }
+    .contact__brand .mi { transition-duration: 1.1s; transition-delay: calc(var(--i, 0) * 40ms); }
+    .contact__legal { margin-top: 24px; font-size: 14px; opacity: .8; }
+
+    /* BADGE */
+    .badge { position: fixed; right: 20px; bottom: 20px; z-index: 30; width: 96px; height: 96px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; }
+    .badge svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 14s linear infinite; }
+    .badge text { font-size: 10.5px; letter-spacing: .16em; fill: #fff; font-family: var(--sans); font-weight: 500; }
+    .badge .face { width: 38px; height: 38px; transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+    .badge:hover .face { transform: rotate(-12deg) scale(1.12); }
+    .badge .eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+    @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+    .badge:hover { background: var(--fuchsia-deep); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+
+    /* LIGHTBOX */
+    .lb { position: fixed; inset: 0; z-index: 100; background: rgba(42,10,30,.92); display: none; align-items: center; justify-content: center; padding: 24px; }
+    .lb.open { display: flex; }
+    .lb__inner { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 32px; max-width: 1200px; width: 100%; max-height: 90vh; align-items: center; color: #fff; }
+    .lb__inner img { max-height: 88vh; width: 100%; object-fit: contain; border-radius: 12px; }
+    .lb__inner h3 { font-size: 2rem; font-weight: 400; letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 12px; }
+    .lb__inner p { line-height: 1.55; opacity: .85; }
+    .lb__x { position: absolute; top: 14px; right: 20px; font-size: 40px; color: #fff; line-height: 1; }
+
+    /* generic reveal */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    a:focus-visible, button:focus-visible, .card:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    .hero a:focus-visible, .about a:focus-visible, .contact a:focus-visible, .menu a:focus-visible, .nav button:focus-visible { outline-color: #fff; }
+
+    @media (max-width: 860px) {
+      .edu { grid-template-columns: 1fr; }
+      .about__grid { grid-template-columns: 1fr; }
+      .about__photo-col { position: static; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .exp__row { grid-template-columns: 1fr; gap: 8px; }
+      .lb__inner { grid-template-columns: 1fr; overflow-y: auto; }
+      .badge { width: 76px; height: 76px; right: 14px; bottom: 14px; }
+      .contact__nav { text-align: left; }
+      .hero__foot { padding-right: 90px; }
+      .hero__scroll { display: none; }
+      .about, .contact { border-radius: 28px 28px 0 0; }
+    }
+
+    /* reduced motion: static, fully visible */
+    .rm .hero-wrap { height: auto; }
+    .rm .hero { position: relative; height: auto; min-height: 100svh; }
+    .rm .after { margin-top: 0; }
+    .rm .w { opacity: 1; }
+    .rm .hero__stats { opacity: 1; }
+    .rm .mi, .rm .reveal, .rm .card__body, .rm .skills span { transform: none; opacity: 1; transition: none; }
+    .rm .card__media { clip-path: none; transition: none; }
+    .rm .exp__row::after { transform: none; transition: none; }
+    .rm .strip { overflow-x: auto; }
+    .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i { animation: none; }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <div class="progress" id="progress"></div>
+
   <nav class="nav" id="nav">
-    <div class="nav__inner">
-      <a href="#home" class="nav__logo">YS</a>
-      <ul class="nav__links" id="navLinks">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#resume">Resume</a></li>
-        <li><a href="#contact" class="nav__cta">Contact</a></li>
-      </ul>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
-        <span></span><span></span>
-      </button>
-    </div>
+    <a href="#home" class="nav__logo">Yael Swimmer</a>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero__content">
-      <div class="hero__eyebrow">
-        <span class="hero__dot"></span>
-        <span>Available for projects</span>
-      </div>
-      <h1 class="hero__name">
-        <em class="hero__name-italic">Yael</em>
-        <span class="hero__name-bold">Swimmer</span>
-      </h1>
-      <div class="hero__tagline">
-        <div class="hero__line"></div>
-        <p>Marketing &amp; Creative Designer</p>
-      </div>
-      <p class="hero__disciplines">
-        Infographics &nbsp;·&nbsp; Editorial &nbsp;·&nbsp; Branding &nbsp;·&nbsp; UX/UI &nbsp;·&nbsp; Illustration
-      </p>
-      <a href="#work" class="hero__cta">
-        <span>View Selected Work</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="hero__meta">
-      <div class="hero__meta-item">
-        <span class="hero__meta-num">13+</span>
-        <span class="hero__meta-label">Years experience</span>
-      </div>
-      <div class="hero__meta-divider"></div>
-      <div class="hero__meta-item">
-        <span class="hero__meta-num">6</span>
-        <span class="hero__meta-label">Years at Mekor Rishon</span>
-      </div>
-      <div class="hero__meta-divider"></div>
-      <div class="hero__meta-item">
-        <span class="hero__meta-num">4</span>
-        <span class="hero__meta-label">Years at Fitness22</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      <span>Infographic Design</span><b>·</b>
-      <span>Editorial Art Direction</span><b>·</b>
-      <span>Brand Identity</span><b>·</b>
-      <span>UX / UI</span><b>·</b>
-      <span>Illustration</span><b>·</b>
-      <span>Print Design</span><b>·</b>
-      <span>Visual Storytelling</span><b>·</b>
-      <span>Data Visualisation</span><b>·</b>
-      <span>Typography</span><b>·</b>
-      <span>Infographic Design</span><b>·</b>
-      <span>Editorial Art Direction</span><b>·</b>
-      <span>Brand Identity</span><b>·</b>
-      <span>UX / UI</span><b>·</b>
-      <span>Illustration</span><b>·</b>
-      <span>Print Design</span><b>·</b>
-      <span>Visual Storytelling</span><b>·</b>
-      <span>Data Visualisation</span><b>·</b>
-      <span>Typography</span><b>·</b>
-    </div>
+  <div class="menu" id="menu" aria-hidden="true">
+    <a href="#work">Projects</a>
+    <a href="#about">Studio</a>
+    <a href="#resume">Experience</a>
+    <a href="#contact">Let's <em>talk</em></a>
   </div>
 
-  <!-- WORK -->
-  <section class="section work" id="work">
-    <div class="container">
-      <div class="work__header">
-        <div>
-          <p class="section__label reveal">Selected Work</p>
-          <h2 class="section__title reveal">Projects</h2>
-        </div>
-        <div class="filter reveal" role="group">
-          <button class="filter__btn active" data-filter="all">All</button>
-          <button class="filter__btn" data-filter="editorial">Editorial</button>
-          <button class="filter__btn" data-filter="branding">Branding</button>
-          <button class="filter__btn" data-filter="digital">Digital</button>
-        </div>
-      </div>
-
-      <div class="portfolio-grid" id="portfolioGrid">
-
-        <!-- 01 · ShareKit — Fitness22 -->
-        <article class="card reveal" data-category="digital" onclick="window.location.href='sharekit.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--sharekit">
-            <span class="thumb__num">01</span>
-            <video class="thumb__video" autoplay loop muted playsinline webkit-playsinline>
-              <source src="https://github.com/Yael-Swimmer/yael-portfolio/releases/download/v1.0-assets/sharekit.mp4" type="video/mp4">
-            </video>
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
+  <div class="hero-wrap" id="home">
+    <header class="hero" data-nav="dark">
+      <div class="hero__inner" id="heroInner">
+        <div class="hero__eyebrow"><span class="hero__dot"></span>Available for projects</div>
+        <h1 class="hero__title scrub-hero">Marketing &amp; creative design, that turns complex ideas into <em>visual stories</em></h1>
+        <div class="hero__foot">
+          <div class="hero__stats" id="heroStats">
+            <div class="hero__stat"><b>13+</b><span>Years experience</span></div>
+            <div class="hero__stat"><b>6</b><span>Years at Makor Rishon</span></div>
+            <div class="hero__stat"><b>4</b><span>Years at Fitness22</span></div>
           </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">UX/UI · Digital</span>
-              <span class="card__year">2022–2026</span>
-            </div>
-            <h3 class="card__title">Fitness22 — ShareKit</h3>
-            <p class="card__desc">Social sharing feature for fitness and running apps. 100 custom stickers designed in collaboration with AI, covering every workout mood and milestone.</p>
-          </div>
-        </article>
-
-        <!-- 02 · No Color -->
-        <article class="card reveal" data-category="editorial" data-lightbox="assets/nocolor/1.png" data-title="Focus Section · Makor Rishon" data-desc="Weekly infographic spread from the Focus section of Diukan magazine. A regular column that translates each issue's lead story into a single, richly illustrated visual essay." style="cursor:pointer;">
-          <div class="card__thumb thumb--nocolor">
-            <span class="thumb__num">02</span>
-            <img class="thumb__cover" src="assets/nocolor/1.png" alt="No Color spread">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Editorial · Print</span>
-              <span class="card__year">Makor Rishon</span>
-            </div>
-            <h3 class="card__title">Focus Section</h3>
-            <p class="card__desc">Full editorial spread and infographic design, published in Makor Rishon</p>
-          </div>
-        </article>
-
-        <!-- 03 · 5K Runner -->
-        <article class="card reveal" data-category="digital" onclick="window.location.href='5k-runner.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--5k">
-            <span class="thumb__num">03</span>
-            <img class="thumb__cover" src="assets/5k/Cover_5K.png" alt="5K Runner — The simplest way to run 5K">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">UX/UI · Web</span>
-              <span class="card__year">App of the Day</span>
-            </div>
-            <h3 class="card__title">5K Runner</h3>
-            <p class="card__desc">Website design for the award-winning running coach app. UX, UI and visual storytelling that helps beginners go from couch to 5K.</p>
-          </div>
-        </article>
-
-        <!-- 04 · Gymverse Ebook -->
-        <article class="card reveal" data-category="editorial" onclick="window.location.href='gymverse.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--gymverse">
-            <span class="thumb__num">04</span>
-            <img class="thumb__cover" src="assets/ebook/Gymverse.png" alt="The Gymverse Method">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Ebook · Editorial</span>
-              <span class="card__year">Print</span>
-            </div>
-            <h3 class="card__title">The Gymverse Method</h3>
-            <p class="card__desc">Full ebook design for an advanced fitness training program. Structured chapter architecture, bold editorial layout, and a visual identity built around performance.</p>
-          </div>
-        </article>
-
-        <!-- 05 · Gymverse Instagram -->
-        <article class="card reveal" data-category="digital" onclick="window.location.href='gymverse-posts.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--pirates">
-            <span class="thumb__num">05</span>
-            <img class="thumb__cover" src="assets/posts/cover.png" alt="Gymverse Instagram posts">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Social · Digital</span>
-            </div>
-            <h3 class="card__title">Gymverse Instagram</h3>
-            <p class="card__desc">Social posts campaign for the Gymverse fitness app, turning happy users into a wall of motivation.</p>
-          </div>
-        </article>
-
-        <!-- 06 · Focus Page -->
-        <article class="card reveal" data-category="editorial" data-lightbox="assets/nocolor/3.png" data-title="Focus Page · Makor Rishon" data-desc="A weekly infographic feature published on the closing page of the Diukan supplement. Each week translates the issue's lead topic into a single illustrated visual essay. This week: a deep-dive into global cola culture and its hold on modern consumers." style="cursor:pointer;">
-          <div class="card__thumb thumb--portrait">
-            <span class="thumb__num">06</span>
-            <img class="thumb__cover" src="assets/nocolor/3.png" alt="Focus infographic spread — Pepsi-Cola">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Infographic · Editorial</span>
-              <span class="card__year">2016–2022</span>
-            </div>
-            <h3 class="card__title">Focus Page</h3>
-            <p class="card__desc">Closing spread of Diukan magazine in Makor Rishon. A weekly infographic feature translating each issue's lead story into a single, richly illustrated visual essay.</p>
-          </div>
-        </article>
-
-        <!-- 07 · Survivor Grandma -->
-        <article class="card reveal" data-category="editorial" onclick="window.location.href='survivor-grandma.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--yoyo">
-            <span class="thumb__num">07</span>
-            <img class="thumb__cover" src="assets/projects/paper-cutouts.png" alt="Survivor Grandma — paper cutout illustration">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Editorial · Illustration</span>
-            </div>
-            <h3 class="card__title">Survivor Grandma</h3>
-            <p class="card__desc">Editorial illustration and feature design. Paper-cutout artwork for a magazine spread celebrating active aging</p>
-          </div>
-        </article>
-
-        <!-- 08 · Magazine Cover -->
-        <article class="card reveal" data-category="editorial" data-lightbox="assets/projects/rehavia.png" data-title="Magazine Cover · Rehavia Edition" data-desc="Cover design for the Diukan supplement of Makor Rishon, featuring a hand-built paper-cut illustration of Jerusalem's Rehavia neighbourhood. Tactile, editorial, and grounded in place." style="cursor:pointer;">
-          <div class="card__thumb thumb--neve">
-            <span class="thumb__num">08</span>
-            <img class="thumb__cover" src="assets/projects/rehavia.png" alt="Magazine cover design">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Editorial</span>
-            </div>
-            <h3 class="card__title">Magazine Cover</h3>
-            <p class="card__desc">Cover design for a Jerusalem neighbourhood feature, with paper-cut illustration and editorial layout</p>
-          </div>
-        </article>
-
-        <!-- 09 · Paper Cutouts -->
-        <article class="card reveal" data-category="branding" data-lightbox="assets/projects/paper-cutouts.jpg" data-title="Paper Cutouts · Handmade Card" data-desc="Handcrafted greeting card designed with paper-cutout figures. A tactile, three-dimensional take on the family portrait." style="cursor:pointer;">
-          <div class="card__thumb thumb--sabta">
-            <span class="thumb__num">09</span>
-            <img class="thumb__cover" src="assets/projects/paper-cutouts.jpg" alt="Paper cutout greeting card">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Illustration · Handmade</span>
-            </div>
-            <h3 class="card__title">Paper Cutouts</h3>
-            <p class="card__desc">Handcrafted greeting card design with paper cutout figures and tactile storytelling</p>
-          </div>
-        </article>
-
-        <!-- 10 · YOYO HATS -->
-        <article class="card reveal" data-category="branding" onclick="window.location.href='yoyo-hats.html'" style="cursor:pointer;">
-          <div class="card__thumb thumb--logos">
-            <span class="thumb__num">10</span>
-            <img class="thumb__cover" src="assets/projects/yoyo-hats.jpg" alt="YOYO Hats brand identity">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Branding · Identity</span>
-            </div>
-            <h3 class="card__title">YOYO Hats</h3>
-            <p class="card__desc">Brand identity and signage design for a boutique modern hat label</p>
-          </div>
-        </article>
-
-        <!-- 11 · Love Postcard -->
-        <article class="card reveal" data-category="branding" data-lightbox="assets/projects/girl-boy.jpg" data-title="Love Postcard" data-desc="Hand-illustrated greeting card. Two figures, one heart, printed on tactile fine art paper. A small object designed to be held, kept, and passed on." style="cursor:pointer;">
-          <div class="card__thumb thumb--postcard">
-            <span class="thumb__num">11</span>
-            <img class="thumb__cover" src="assets/projects/girl-boy.jpg" alt="Love postcard illustration">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Illustration · Print</span>
-            </div>
-            <h3 class="card__title">Love Postcard</h3>
-            <p class="card__desc">Hand-illustrated greeting card. Two figures, one heart, printed on tactile fine art paper.</p>
-          </div>
-        </article>
-
-        <!-- 12 · Newspaper Sketch -->
-        <article class="card reveal" data-category="editorial" data-lightbox="assets/projects/newspaper-sketch.jpg" data-title="Newspaper Sketch" data-desc="Quick line drawing in pen over newsprint. A personal warm-up that grew into a series. Each piece responds to whichever article happened to be open that morning." style="cursor:pointer;">
-          <div class="card__thumb thumb--sketch">
-            <span class="thumb__num">12</span>
-            <img class="thumb__cover" src="assets/projects/newspaper-sketch.jpg" alt="Quick newspaper sketch">
-            <div class="card__overlay"><span class="card__overlay-label">View Project ↗</span></div>
-          </div>
-          <div class="card__body">
-            <div class="card__meta">
-              <span class="card__tag">Illustration · Sketch</span>
-            </div>
-            <h3 class="card__title">Newspaper Sketch</h3>
-            <p class="card__desc">Quick line drawing in pen over newsprint. A personal warm-up turned into a series.</p>
-          </div>
-        </article>
-
-      </div><!-- /grid -->
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section about" id="about">
-    <div class="container">
-
-      <div class="about__top">
-        <p class="section__label reveal">About</p>
-        <h2 class="section__title reveal">Designing stories<br><em>people remember.</em></h2>
-      </div>
-
-      <div class="about__grid">
-        <div class="about__left reveal">
-          <div class="about__photo-wrap">
-            <div class="about__photo">
-              <img src="assets/images/yael.jpg" alt="Yael Swimmer">
-            </div>
-          </div>
-          <div class="about__quick">
-            <div class="about__quick-item">
-              <span class="about__quick-label">Email</span>
-              <a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a>
-            </div>
-            <div class="about__quick-item">
-              <span class="about__quick-label">Phone</span>
-              <a href="tel:+972525557663">052-555-7663</a>
-            </div>
-            <div class="about__quick-item">
-              <span class="about__quick-label">Based in</span>
-              <span>Israel</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="about__right">
-          <div class="about__body reveal">
-            <p>I'm a marketing and creative designer with over <strong>13 years</strong> of experience turning complex ideas into clear, beautiful visual stories.</p>
-            <p>My background spans editorial design, infographics, brand identity, illustration, and digital UX/UI. For 6 years I was the visual voice of <em>Makor Rishon</em>, designing editorial content, art-directing the portrait supplement, and authoring a weekly infographic column. I now bring that editorial precision to mobile app marketing, creative campaigns, and AI-assisted design workflows.</p>
-            <p>I work independently, with strong attention to detail, a sharp visual instinct, and the ability to deliver under tight deadlines.</p>
-          </div>
-
-          <div class="about__stats reveal">
-            <div class="about__stat">
-              <span class="about__stat-num">13+</span>
-              <span class="about__stat-label">Years of experience</span>
-            </div>
-            <div class="about__stat">
-              <span class="about__stat-num">300+</span>
-              <span class="about__stat-label">Published infographics</span>
-            </div>
-            <div class="about__stat">
-              <span class="about__stat-num">6</span>
-              <span class="about__stat-label">Years at Makor Rishon</span>
-            </div>
-            <div class="about__stat">
-              <span class="about__stat-num">4</span>
-              <span class="about__stat-label">Years at Fitness22</span>
-            </div>
-          </div>
-
-          <div class="skills reveal">
-            <h3 class="skills__label">Tools &amp; Disciplines</h3>
-            <div class="skills__grid">
-              <span class="skill">Marketing Design</span>
-              <span class="skill">Creative Campaigns</span>
-              <span class="skill">Branding &amp; Identity</span>
-              <span class="skill">Visual Storytelling</span>
-              <span class="skill">Mobile App Marketing</span>
-              <span class="skill">Social Media Design</span>
-              <span class="skill">Infographics</span>
-              <span class="skill">Editorial Design</span>
-              <span class="skill">Print &amp; Digital</span>
-              <span class="skill">AI-Assisted Workflows</span>
-              <span class="skill">Figma</span>
-              <span class="skill">Adobe Suite</span>
-            </div>
-          </div>
+          <a href="#work" class="hero__scroll" id="heroHint">scroll to proceed <i>↓</i></a>
         </div>
       </div>
+    </header>
+  </div>
 
-    </div>
-  </section>
+  <div class="after" data-nav="light">
 
-  <!-- RESUME -->
-  <section class="section resume" id="resume">
-    <div class="container">
-      <div class="section__header">
-        <p class="section__label reveal">Experience</p>
-        <h2 class="section__title reveal">13+ Years of<br>Visual Work</h2>
-      </div>
-
-      <div class="resume__cols">
-
-        <div class="timeline">
-          <div class="timeline__item reveal">
-            <div class="timeline__left">
-              <span class="timeline__year">2022 – 2026</span>
-            </div>
-            <div class="timeline__connector"><div class="timeline__dot"></div></div>
-            <div class="timeline__right">
-              <h3>Marketing Designer</h3>
-              <p class="timeline__org">Fitness22</p>
-              <p>Led all marketing and creative design for a global fitness app studio. Produced campaign assets, app store visuals, social media content, and designed 100+ custom stickers using AI-assisted workflows. Delivered cross-platform creative at scale.</p>
-            </div>
-          </div>
-
-          <div class="timeline__item reveal">
-            <div class="timeline__left">
-              <span class="timeline__year">2016 – 2022</span>
-            </div>
-            <div class="timeline__connector"><div class="timeline__dot"></div></div>
-            <div class="timeline__right">
-              <h3>Graphic Designer</h3>
-              <p class="timeline__org">Makor Rishon Newspaper</p>
-              <p>Full editorial design, print production, and art direction of the weekly portrait supplement. Authored <em>Focus</em>, a weekly infographic column making current affairs visually accessible.</p>
-            </div>
-          </div>
-
-          <div class="timeline__item reveal">
-            <div class="timeline__left">
-              <span class="timeline__year">2014 – 2015</span>
-            </div>
-            <div class="timeline__connector"><div class="timeline__dot"></div></div>
-            <div class="timeline__right">
-              <h3>Graphic Designer</h3>
-              <p class="timeline__org">Speedia Design Studio</p>
-              <p>Full-time role covering branding, advertising, print collateral, and identity design.</p>
-            </div>
-          </div>
-
-          <div class="timeline__item reveal">
-            <div class="timeline__left">
-              <span class="timeline__year">2013 – 2014</span>
-            </div>
-            <div class="timeline__connector"><div class="timeline__dot"></div></div>
-            <div class="timeline__right">
-              <h3>Graphic Designer</h3>
-              <p class="timeline__org">Copy Color Design Studio, Jerusalem</p>
-              <p>Branding, menus, roll-ups, large-format print, and promotional materials.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="resume__side">
-          <div class="edu reveal">
-            <h3 class="edu__title">Education</h3>
-            <div class="edu__list">
-              <div class="edu__item">
-                <span class="edu__year">2018</span>
-                <div>
-                  <strong>UI/UX &amp; User Experience Studies</strong>
-                  <span>Bezalel Academy of Arts and Design</span>
-                </div>
-              </div>
-              <div class="edu__item">
-                <span class="edu__year">2011–2013</span>
-                <div>
-                  <strong>Practical Engineering — Visual Communication</strong>
-                  <span>Ariel University · Graduated with Highest Honours</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="resume__download reveal">
-            <p>Full work history, references, and portfolio available on request.</p>
-            <a href="assets/Yael-Swimmer-CV.pdf"
-               target="_blank" rel="noopener" class="btn btn--outline" download>
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                <path d="M7.5 2v7.5M4.5 7l3 3 3-3M2.5 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Download CV
-            </a>
-          </div>
-        </div>
-
+    <div class="marquee" data-marquee="70" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Infographic Design</span><i>&amp;</i><span>Editorial Art Direction</span><i>&amp;</i><span>Brand Identity</span><i>&amp;</i><span>UX / UI</span><i>&amp;</i><span>Illustration</span><i>&amp;</i><span>Print Design</span><i>&amp;</i><span>Visual Storytelling</span><i>&amp;</i><span>Data Visualisation</span><i>&amp;</i><span>Typography</span><i>&amp;</i>
+        <span>Infographic Design</span><i>&amp;</i><span>Editorial Art Direction</span><i>&amp;</i><span>Brand Identity</span><i>&amp;</i><span>UX / UI</span><i>&amp;</i><span>Illustration</span><i>&amp;</i><span>Print Design</span><i>&amp;</i><span>Visual Storytelling</span><i>&amp;</i><span>Data Visualisation</span><i>&amp;</i><span>Typography</span><i>&amp;</i>
       </div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="section contact" id="contact">
-    <div class="container">
-      <div class="contact__inner">
-        <p class="section__label reveal">Get in Touch</p>
-        <h2 class="contact__title reveal">Let's work<br><em>together.</em></h2>
-        <p class="contact__sub reveal">Open to freelance projects, full-time positions, and collaborations.</p>
-        <div class="contact__links reveal">
-          <a href="mailto:yaelyaels@gmail.com" class="contact__link">
-            <div>
-              <span class="contact__link-label">Email</span>
-              <span class="contact__link-val">yaelyaels@gmail.com</span>
+    <main>
+      <section class="section" id="work" data-nav="light">
+        <div class="work__head">
+          <div>
+            <p class="label rise">Selected work</p>
+            <h2 class="big rise">Design creates an experience, expresses a message.</h2>
+          </div>
+          <div class="pill reveal" role="group" aria-label="Filter projects">
+            <button class="active" data-filter="all">All</button>
+            <button data-filter="editorial">Editorial</button>
+            <button data-filter="branding">Branding</button>
+            <button data-filter="digital">Digital</button>
+          </div>
+        </div>
+
+        <div class="grid" id="grid">
+
+          <a class="card reveal" data-category="digital" href="sharekit.html">
+            <div class="card__media" style="--ar:9/16;--bg:#171E28;--fit:cover;--pad:0px"><span class="card__num">01</span>
+              <video autoplay loop muted playsinline webkit-playsinline><source src="https://github.com/Yael-Swimmer/yael-portfolio/releases/download/v1.0-assets/sharekit.mp4" type="video/mp4"></video>
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Fitness22 — ShareKit</h3><span class="card__tag">UX/UI · Digital</span></div>
+              <p class="card__desc">Social sharing feature for fitness and running apps. 100 custom stickers designed in collaboration with AI, covering every workout mood and milestone.</p>
             </div>
-            <span class="contact__arrow">↗</span>
           </a>
-          <a href="tel:+972525557663" class="contact__link">
-            <div>
-              <span class="contact__link-label">Phone</span>
-              <span class="contact__link-val">052-555-7663</span>
+
+          <a class="card reveal" data-category="editorial" href="#" data-lightbox="assets/nocolor/1.png" data-title="Focus Section · Makor Rishon" data-desc="Weekly infographic spread from the Focus section of Diukan magazine. A regular column that translates each issue's lead story into a single, richly illustrated visual essay.">
+            <div class="card__media" style="--ar:4/3;--bg:#D2AEB2;--fit:contain;--pad:12px"><span class="card__num">02</span>
+              <img src="assets/nocolor/1.png" alt="Focus Section spread" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Focus Section</h3><span class="card__tag">Editorial · Print</span></div>
+              <p class="card__desc">Full editorial spread and infographic design, published in Makor Rishon.</p>
             </div>
-            <span class="contact__arrow">↗</span>
           </a>
+
+          <a class="card reveal" data-category="digital" href="5k-runner.html">
+            <div class="card__media" style="--ar:758/1066;--bg:#6DBDF1;--fit:cover;--pad:0px"><span class="card__num">03</span>
+              <img src="assets/5k/Cover_5K.png" alt="5K Runner — The simplest way to run 5K" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">5K Runner</h3><span class="card__tag">UX/UI · Web</span></div>
+              <p class="card__desc">Website design for the award-winning running coach app. UX, UI and visual storytelling that helps beginners go from couch to 5K.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="editorial" href="gymverse.html">
+            <div class="card__media" style="--ar:2828/1540;--bg:#0a0e1a;--fit:contain;--pad:0px"><span class="card__num">04</span>
+              <img src="assets/ebook/Gymverse.png" alt="The Gymverse Method" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">The Gymverse Method</h3><span class="card__tag">Ebook · Editorial</span></div>
+              <p class="card__desc">Full ebook design for an advanced fitness training program. Structured chapter architecture, bold editorial layout, and a visual identity built around performance.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="digital" href="gymverse-posts.html">
+            <div class="card__media" style="--ar:495/373;--bg:#5774F4;--fit:cover;--pad:0px"><span class="card__num">05</span>
+              <img src="assets/posts/cover.png" alt="Gymverse Instagram posts" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Gymverse Instagram</h3><span class="card__tag">Social · Digital</span></div>
+              <p class="card__desc">Social posts campaign for the Gymverse fitness app, turning happy users into a wall of motivation.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="editorial" href="#" data-lightbox="assets/nocolor/3.png" data-title="Focus Page · Makor Rishon" data-desc="A weekly infographic feature published on the closing page of the Diukan supplement. Each week translates the issue's lead topic into a single illustrated visual essay. This week: a deep-dive into global cola culture and its hold on modern consumers.">
+            <div class="card__media" style="--ar:4020/2723;--bg:#CCD8CC;--fit:contain;--pad:0px"><span class="card__num">06</span>
+              <img src="assets/nocolor/3.png" alt="Focus infographic spread — Pepsi-Cola" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Focus Page</h3><span class="card__tag">Infographic · Editorial</span></div>
+              <p class="card__desc">Closing spread of Diukan magazine in Makor Rishon. A weekly infographic feature translating each issue's lead story into a single, richly illustrated visual essay.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="editorial" href="survivor-grandma.html">
+            <div class="card__media" style="--ar:1494/1383;--bg:linear-gradient(150deg,#7C3F18,#C07840);--fit:cover;--pad:0px"><span class="card__num">07</span>
+              <img src="assets/projects/paper-cutouts.png" alt="Survivor Grandma — paper cutout illustration" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Survivor Grandma</h3><span class="card__tag">Editorial · Illustration</span></div>
+              <p class="card__desc">Editorial illustration and feature design. Paper-cutout artwork for a magazine spread celebrating active aging.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="editorial" href="#" data-lightbox="assets/projects/rehavia.png" data-title="Magazine Cover · Rehavia Edition" data-desc="Cover design for the Diukan supplement of Makor Rishon, featuring a hand-built paper-cut illustration of Jerusalem's Rehavia neighbourhood. Tactile, editorial, and grounded in place.">
+            <div class="card__media" style="--ar:1889/2706;--bg:#C1DBDA;--fit:contain;--pad:0px"><span class="card__num">08</span>
+              <img src="assets/projects/rehavia.png" alt="Magazine cover design" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Magazine Cover</h3><span class="card__tag">Editorial</span></div>
+              <p class="card__desc">Cover design for a Jerusalem neighbourhood feature, with paper-cut illustration and editorial layout.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="branding" href="#" data-lightbox="assets/projects/paper-cutouts.jpg" data-title="Paper Cutouts · Handmade Card" data-desc="Handcrafted greeting card designed with paper-cutout figures. A tactile, three-dimensional take on the family portrait.">
+            <div class="card__media" style="--ar:4/3;--bg:linear-gradient(150deg,#21103C,#5B2A8C);--fit:cover;--pad:0px"><span class="card__num">09</span>
+              <img src="assets/projects/paper-cutouts.jpg" alt="Paper cutout greeting card" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Paper Cutouts</h3><span class="card__tag">Illustration · Handmade</span></div>
+              <p class="card__desc">Handcrafted greeting card design with paper cutout figures and tactile storytelling.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="branding" href="yoyo-hats.html">
+            <div class="card__media" style="--ar:7162/4780;--bg:linear-gradient(150deg,#082818,#156638);--fit:cover;--pad:0px"><span class="card__num">10</span>
+              <img src="assets/projects/yoyo-hats.jpg" alt="YOYO Hats brand identity" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">YOYO Hats</h3><span class="card__tag">Branding · Identity</span></div>
+              <p class="card__desc">Brand identity and signage design for a boutique modern hat label.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="branding" href="#" data-lightbox="assets/projects/girl-boy.jpg" data-title="Love Postcard" data-desc="Hand-illustrated greeting card. Two figures, one heart, printed on tactile fine art paper. A small object designed to be held, kept, and passed on.">
+            <div class="card__media" style="--ar:3/4;--bg:#E8DECF;--fit:cover;--pad:0px"><span class="card__num">11</span>
+              <img src="assets/projects/girl-boy.jpg" alt="Love postcard illustration" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Love Postcard</h3><span class="card__tag">Illustration · Print</span></div>
+              <p class="card__desc">Hand-illustrated greeting card. Two figures, one heart, printed on tactile fine art paper.</p>
+            </div>
+          </a>
+
+          <a class="card reveal" data-category="editorial" href="#" data-lightbox="assets/projects/newspaper-sketch.jpg" data-title="Newspaper Sketch" data-desc="Quick line drawing in pen over newsprint. A personal warm-up that grew into a series. Each piece responds to whichever article happened to be open that morning.">
+            <div class="card__media" style="--ar:1/1;--bg:#1A1A1A;--fit:cover;--pad:0px"><span class="card__num">12</span>
+              <img src="assets/projects/newspaper-sketch.jpg" alt="Quick newspaper sketch" loading="lazy">
+              <span class="card__go">↗</span></div>
+            <div class="card__body">
+              <div class="card__row"><h3 class="card__title">Newspaper Sketch</h3><span class="card__tag">Illustration · Sketch</span></div>
+              <p class="card__desc">Quick line drawing in pen over newsprint. A personal warm-up turned into a series.</p>
+            </div>
+          </a>
+
         </div>
+      </section>
+
+      <section class="section illu" id="illustrations" data-nav="light">
+        <div class="illu__head">
+          <div>
+            <p class="label rise">Illustration</p>
+            <h2 class="big rise">Quiet little scenes, <em>for your wall.</em></h2>
+            <p class="illu__sub reveal">Prints from my illustration shop. Hover over one to see how it looks at home.</p>
+          </div>
+          <a class="shoplink reveal" href="shop/index.html">Visit the shop <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="strip" id="illuStrip">
+          <div class="track" id="illuTrack">
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:0ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-mint-coat-art.jpg" alt="Illustration — mint coat" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-mint-coat-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">מעיל מנטה</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:70ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-yellow-boots-art.jpg" alt="Illustration — yellow boots" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-yellow-boots-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">מגפי הגשם הצהובים</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:140ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-paper-boat-art.jpg" alt="Illustration — paper boat" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-paper-boat-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">סירת נייר</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:210ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-lavender-art.jpg" alt="Illustration — lavender" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-lavender-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">זר לבנדר</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:0ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-wildflowers-art.jpg" alt="Illustration — wildflowers" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-wildflowers-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">פרחי בר באגרטל מנוקד</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:70ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-icecream-heart-art.jpg" alt="Illustration — icecream heart" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-icecream-heart-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">גלידה עם לב</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:140ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-window-lemons-art.jpg" alt="Illustration — window lemons" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-window-lemons-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">החלון הירוק</p>
+          </a>
+          <a class="tile reveal" href="shop/index.html" style="transition-delay:210ms">
+            <div class="tile__img">
+              <img src="concept-assets/ill-daisies-art.jpg" alt="Illustration — daisies" loading="lazy">
+              <img class="tile__room" src="concept-assets/ill-daisies-room.jpg" alt="" loading="lazy">
+              <span class="tile__pill"><span class="a">Illustration</span><span class="b">At home</span></span>
+            </div>
+            <p class="tile__cap" lang="he">חרצית ואגרטל קרם</p>
+          </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about" data-nav="dark">
+        <p class="label rise">About</p>
+        <h2 class="big rise">Designing stories <em>people remember.</em></h2>
+
+        <div class="about__grid">
+          <div class="about__photo-col">
+            <div class="about__photo" id="aboutPhoto"><img src="assets/images/yael.jpg" alt="Yael Swimmer" loading="lazy"></div>
+            <div class="about__quick reveal">
+              <div><small>Email</small><a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a></div>
+              <div><small>Phone</small><a href="tel:+972525557663">052-555-7663</a></div>
+              <div><small>Based in</small><span class="v">Israel</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="about__body">
+              <p class="scrub">I'm a marketing and creative designer with over <strong>13 years</strong> of experience turning complex ideas into clear, beautiful visual stories.</p>
+              <p class="scrub">My background spans editorial design, infographics, brand identity, illustration, and digital UX/UI. For 6 years I was the visual voice of <em>Makor Rishon</em>, designing editorial content, art-directing the portrait supplement, and authoring a weekly infographic column. I now bring that editorial precision to mobile app marketing, creative campaigns, and AI-assisted design workflows.</p>
+              <p class="scrub">I work independently, with strong attention to detail, a sharp visual instinct, and the ability to deliver under tight deadlines.</p>
+            </div>
+
+            <div class="stats reveal">
+              <div><b><span class="count" data-to="13" data-suffix="+">13+</span></b><span class="l">Years of experience</span></div>
+              <div><b><span class="count" data-to="300" data-suffix="+">300+</span></b><span class="l">Published infographics</span></div>
+              <div><b><span class="count" data-to="6">6</span></b><span class="l">Years at Makor Rishon</span></div>
+              <div><b><span class="count" data-to="4">4</span></b><span class="l">Years at Fitness22</span></div>
+            </div>
+
+            <div class="skills" id="skills">
+              <span>Marketing Design</span><span>Creative Campaigns</span><span>Branding &amp; Identity</span><span>Visual Storytelling</span>
+              <span>Mobile App Marketing</span><span>Social Media Design</span><span>Infographics</span><span>Editorial Design</span>
+              <span>Print &amp; Digital</span><span>AI-Assisted Workflows</span><span>Figma</span><span>Adobe Suite</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="resume" data-nav="light">
+        <p class="label rise">Experience</p>
+        <h2 class="big rise">13+ years of <em>visual</em> work</h2>
+
+        <div class="exp__list">
+          <div class="exp__row reveal">
+            <span class="exp__year">2022 – 2026</span>
+            <h3 class="exp__role">Marketing Designer<span class="exp__org">Fitness22</span></h3>
+            <p class="exp__desc">Led all marketing and creative design for a global fitness app studio. Produced campaign assets, app store visuals, social media content, and designed 100+ custom stickers using AI-assisted workflows. Delivered cross-platform creative at scale.</p>
+          </div>
+          <div class="exp__row reveal">
+            <span class="exp__year">2016 – 2022</span>
+            <h3 class="exp__role">Graphic Designer<span class="exp__org">Makor Rishon Newspaper</span></h3>
+            <p class="exp__desc">Full editorial design, print production, and art direction of the weekly portrait supplement. Authored <em>Focus</em>, a weekly infographic column making current affairs visually accessible.</p>
+          </div>
+          <div class="exp__row reveal">
+            <span class="exp__year">2014 – 2015</span>
+            <h3 class="exp__role">Graphic Designer<span class="exp__org">Speedia Design Studio</span></h3>
+            <p class="exp__desc">Full-time role covering branding, advertising, print collateral, and identity design.</p>
+          </div>
+          <div class="exp__row reveal">
+            <span class="exp__year">2013 – 2014</span>
+            <h3 class="exp__role">Graphic Designer<span class="exp__org">Copy Color Design Studio, Jerusalem</span></h3>
+            <p class="exp__desc">Branding, menus, roll-ups, large-format print, and promotional materials.</p>
+          </div>
+        </div>
+
+        <div class="edu">
+          <div class="edu__item reveal">
+            <small>2018</small>
+            <strong>UI/UX &amp; User Experience Studies</strong>
+            <span>Bezalel Academy of Arts and Design</span>
+          </div>
+          <div class="edu__item reveal">
+            <small>2011 – 2013</small>
+            <strong>Practical Engineering — Visual Communication</strong>
+            <span>Ariel University · Graduated with Highest Honours</span>
+          </div>
+        </div>
+
+        <a class="cv reveal" href="assets/Yael-Swimmer-CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
+      </section>
+    </main>
+  </div>
+
+  <footer class="section contact" id="contact" data-nav="dark">
+    <div class="contact__ticker" data-marquee="-90" aria-hidden="true">
+      <div>
+        <span>Let's say hey to all <em>visual</em> projects</span><span>Let's say hey to all <em>visual</em> projects</span>
+        <span>Let's say hey to all <em>visual</em> projects</span><span>Let's say hey to all <em>visual</em> projects</span>
       </div>
     </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <a href="#home" class="footer__logo">YS</a>
-      <p>© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
-      <a href="#home" class="footer__top">↑ Top</a>
+    <div class="contact__cols">
+      <div class="contact__links">
+        <a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a>
+        <a href="tel:+972525557663">052-555-7663</a>
+        <p class="contact__small">Open to freelance projects, full-time positions, and collaborations.<br>Based in Israel.</p>
+      </div>
+      <nav class="contact__nav" aria-label="Footer">
+        <a href="#home">Home</a>
+        <a href="#about">Studio</a>
+        <a href="#work">Projects</a>
+        <a href="#resume">Experience</a>
+      </nav>
     </div>
+    <div class="contact__brand chars" aria-label="Yael Swimmer">Yael Swimmer</div>
+    <p class="contact__legal">© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox__close" aria-label="Close">&times;</button>
-    <div class="lightbox__inner">
-      <div class="lightbox__img-wrap">
-        <img class="lightbox__img" src="" alt="">
-      </div>
-      <div class="lightbox__info">
-        <h3 class="lightbox__title"></h3>
-        <p class="lightbox__desc"></p>
-      </div>
+  <a class="badge" href="mailto:yaelyaels@gmail.com" aria-label="Let's talk — email Yael">
+    <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="circ" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+      <text><textPath href="#circ">LET'S TALK → LET'S TALK → LET'S TALK →</textPath></text>
+    </svg>
+    <svg class="face" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18" fill="#fff"/>
+      <circle class="eye" cx="14" cy="16.2" r="2.5" fill="#2A0A1E"/>
+      <path d="M23 16.8 Q26.3 13 29.6 16.8" fill="none" stroke="#2A0A1E" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M11.5 23.2 Q20 32.2 28.5 23.2" fill="none" stroke="#2A0A1E" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>
+  </a>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lb__x" id="lbClose" aria-label="Close">&times;</button>
+    <div class="lb__inner">
+      <img id="lbImg" src="" alt="">
+      <div><h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
     </div>
   </div>
 
-  <script src="js/main.js?v=3"></script>
+  <script>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) document.documentElement.classList.add('rm');
+
+      var $ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+      var clamp = function (v) { return Math.min(1, Math.max(0, v)); };
+
+      /* ---------- menu + nav theme ---------- */
+      var nav = document.getElementById('nav');
+      var toggle = document.getElementById('navToggle');
+      var menu = document.getElementById('menu');
+      function setMenu(open) {
+        menu.classList.toggle('open', open);
+        nav.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', open);
+        menu.setAttribute('aria-hidden', !open);
+      }
+      toggle.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+      menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+
+      var themed = $('[data-nav]');
+      function updateNav() {
+        var mode = 'dark';
+        themed.forEach(function (s) {
+          var r = s.getBoundingClientRect();
+          if (r.top <= 40 && r.bottom > 40) mode = s.getAttribute('data-nav');
+        });
+        nav.classList.toggle('on-light', mode === 'light');
+      }
+
+      /* ---------- text splitting ---------- */
+      function walk(node, make) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (p) {
+              if (!p) return;
+              frag.appendChild(/^\s+$/.test(p) ? document.createTextNode(' ') : make(p));
+            });
+            n.parentNode.replaceChild(frag, n);
+          } else if (n.nodeType === 1 && n.tagName !== 'BR') { walk(n, make); }
+        });
+      }
+      function wordSpan(t) { var s = document.createElement('span'); s.className = 'w'; s.textContent = t; return s; }
+      function maskSpan(t) {
+        var o = document.createElement('span'), i = document.createElement('span');
+        o.className = 'mw'; i.className = 'mi'; i.textContent = t; o.appendChild(i); return o;
+      }
+      function indexMasks(el) { $('.mi', el).forEach(function (m, i) { m.style.setProperty('--i', i); }); }
+
+      if (!reduce) {
+        $('.rise').forEach(function (el) { walk(el, maskSpan); indexMasks(el); });
+        var brand = $('.chars')[0];
+        if (brand) {
+          var txt = brand.textContent; brand.textContent = '';
+          txt.split('').forEach(function (ch, i) {
+            var o = maskSpan(ch === ' ' ? ' ' : ch); o.firstChild.style.setProperty('--i', i); brand.appendChild(o);
+          });
+        }
+        walk($('.scrub-hero')[0], wordSpan);
+        $('.scrub').forEach(function (el) { walk(el, wordSpan); });
+      }
+
+      /* ---------- reveal on enter ---------- */
+      function countUp(el) {
+        var to = parseFloat(el.getAttribute('data-to')), suf = el.getAttribute('data-suffix') || '', t0 = null;
+        function step(t) {
+          if (!t0) t0 = t;
+          var k = clamp((t - t0) / 1400), e = 1 - Math.pow(1 - k, 3);
+          el.textContent = Math.round(to * e) + suf;
+          if (k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      $('.skills span').forEach(function (s, i) { s.style.setProperty('--i', i); });
+      var targets = $('.reveal, .rise, .chars, .skills');
+      if (reduce || !('IntersectionObserver' in window)) {
+        targets.forEach(function (el) { el.classList.add('in'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            en.target.classList.add('in');
+            $('.count', en.target).forEach(countUp);
+            io.unobserve(en.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+        targets.forEach(function (el) { io.observe(el); });
+      }
+
+      /* ---------- filter + staggered layout ---------- */
+      var cards = $('.card');
+      var gridEl = document.getElementById('grid');
+      var colEls = [], sig = '';
+      function masonry() {
+        var w = gridEl.clientWidth, n = w >= 1000 ? 3 : (w >= 620 ? 2 : 1);
+        var gap = parseFloat(getComputedStyle(gridEl).columnGap) || 24;
+        var colW = (w - gap * (n - 1)) / n;
+        var vis = cards.filter(function (c) { return !c.hidden; });
+        var key = n + ':' + vis.map(function (c) { return cards.indexOf(c); }).join(',');
+        if (key === sig) return;
+        sig = key;
+        var heights = [], buckets = [];
+        for (var i = 0; i < n; i++) { heights.push(0); buckets.push([]); }
+        vis.forEach(function (c) {
+          var ar = c.querySelector('.card__media').style.getPropertyValue('--ar').split('/');
+          var h = colW * (parseFloat(ar[1]) / parseFloat(ar[0])) + 170, k = heights.indexOf(Math.min.apply(null, heights));
+          heights[k] += h; buckets[k].push(c);
+        });
+        gridEl.textContent = '';
+        colEls = buckets.map(function (list) {
+          var col = document.createElement('div'); col.className = 'col';
+          list.forEach(function (c) { col.appendChild(c); });
+          gridEl.appendChild(col); return col;
+        });
+        $('video', gridEl).forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
+      }
+      masonry();
+      window.addEventListener('resize', masonry);
+      $('.pill button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          $('.pill button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var f = btn.getAttribute('data-filter');
+          cards.forEach(function (c) { c.hidden = !(f === 'all' || c.getAttribute('data-category') === f); });
+          masonry();
+        });
+      });
+
+      /* ---------- lightbox ---------- */
+      var lb = document.getElementById('lb');
+      function closeLb() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
+      cards.forEach(function (c) {
+        var src = c.getAttribute('data-lightbox');
+        if (!src) return;
+        c.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.getElementById('lbImg').src = src;
+          document.getElementById('lbImg').alt = c.getAttribute('data-title');
+          document.getElementById('lbTitle').textContent = c.getAttribute('data-title');
+          document.getElementById('lbDesc').textContent = c.getAttribute('data-desc');
+          lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+        });
+      });
+      document.getElementById('lbClose').addEventListener('click', closeLb);
+      lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeLb(); setMenu(false); } });
+
+      if (window.matchMedia('(hover: none)').matches) {
+        $('.tile').forEach(function (t) {
+          t.addEventListener('click', function (e) { e.preventDefault(); t.classList.toggle('show-room'); });
+        });
+      }
+
+      if (reduce) { window.addEventListener('scroll', updateNav, { passive: true }); updateNav(); return; }
+
+      /* ---------- scroll-driven loop ---------- */
+      var bar = document.getElementById('progress');
+      var heroWrap = document.getElementById('home');
+      var heroInner = document.getElementById('heroInner');
+      var heroStats = document.getElementById('heroStats');
+      var heroHint = document.getElementById('heroHint');
+      var heroWords = $('.scrub-hero .w');
+      var scrubs = $('.scrub').map(function (el) { return { el: el, words: $('.w', el) }; });
+      var photo = document.getElementById('aboutPhoto');
+      var illuSec = document.getElementById('illustrations');
+      var illuTrack = document.getElementById('illuTrack');
+      var illuStrip = document.getElementById('illuStrip');
+      var marquees = $('[data-marquee]').map(function (el) {
+        var speed = parseFloat(el.getAttribute('data-marquee'));
+        return { track: el.firstElementChild, speed: Math.abs(speed), dir: speed < 0 ? -1 : 1, x: 0 };
+      });
+
+      var lastY = window.scrollY, lastT = performance.now(), t0 = lastT;
+      function frame(now) {
+        var y = window.scrollY, vh = window.innerHeight, d = y - lastY, dt = Math.min(64, now - lastT);
+        lastY = y; lastT = now;
+
+        var max = document.documentElement.scrollHeight - vh;
+        bar.style.transform = 'scaleX(' + (max > 0 ? clamp(y / max) : 0) + ')';
+
+        var hr = heroWrap.getBoundingClientRect();
+        if (hr.bottom > 0) {
+          var intro = clamp((now - t0 - 350) / 2000), sp = clamp(-hr.top / (vh * 0.5));
+          var p = Math.max(intro, sp), n = heroWords.length;
+          for (var i = 0; i < n; i++) heroWords[i].style.opacity = (0.16 + 0.84 * clamp(p * (n + 5) - i)).toFixed(3);
+          heroStats.style.opacity = clamp((p - 0.82) / 0.18);
+          heroStats.style.transform = 'translateY(' + (1 - clamp((p - 0.82) / 0.18)) * 24 + 'px)';
+          heroHint.style.opacity = clamp((intro - 0.9) / 0.1) * (1 - clamp(sp * 6));
+          var q = clamp(-hr.top / vh);
+          heroInner.style.transform = 'scale(' + (1 - 0.07 * q).toFixed(4) + ')';
+          heroInner.style.opacity = (1 - 0.55 * q).toFixed(3);
+        }
+
+        scrubs.forEach(function (s) {
+          var r = s.el.getBoundingClientRect();
+          if (r.bottom < -150 || r.top > vh + 150) return;
+          var p = clamp((vh * 0.9 - r.top) / (vh * 0.5 + r.height * 0.4)), n = s.words.length;
+          for (var i = 0; i < n; i++) s.words[i].style.opacity = (0.2 + 0.8 * clamp(p * (n + 3) - i)).toFixed(3);
+        });
+
+        if (colEls.length === 3) {
+          var gr = gridEl.getBoundingClientRect();
+          if (gr.bottom > 0 && gr.top < vh) {
+            var gp = clamp((vh * 0.5 - gr.top) / (gr.height + vh * 0.2));
+            colEls[1].style.transform = 'translate3d(0,' + (-(gp - 0.5) * 90).toFixed(1) + 'px,0)';
+            colEls[2].style.transform = 'translate3d(0,' + ((gp - 0.5) * 40).toFixed(1) + 'px,0)';
+          }
+        }
+
+        if (photo) {
+          var pr = photo.getBoundingClientRect();
+          if (pr.bottom > -50 && pr.top < vh + 50) {
+            var t = clamp((vh - pr.top) / (vh * 0.8));
+            photo.style.transform = 'scale(' + (0.8 + 0.2 * t).toFixed(4) + ')';
+          }
+        }
+
+        var sr = illuSec.getBoundingClientRect();
+        if (sr.bottom > -50 && sr.top < vh + 50) {
+          var tr = illuStrip.getBoundingClientRect();
+          var tp = clamp((vh * 0.45 - tr.top) / (vh * 0.25 + tr.height));
+          var dist = Math.max(0, illuTrack.scrollWidth - illuStrip.clientWidth);
+          illuTrack.style.transform = 'translate3d(' + (-tp * dist).toFixed(1) + 'px,0,0)';
+        }
+
+        marquees.forEach(function (m) {
+          var half = m.track.scrollWidth / 2;
+          if (!half) return;
+          m.x += m.speed * dt / 1000 + d * 0.6;
+          m.x = ((m.x % half) + half) % half;
+          m.track.style.transform = 'translate3d(' + (m.dir > 0 ? -m.x : m.x - half).toFixed(1) + 'px,0,0)';
+        });
+
+        updateNav();
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
 </body>
 </html>
