@@ -94,14 +94,21 @@ em { font-weight: 400; }
 
 /* ───────── per-page patches ───────── */
 
-/* Gymverse ebook */
-.pg-gymverse .hero__title { font-size: clamp(3.4rem, 9vw, 8rem); line-height: .98; }
-.pg-gymverse .hero__title em { display: block; color: #fff; }
-.pg-gymverse .flow-section__label { color: var(--muted); background: var(--paper); font-family: var(--sans); letter-spacing: .14em; }
+/* Gymverse ebook: original dark page, fuchsia used as an accent */
+body.pg-gymverse { --bg: #080808; --text: #F0EDE6; --cream: #F0EDE6; --muted: rgba(240, 237, 230, .55); --border: rgba(240, 237, 230, .12); background: #080808; color: #F0EDE6; }
+.pg-gymverse .pprogress { background: var(--fuchsia); }
+.pg-gymverse .phero { background: #080808; color: #F0EDE6; --text: #F0EDE6; --cream: #F0EDE6; --muted: rgba(240, 237, 230, .62); --accent: var(--fuchsia); --sky: var(--fuchsia); --bg2: #111; --border: rgba(240, 237, 230, .14); }
+.pg-gymverse .phero::before { content: ''; position: absolute; width: 640px; height: 640px; max-width: 90vw; border-radius: 50%; background: radial-gradient(circle, rgba(230, 0, 126, .32) 0%, transparent 70%); top: -170px; right: -120px; pointer-events: none; }
+.pg-gymverse .phero .hero__label { color: var(--fuchsia); }
+.pg-gymverse .phero .hero__title { color: #F0EDE6; font-size: clamp(3.4rem, 9vw, 8rem); line-height: .98; }
+.pg-gymverse .phero .hero__title em { display: block; color: var(--fuchsia); }
+.pg-gymverse .phero .hero__sub { color: rgba(240, 237, 230, .7); }
+.pg-gymverse .flowchart::before { background: linear-gradient(to bottom, transparent 0%, rgba(230, 0, 126, .45) 5%, rgba(230, 0, 126, .45) 95%, transparent 100%); }
+.pg-gymverse .flow-section__label { color: rgba(240, 237, 230, .42); background: #080808; font-family: var(--sans); letter-spacing: .14em; }
 .pg-gymverse .flow-section__label span { color: var(--fuchsia); font-weight: 600; }
-.pg-gymverse .flow-page img { border-color: var(--border); box-shadow: 0 14px 44px -18px rgba(42, 10, 30, .4); }
-.pg-gymverse .flow-page img:hover { box-shadow: 0 26px 60px -18px rgba(230, 0, 126, .5); }
-.pg-gymverse .flow-dot { background: var(--paper); border-color: var(--fuchsia); }
+.pg-gymverse .flow-page img { border-color: rgba(240, 237, 230, .1); box-shadow: 0 12px 48px rgba(0, 0, 0, .6); }
+.pg-gymverse .flow-page img:hover { box-shadow: 0 24px 72px rgba(0, 0, 0, .8), 0 0 60px -10px rgba(230, 0, 126, .5); }
+.pg-gymverse .flow-dot { background: #080808; border-color: rgba(230, 0, 126, .6); }
 .pg-gymverse .flow-dot::before { background: var(--fuchsia); }
 
 /* Gymverse instagram */
