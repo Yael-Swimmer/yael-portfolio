@@ -6,7 +6,7 @@
   <title>Gymverse Instagram — Yael Swimmer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -301,21 +301,23 @@
       .intro { margin: 2.5rem auto 3.5rem; }
     }
   </style>
+  <link rel="stylesheet" href="css/pink.css?v=1">
 </head>
-<body>
+<body class="pg-posts">
 
-  <nav class="nav">
-    <a class="nav__back" href="index.html">← Back to Portfolio</a>
-    <span class="nav__brand">YS</span>
+  <div class="pprogress" id="pprogress"></div>
+  <nav class="pnav" id="pnav">
+    <a class="pnav__logo" href="index.html">Yael Swimmer</a>
+    <a class="pnav__back" href="index.html#work"><span aria-hidden="true">←</span> All projects</a>
   </nav>
 
   <main>
 
-    <section class="hero container">
+    <section class="phero"><div class="hero container">
       <span class="hero__tag">Social · Instagram · Gymverse</span>
       <h1 class="hero__title">Where users<br><em>show up.</em></h1>
       <p class="hero__sub">A wall of motivation. Instagram posts spotlighting Gymverse's happiest, hardest-working users.</p>
-    </section>
+    </div></section>
 
     <section class="cover-showcase container">
       <div class="cover-showcase__wrap">
@@ -365,9 +367,12 @@
       </section>
     </div>
 
-    <footer class="footer">
-      <p>Yael Swimmer · Marketing &amp; Creative Designer</p>
-    </footer>
+    <footer class="pfoot">
+    <a class="pnext" href="survivor-grandma.html"><small>Next project</small><span>Survivor Grandma <i aria-hidden="true">↗</i></span></a>
+    <div class="pfoot__row"><a href="index.html#work">← All projects</a><a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a></div>
+    <div class="pfoot__brand" aria-hidden="true">Yael Swimmer</div>
+    <p class="pfoot__legal">© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
+  </footer>
 
   </main>
 
@@ -412,5 +417,6 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.post').forEach(p => postIO.observe(p));
   </script>
+  <script src="js/pink.js?v=1"></script>
 </body>
 </html>

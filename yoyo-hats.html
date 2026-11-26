@@ -6,7 +6,7 @@
   <title>YOYO Hats — Yael Swimmer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -319,19 +319,21 @@
       .swatch { aspect-ratio: 3/1; }
     }
   </style>
+  <link rel="stylesheet" href="css/pink.css?v=1">
 </head>
-<body>
+<body class="pg-yoyo">
 
-  <nav class="nav">
-    <a class="nav__back" href="index.html">← Back to Portfolio</a>
-    <span class="nav__brand">YS</span>
+  <div class="pprogress" id="pprogress"></div>
+  <nav class="pnav" id="pnav">
+    <a class="pnav__logo" href="index.html">Yael Swimmer</a>
+    <a class="pnav__back" href="index.html#work"><span aria-hidden="true">←</span> All projects</a>
   </nav>
 
-  <header class="hero container">
+  <header class="phero"><div class="hero container">
     <span class="hero__tag">Branding · Identity · Logo</span>
     <h1 class="hero__title">YOYO <em>Hats.</em></h1>
     <p class="hero__sub">Brand identity for a boutique hat shop on King George Street, Jerusalem. From notebook scribble to polished signage.</p>
-  </header>
+  </div></header>
 
   <section class="visual container">
     <div class="visual__frame">
@@ -407,8 +409,11 @@
     <p>The logo grew from a single loose sketch: a side-profile face wearing two intersecting brims. From there, the lines were tightened, the proportions refined, and the colour story (deep teal, magenta, soft skin) locked in. The finished mark works as comfortably on a circular shop sign as it does on a label, business card, or Instagram avatar.</p>
   </article>
 
-  <footer class="footer">
-    <p>Yael Swimmer · Marketing &amp; Creative Designer</p>
+  <footer class="pfoot">
+    <a class="pnext" href="sharekit.html"><small>Next project</small><span>Fitness22 — ShareKit <i aria-hidden="true">↗</i></span></a>
+    <div class="pfoot__row"><a href="index.html#work">← All projects</a><a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a></div>
+    <div class="pfoot__brand" aria-hidden="true">Yael Swimmer</div>
+    <p class="pfoot__legal">© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
   </footer>
 
   <script>
@@ -419,5 +424,6 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
+  <script src="js/pink.js?v=1"></script>
 </body>
 </html>

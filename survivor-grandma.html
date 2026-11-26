@@ -6,7 +6,7 @@
   <title>Survivor Grandma — Yael Swimmer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -181,19 +181,21 @@
       .pull-quote { font-size: 1.5rem; }
     }
   </style>
+  <link rel="stylesheet" href="css/pink.css?v=1">
 </head>
-<body>
+<body class="pg-survivor">
 
-  <nav class="nav">
-    <a class="nav__back" href="index.html">← Back to Portfolio</a>
-    <span class="nav__brand">YS</span>
+  <div class="pprogress" id="pprogress"></div>
+  <nav class="pnav" id="pnav">
+    <a class="pnav__logo" href="index.html">Yael Swimmer</a>
+    <a class="pnav__back" href="index.html#work"><span aria-hidden="true">←</span> All projects</a>
   </nav>
 
-  <header class="hero container">
+  <header class="phero"><div class="hero container">
     <span class="hero__tag">Editorial · Illustration · Makor Rishon</span>
     <h1 class="hero__title">Survivor Grandma</h1>
     <p class="hero__sub">A magazine feature spotlighting grandmothers who refuse to slow down, illustrated with handcrafted paper cutouts.</p>
-  </header>
+  </div></header>
 
   <section class="visual container">
     <img src="assets/projects/sabta.png" alt="Survivor Grandma paper-cutout illustration">
@@ -239,10 +241,13 @@
     <p>The spread ran nationally in <em>Makor Rishon</em>, reaching hundreds of thousands of print readers. A feature article that put illustration at the centre of the editorial conversation.</p>
   </article>
 
-  <footer class="footer">
-    <p>Yael Swimmer · Marketing &amp; Creative Designer</p>
-    <p style="margin-top:0.5rem;"><a href="index.html">← Back to all projects</a></p>
+  <footer class="pfoot">
+    <a class="pnext" href="yoyo-hats.html"><small>Next project</small><span>YOYO Hats <i aria-hidden="true">↗</i></span></a>
+    <div class="pfoot__row"><a href="index.html#work">← All projects</a><a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a></div>
+    <div class="pfoot__brand" aria-hidden="true">Yael Swimmer</div>
+    <p class="pfoot__legal">© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
   </footer>
 
+  <script src="js/pink.js?v=1"></script>
 </body>
 </html>
