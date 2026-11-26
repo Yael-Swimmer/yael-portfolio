@@ -874,6 +874,10 @@
       });
 
       var lastY = window.scrollY, lastT = performance.now(), t0 = lastT;
+      var stableVh = window.innerHeight, stableW = window.innerWidth, smoothBase = null;
+      window.addEventListener('resize', function () {
+        if (window.innerWidth !== stableW) { stableW = window.innerWidth; stableVh = window.innerHeight; smoothBase = null; }
+      });
       function frame(now) {
         var y = window.scrollY, vh = window.innerHeight, d = y - lastY, dt = Math.min(64, now - lastT);
         lastY = y; lastT = now;
@@ -921,9 +925,18 @@
         var sr = illuSec.getBoundingClientRect();
         if (sr.bottom > -50 && sr.top < vh + 50) {
           var tr = illuStrip.getBoundingClientRect();
-          var tp = clamp((vh * 0.45 - tr.top) / (vh * 0.25 + tr.height));
           var dist = Math.max(0, illuTrack.scrollWidth - illuStrip.clientWidth);
-          var base = -tp * dist;
+          var base;
+          if (window.innerWidth <= 860) {
+            /* phones: ~1.5px of drift per px of scroll (was ~2.5), eased, and immune to the URL bar changing the viewport height */
+            var tpm = clamp((stableVh * 0.6 - tr.top) / Math.max(300, dist / 1.5));
+            base = -tpm * dist;
+            if (smoothBase === null) smoothBase = base;
+            smoothBase += (base - smoothBase) * 0.22;
+            base = smoothBase;
+          } else {
+            base = -clamp((vh * 0.45 - tr.top) / (vh * 0.25 + tr.height)) * dist;
+          }
           if (!dragging && Math.abs(vel) > 0.1) { vel = Math.max(-40, Math.min(40, vel)); userOff += vel; vel *= 0.92; }
           userOff = Math.max(-dist - base, Math.min(-base, userOff));
           illuTrack.style.transform = 'translate3d(' + (base + userOff).toFixed(1) + 'px,0,0)';
