@@ -118,7 +118,9 @@
     .illu__sub { margin-top: 18px; font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.5; max-width: 34em; opacity: .8; }
     .shoplink { display: inline-flex; align-items: center; gap: 10px; background: var(--fuchsia); color: #fff; border-radius: 999px; padding: 14px 26px; font-size: 17px; transition: background .25s; }
     .shoplink:hover { background: var(--ink); }
-    .strip { overflow: hidden; margin: 0 calc(var(--gutter) * -1); }
+    .strip { overflow: hidden; margin: 0 calc(var(--gutter) * -1); touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; }
+    .strip:active { cursor: grabbing; }
+    .tile img { -webkit-user-drag: none; }
     .track { display: flex; gap: clamp(14px, 1.6vw, 24px); width: max-content; padding: 0 var(--gutter) 8px; will-change: transform; }
     .tile { display: block; flex: none; width: clamp(210px, 23vw, 330px); }
     .tile:nth-child(even) { margin-top: clamp(24px, 3.5vw, 56px); }
@@ -810,6 +812,8 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeLb(); setMenu(false); } });
 
       if (window.matchMedia('(hover: none)').matches) {
+        var sub = document.querySelector('.illu__sub');
+        if (sub) sub.textContent = 'Swipe sideways, and tap one to see how it looks at home.';
         $('.tile').forEach(function (t) {
           t.addEventListener('click', function (e) { e.preventDefault(); t.classList.toggle('show-room'); });
         });
@@ -829,6 +833,43 @@
       var illuSec = document.getElementById('illustrations');
       var illuTrack = document.getElementById('illuTrack');
       var illuStrip = document.getElementById('illuStrip');
+      var userOff = 0, vel = 0, dragging = false, captured = false, dragStartX = 0, dragStartOff = 0, lastPX = 0, moved = 0, noClickUntil = 0;
+      $('.tile, .tile img', illuTrack).forEach(function (el) { el.setAttribute('draggable', 'false'); });
+      illuStrip.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        dragging = true; captured = false; moved = 0; vel = 0;
+        dragStartX = e.clientX; dragStartOff = userOff; lastPX = e.clientX;
+      });
+      illuStrip.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - dragStartX;
+        moved = Math.max(moved, Math.abs(dx));
+        if (moved > 6) {
+          if (!captured) { captured = true; try { illuStrip.setPointerCapture(e.pointerId); } catch (err) {} }
+          userOff = dragStartOff + dx;
+          vel = e.clientX - lastPX;
+        }
+        lastPX = e.clientX;
+      });
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        if (moved > 6) noClickUntil = performance.now() + 350;
+      }
+      illuStrip.addEventListener('pointerup', endDrag);
+      illuStrip.addEventListener('pointercancel', endDrag);
+      illuStrip.addEventListener('click', function (e) {
+        if (performance.now() < noClickUntil) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+      illuStrip.addEventListener('wheel', function (e) {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); userOff -= e.deltaX; vel = 0; }
+      }, { passive: false });
+      illuStrip.addEventListener('scroll', function () { illuStrip.scrollLeft = 0; });
+      illuTrack.addEventListener('focusin', function (e) {
+        var t = e.target.closest('.tile'); if (!t) return;
+        var r = t.getBoundingClientRect(), w = illuStrip.clientWidth, pad = 24;
+        if (r.left < pad) userOff += pad - r.left; else if (r.right > w - pad) userOff -= r.right - (w - pad);
+      });
       var marquees = $('[data-marquee]').map(function (el) {
         var speed = parseFloat(el.getAttribute('data-marquee'));
         return { track: el.firstElementChild, speed: Math.abs(speed), dir: speed < 0 ? -1 : 1, x: 0 };
@@ -884,7 +925,10 @@
           var tr = illuStrip.getBoundingClientRect();
           var tp = clamp((vh * 0.45 - tr.top) / (vh * 0.25 + tr.height));
           var dist = Math.max(0, illuTrack.scrollWidth - illuStrip.clientWidth);
-          illuTrack.style.transform = 'translate3d(' + (-tp * dist).toFixed(1) + 'px,0,0)';
+          var base = -tp * dist;
+          if (!dragging && Math.abs(vel) > 0.1) { vel = Math.max(-40, Math.min(40, vel)); userOff += vel; vel *= 0.92; }
+          userOff = Math.max(-dist - base, Math.min(-base, userOff));
+          illuTrack.style.transform = 'translate3d(' + (base + userOff).toFixed(1) + 'px,0,0)';
         }
 
         marquees.forEach(function (m) {
