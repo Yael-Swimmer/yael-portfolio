@@ -22,6 +22,7 @@
         if (r.top <= 44 && r.bottom > 44) mode = zoneMode(z);
       });
       nav.classList.toggle('on-light', mode === 'light');
+      nav.classList.toggle('scrolled', window.scrollY > 8);
     }
     requestAnimationFrame(frame);
   }

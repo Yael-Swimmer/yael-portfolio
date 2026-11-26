@@ -34,6 +34,10 @@
     .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--gutter); color: #fff; transition: color .3s; }
     .nav.on-light { color: var(--fuchsia); }
     .nav.menu-open { color: #fff; }
+    .nav::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s, background .3s; background: rgba(230, 0, 126, .88); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+    .nav.on-light::before { background: rgba(255, 245, 250, .88); }
+    .nav.scrolled::before { opacity: 1; }
+    .nav.menu-open::before { opacity: 0; }
     .nav__logo { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 30px; letter-spacing: -0.01em; line-height: 1; }
     .nav__toggle { width: 44px; height: 44px; display: grid; place-content: center; gap: 7px; }
     .nav__toggle span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .3s; }
@@ -227,6 +231,19 @@
       .hero__foot { padding-right: 90px; }
       .hero__scroll { display: none; }
       .about, .contact { border-radius: 28px 28px 0 0; }
+      .hero__title { font-size: clamp(2.6rem, 11vw, 4.6rem); }
+      .hero__inner { padding-top: 96px; }
+    }
+
+    @media (max-width: 560px) {
+      .pill { max-width: 100%; flex-wrap: nowrap; }
+      .pill button { padding: 10px 13px; font-size: 15px; }
+      .pill button.active { padding: 8px 13px; font-size: 17px; }
+      .work__head { gap: 20px; }
+      .about__photo { width: min(70%, 230px); }
+      .badge { width: 58px; height: 58px; right: 12px; bottom: 12px; }
+      .badge svg.ring { display: none; }
+      .badge .face { width: 34px; height: 34px; }
     }
 
     /* reduced motion: static, fully visible */
@@ -429,7 +446,7 @@
           <div>
             <p class="label rise">Illustration</p>
             <h2 class="big rise">Quiet little scenes, <em>for your wall.</em></h2>
-            <p class="illu__sub reveal">Prints from my illustration shop. Hover over one to see how it looks at home.</p>
+            <p class="illu__sub reveal">Prints from my illustration shop. Hover over (or tap) one to see how it looks at home.</p>
           </div>
           <a class="shoplink reveal" href="shop/index.html">Visit the shop <span aria-hidden="true">↗</span></a>
         </div>
@@ -659,6 +676,7 @@
           if (r.top <= 40 && r.bottom > 40) mode = s.getAttribute('data-nav');
         });
         nav.classList.toggle('on-light', mode === 'light');
+        nav.classList.toggle('scrolled', window.scrollY > 8);
       }
 
       /* ---------- text splitting ---------- */
