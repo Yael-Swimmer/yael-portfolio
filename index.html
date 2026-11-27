@@ -499,7 +499,7 @@
           <div>
             <p class="label rise">Illustration</p>
             <h2 class="big rise">Quiet little scenes, <em>for your wall.</em></h2>
-            <p class="illu__sub reveal">Prints from my illustration shop. Hover over (or tap) one to see how it looks at home.</p>
+            <p class="illu__sub reveal">Prints from my illustration shop. Hover over (or tap) one to see how it looks at&nbsp;home.</p>
           </div>
           <a class="shoplink reveal" href="shop/index.html">Visit the shop <span aria-hidden="true">↗</span></a>
         </div>
@@ -878,7 +878,7 @@
 
       if (window.matchMedia('(hover: none)').matches) {
         var sub = document.querySelector('.illu__sub');
-        if (sub) sub.textContent = 'Swipe sideways, and tap one to see how it looks at home.';
+        if (sub) sub.textContent = 'Swipe sideways, and tap one to see how it looks at\u00a0home.';
         $('.tile').forEach(function (t) {
           t.addEventListener('click', function (e) { e.preventDefault(); t.classList.toggle('show-room'); });
         });
