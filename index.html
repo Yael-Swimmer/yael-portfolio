@@ -193,6 +193,11 @@
     .contact__links a { display: block; font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem, 2.9vw, 2.6rem); letter-spacing: -0.01em; line-height: 1.25; width: fit-content; }
     .contact__links a, .contact__nav a { transition: opacity .25s; }
     .contact__links a:hover, .contact__nav a:hover { opacity: .7; }
+    .contact__links a.contact__ig { display: flex; align-items: center; gap: 16px; margin-top: 22px; font-family: var(--sans); font-style: normal; font-size: 14px; line-height: 1.4; letter-spacing: .01em; }
+    .contact__ig img { width: clamp(112px, 14vw, 150px); height: auto; border-radius: 16px; display: block; transition: transform .45s cubic-bezier(.3, 1.4, .5, 1); }
+    .contact__ig:hover img { transform: rotate(-3deg) scale(1.04); }
+    .contact__links a.contact__ig:hover { opacity: 1; }
+    .contact__ig span { opacity: .9; }
     .contact__small { margin-top: 28px; font-size: 16px; opacity: .85; line-height: 1.7; }
     .contact__nav { text-align: right; display: grid; gap: 6px; align-content: start; font-size: 14px; }
     .contact__brand { margin-top: 64px; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 17vw; letter-spacing: -0.03em; line-height: .95; white-space: nowrap; }
@@ -212,6 +217,8 @@
     .badge .eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
     @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
     .badge:hover { background: var(--fuchsia-deep); }
+    .badge { transition: opacity .35s, transform .45s cubic-bezier(.3, 1.4, .5, 1), background .2s; }
+    .badge.away { opacity: 0; transform: scale(.6); pointer-events: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
 
@@ -674,6 +681,10 @@
       <div class="contact__links">
         <a href="mailto:yaelyaels@gmail.com">yaelyaels@gmail.com</a>
         <a href="tel:+972525557663">052-555-7663</a>
+        <a class="contact__ig" href="https://www.instagram.com/yaelyaels/" target="_blank" rel="noopener" aria-label="Instagram @yaelyaels — scan or tap">
+          <img src="assets/instagram-qr.webp" width="520" height="521" alt="Instagram QR code for @yaelyaels" loading="lazy">
+          <span>Scan or tap<br>to follow</span>
+        </a>
         <p class="contact__small">Open to freelance projects, full-time positions, and collaborations.<br>Based in Israel.</p>
       </div>
       <nav class="contact__nav" aria-label="Footer">
@@ -686,7 +697,7 @@
     <p class="contact__legal">© 2026 Yael Swimmer · Marketing &amp; Creative Designer</p>
   </footer>
 
-  <a class="badge" href="mailto:yaelyaels@gmail.com" aria-label="Let's talk — email Yael">
+  <a class="badge" href="#contact" aria-label="Let's talk — jump to contact details">
     <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
       <defs><path id="circ" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
       <text><textPath href="#circ" textLength="231" lengthAdjust="spacing">LET'S TALK <tspan class="hrt">♥</tspan> LET'S TALK <tspan class="dot">•</tspan> LET'S TALK <tspan class="dot">•</tspan></textPath></text>
@@ -1032,6 +1043,7 @@
         setTimeout(endSplash, 9000);
         ['pointerdown', 'keydown'].forEach(function (ev) { splash.addEventListener(ev, endSplash, { once: true }); document.addEventListener(ev, endSplash, { once: true }); });
       } else if (splash) { splash.remove(); }
+      var contactEl = document.getElementById('contact'), badgeEl = document.querySelector('.badge'), badgeAway = false;
       var stableVh = window.innerHeight, stableW = window.innerWidth, smoothBase = null;
       window.addEventListener('resize', function () {
         if (window.innerWidth !== stableW) { stableW = window.innerWidth; stableVh = window.innerHeight; smoothBase = null; }
@@ -1115,6 +1127,8 @@
           m.track.style.transform = 'translate3d(' + (m.dir > 0 ? -m.x : m.x - half).toFixed(1) + 'px,0,0)';
         });
 
+        var away = contactEl.getBoundingClientRect().top < vh * 0.55;
+        if (away !== badgeAway) { badgeAway = away; badgeEl.classList.toggle('away', away); }
         updateNav();
         requestAnimationFrame(frame);
       }
