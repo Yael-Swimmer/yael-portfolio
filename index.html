@@ -180,9 +180,12 @@
 
     /* CONTACT / FOOTER */
     .contact { background: var(--fuchsia); color: #fff; padding-bottom: 36px; overflow: hidden; border-radius: 40px 40px 0 0; position: relative; z-index: 6; }
-    .contact__ticker { white-space: nowrap; margin: 0 calc(var(--gutter) * -1) 56px; overflow: hidden; }
-    .contact__ticker > div { display: inline-flex; will-change: transform; }
-    .contact__ticker span { font-size: clamp(3rem, 10vw, 9rem); letter-spacing: -0.05em; line-height: 1.05; padding-right: .5em; }
+    .contact__ticker { white-space: nowrap; margin: 0 calc(var(--gutter) * -1) 40px; padding: 1rem 0; overflow: hidden; }
+    .contact__ticker > div { display: inline-flex; align-items: center; will-change: transform; }
+    .contact__ticker .tk { flex: none; width: clamp(3.2rem, 10vw, 8.5rem); height: clamp(3.2rem, 10vw, 8.5rem); margin-right: clamp(1.6rem, 5vw, 4.4rem); transform-origin: 50% 60%; animation: tkBob 3.4s ease-in-out infinite; animation-delay: calc(var(--n) * -.43s); }
+    .contact__ticker .tk--h { animation-name: tkBeat; animation-duration: 1.7s; }
+    @keyframes tkBob { 0%, 100% { transform: rotate(-7deg) translateY(0); } 50% { transform: rotate(7deg) translateY(-7%); } }
+    @keyframes tkBeat { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.14); } 28% { transform: scale(.98); } 42% { transform: scale(1.1); } 60% { transform: scale(1); } }
     .contact__cols { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
     .contact__links a { display: block; font-size: clamp(1.8rem, 3.4vw, 3rem); letter-spacing: -0.035em; line-height: 1.25; width: fit-content; }
     .contact__links a:hover, .contact__nav a:hover { font-family: var(--serif); font-style: italic; }
@@ -279,7 +282,7 @@
     .rm .card__media { clip-path: none; transition: none; }
     .rm .exp__row::after { transform: none; transition: none; }
     .rm .strip { overflow-x: auto; }
-    .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i, .rm .hero__cue i::after, .rm .hero__cue span { animation: none; }
+    .rm .contact__ticker .tk, .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i, .rm .hero__cue i::after, .rm .hero__cue span { animation: none; }
     .rm .hero__cue { opacity: 1; }
   </style>
   <script>try { if (sessionStorage.getItem('ys-intro') || matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('no-intro'); } catch (e) {}</script>
@@ -289,7 +292,6 @@
   <div class="intro" id="intro" aria-hidden="true">
     <svg class="intro__face" id="introFace" viewBox="0 0 120 120">
       <g id="fAll">
-        <ellipse id="fRipple" cx="60" cy="106" rx="20" ry="6" fill="none" stroke="#fff" stroke-width="2" opacity="0"/>
         <g id="fMorph" opacity="0"><path id="fShape" fill="#fff" d="M60 4C64 28 100 52 100 78C100 100 82 114 60 114C38 114 20 100 20 78C20 52 56 28 60 4Z"/></g>
         <circle id="fEyeL" cx="42" cy="48.6" r="7.5" fill="#2A0A1E" opacity="0"/>
         <circle id="fEyeR" cx="78" cy="48.6" r="7.5" fill="#2A0A1E" opacity="0"/>
@@ -644,10 +646,15 @@
   </div>
 
   <footer class="section contact" id="contact" data-nav="dark">
-    <div class="contact__ticker" data-marquee="-90" aria-hidden="true">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+      <symbol id="tkw" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#fff"/><circle cx="14" cy="16.2" r="2.5" fill="#2A0A1E"/><path d="M23 16.8 Q26.3 13 29.6 16.8" fill="none" stroke="#2A0A1E" stroke-width="2.6" stroke-linecap="round"/><path d="M11.5 23.2 Q20 32.2 28.5 23.2" fill="none" stroke="#2A0A1E" stroke-width="2.6" stroke-linecap="round"/></symbol>
+      <symbol id="tko" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#fff"/><circle cx="14" cy="16.2" r="2.5" fill="#2A0A1E"/><circle cx="26" cy="16.2" r="2.5" fill="#2A0A1E"/><path d="M11.5 23.2 Q20 32.2 28.5 23.2" fill="none" stroke="#2A0A1E" stroke-width="2.6" stroke-linecap="round"/></symbol>
+      <symbol id="tkh" viewBox="0 0 40 40"><path transform="translate(-.4 -2.1) scale(1.7)" fill="#fff" d="M12 21s-7.5-4.6-9.6-9.1C.8 8.6 2.7 5 6.2 5c2 0 3.5 1 4.3 2.3C11.3 6 12.8 5 14.8 5c3.5 0 5.4 3.6 3.8 6.9C19.5 16.4 12 21 12 21z"/></symbol>
+    </defs></svg>
+    <div class="contact__ticker" data-marquee="-70" aria-hidden="true">
       <div>
-        <span>Let's say hey to all <em>visual</em> projects</span><span>Let's say hey to all <em>visual</em> projects</span>
-        <span>Let's say hey to all <em>visual</em> projects</span><span>Let's say hey to all <em>visual</em> projects</span>
+        <svg class="tk tk--s" style="--n:0" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:1" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:2" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:3" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:4" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:5" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:6" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:7" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:8" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:9" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:10" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--h" style="--n:11" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:12" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:13" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:14" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:15" viewBox="0 0 40 40"><use href="#tkh"/></svg>
+        <svg class="tk tk--s" style="--n:0" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:1" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:2" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:3" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:4" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:5" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:6" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:7" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:8" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:9" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:10" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--h" style="--n:11" viewBox="0 0 40 40"><use href="#tkh"/></svg><svg class="tk tk--s" style="--n:12" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--s" style="--n:13" viewBox="0 0 40 40"><use href="#tko"/></svg><svg class="tk tk--s" style="--n:14" viewBox="0 0 40 40"><use href="#tkw"/></svg><svg class="tk tk--h" style="--n:15" viewBox="0 0 40 40"><use href="#tkh"/></svg>
       </div>
     </div>
     <div class="contact__cols">
@@ -929,7 +936,7 @@
         /* One master timeline, a pure function of time t (ms): every phase is computed from the same clock,
            with spring physics for squash/jelly and clamped frame deltas so a slow frame never skips the animation. */
         var $i = function (id) { return document.getElementById(id); };
-        var face = $i('introFace'), gAll = $i('fAll'), gM = $i('fMorph'), shape = $i('fShape'), rip = $i('fRipple'),
+        var face = $i('introFace'), gAll = $i('fAll'), gM = $i('fMorph'), shape = $i('fShape'),
             eL = $i('fEyeL'), eR = $i('fEyeR'), smile = $i('fSmile'), wink = $i('fWink'), hrt = $i('fHeart'), word = splash.querySelector('.intro__word');
         var DROP = [60,4, 64,28,100,52,100,78, 100,100,82,114,60,114, 38,114,20,100,20,78, 20,52,56,28,60,4];
         var HEART = [60,40, 64,12,114,14,112,54, 110,80,76,98,60,108, 42,100,6,80,8,50, 10,14,54,10,60,40];
@@ -980,10 +987,6 @@
           y += (1 - sy) * 46;
           gM.setAttribute('opacity', 1);
           gM.setAttribute('transform', 'translate(60 ' + (60 + y).toFixed(2) + ') rotate(' + rot.toFixed(2) + ') scale(' + (sx * grow).toFixed(3) + ' ' + (sy * grow).toFixed(3) + ') translate(-60 -60)');
-
-          var rp = Math.min(1, Math.max(0, (t - TI) / 800));      /* landing ripple */
-          if (rp > 0 && rp < 1) { var rx = 18 + 85 * outC(rp); rip.setAttribute('rx', rx.toFixed(1)); rip.setAttribute('ry', (rx * .28).toFixed(1)); rip.setAttribute('opacity', (.5 * Math.pow(1 - rp, 1.5)).toFixed(3)); rip.setAttribute('stroke-width', (2.2 * (1 - rp) + .4).toFixed(2)); }
-          else rip.setAttribute('opacity', 0);
 
           /* face comes alive: eyes pop on springs, smile draws, then the wink with a tilt, a heart floats off, wordmark rises */
           var pl = spring((t - TEYE) / 1000, 9, 16), pr = spring((t - TEYE - 50) / 1000, 9, 16), cl = Math.min(1, Math.max(0, (t - TWK) / 160)); cl *= cl;
