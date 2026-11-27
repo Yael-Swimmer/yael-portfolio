@@ -66,6 +66,7 @@
     .hero__scroll { font-size: 14px; letter-spacing: .02em; }
     .hero__scroll i { display: inline-block; font-style: normal; animation: bob 1.6s ease-in-out infinite; }
     @keyframes bob { 50% { transform: translateY(5px); } }
+    .hero__cue { display: none; }
 
     /* CURTAIN — everything after the hero slides over it */
     .after { position: relative; z-index: 5; margin-top: -100vh; margin-top: -100svh; background: var(--paper); overflow: clip; }
@@ -235,6 +236,12 @@
       .contact__nav { text-align: left; }
       .hero__foot { padding-right: 90px; }
       .hero__scroll { display: none; }
+      .hero__inner { padding-bottom: 104px; }
+      .hero__cue { display: flex; flex-direction: column; align-items: center; gap: 8px; position: absolute; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); opacity: 0; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
+      .hero__cue i { position: relative; display: block; width: 22px; height: 38px; border: 1.5px solid rgba(255,255,255,.75); border-radius: 12px; }
+      .hero__cue i::after { content: ""; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: #fff; animation: cueDot 1.6s cubic-bezier(.6, 0, .3, 1) infinite; }
+      .hero__cue span { animation: pulse 2s infinite; }
+      @keyframes cueDot { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 70% { transform: translateY(14px); opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
       .about, .contact { border-radius: 28px 28px 0 0; }
       .hero__title { font-size: clamp(2.6rem, 11vw, 4.6rem); }
       .hero__inner { padding-top: 96px; }
@@ -254,25 +261,32 @@
 
 
     /* INTRO SPLASH — winking face logo animation, once per visit */
-    .intro { position: fixed; inset: 0; z-index: 300; background: var(--fuchsia); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 30px); clip-path: inset(0 0 0 0); transition: clip-path .8s cubic-bezier(.7, 0, .2, 1); animation: introFailsafe 0s 4.5s forwards; }
+    .intro { position: fixed; inset: 0; z-index: 300; background: var(--fuchsia); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 30px); clip-path: inset(0 0 0 0); transition: clip-path .8s cubic-bezier(.7, 0, .2, 1); animation: introFailsafe 0s 6s forwards; }
     .intro.out { clip-path: inset(0 0 100% 0); pointer-events: none; }
     .intro.out .intro__face, .intro.out .intro__word { opacity: 0; transform: scale(1.18); transition: opacity .35s, transform .6s var(--ease); }
     .no-intro .intro { display: none; }
     html.intro-on { overflow: hidden; }
     @keyframes introFailsafe { to { visibility: hidden; pointer-events: none; } }
-    .intro__face { width: clamp(120px, 22vw, 190px); height: auto; overflow: visible; animation: facePop .7s cubic-bezier(.3, 1.5, .5, 1) both, faceTilt .5s ease-in-out 1s both; }
-    @keyframes facePop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
+    .intro__face { width: clamp(120px, 22vw, 190px); height: auto; overflow: visible; }
+    /* phase 1 (JS-driven): a heart drops in, lands, ripples, beats and morphs into the face circle.
+       phase 2 (.face-on): the face comes alive — eyes, smile, wink, flying heart, wordmark. */
+    .intro__face .f-eye, .intro__face .f-eye2 { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+    .intro__face .f-wink { stroke-dasharray: 60; stroke-dashoffset: 60; }
+    .intro__face .f-smile { stroke-dasharray: 90; stroke-dashoffset: 90; }
+    .intro__face .f-heart { transform-box: fill-box; transform-origin: center; opacity: 0; }
+    .intro__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; letter-spacing: -0.01em; line-height: 1; opacity: 0; }
+    .face-on .f-eye { animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .05s both; }
+    .face-on .f-eye2 { animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .12s both, eyeClose .22s ease-in .85s forwards; }
+    .face-on .f-smile { animation: draw .45s ease-out .15s forwards; }
+    .face-on .f-wink { animation: draw .25s ease-out .9s forwards; }
+    .face-on .f-heart { animation: heartPop .9s cubic-bezier(.2, .8, .3, 1) .9s forwards; }
+    .face-on { animation: faceTilt .5s ease-in-out .85s both; }
+    .face-on ~ .intro__word { animation: wordIn .7s var(--ease) .85s both; }
     @keyframes faceTilt { 0%, 100% { transform: rotate(0); } 45% { transform: rotate(-11deg) scale(1.04); } }
-    .intro__face .f-eye { transform-box: fill-box; transform-origin: center; animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .45s both; }
-    .intro__face .f-eye2 { transform-box: fill-box; transform-origin: center; animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .5s both, eyeClose .22s ease-in 1s forwards; }
     @keyframes eyeIn { from { transform: scale(0); } to { transform: scale(1); } }
     @keyframes eyeClose { to { transform: scaleY(.05); opacity: 0; } }
-    .intro__face .f-wink { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw .25s ease-out 1.05s forwards; }
-    .intro__face .f-smile { stroke-dasharray: 90; stroke-dashoffset: 90; animation: draw .5s ease-out .6s forwards; }
     @keyframes draw { to { stroke-dashoffset: 0; } }
-    .intro__face .f-heart { transform-box: fill-box; transform-origin: center; opacity: 0; animation: heartPop .9s cubic-bezier(.2, .8, .3, 1) 1.05s forwards; }
     @keyframes heartPop { 0% { opacity: 0; transform: translate(0, 6px) scale(0) rotate(-12deg); } 35% { opacity: 1; transform: translate(10px, -14px) scale(1.3) rotate(8deg); } 100% { opacity: 0; transform: translate(26px, -54px) scale(.85) rotate(14deg); } }
-    .intro__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; letter-spacing: -0.01em; line-height: 1; animation: wordIn .7s var(--ease) 1.05s both; }
     @keyframes wordIn { from { opacity: 0; transform: translateY(18px); letter-spacing: .08em; } to { opacity: 1; transform: none; letter-spacing: -0.01em; } }
 
     /* reduced motion: static, fully visible */
@@ -285,15 +299,17 @@
     .rm .card__media { clip-path: none; transition: none; }
     .rm .exp__row::after { transform: none; transition: none; }
     .rm .strip { overflow-x: auto; }
-    .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i { animation: none; }
+    .rm .badge svg.ring, .rm .badge .eye, .rm .hero__dot, .rm .hero__scroll i, .rm .hero__cue i::after, .rm .hero__cue span { animation: none; }
+    .rm .hero__cue { opacity: 1; }
   </style>
   <script>try { if (sessionStorage.getItem('ys-intro') || matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('no-intro'); } catch (e) {}</script>
 </head>
 <body>
 
   <div class="intro" id="intro" aria-hidden="true">
-    <svg class="intro__face" viewBox="0 0 120 120">
-      <circle cx="60" cy="60" r="54" fill="#fff"/>
+    <svg class="intro__face" id="introFace" viewBox="0 0 120 120">
+      <circle id="fRipple" cx="60" cy="60" r="20" fill="none" stroke="#fff" stroke-width="2.5" opacity="0"/>
+      <g id="fMorph" opacity="0"><path id="fShape" fill="#fff" d="M60 4C64 28 100 52 100 78C100 100 82 114 60 114C38 114 20 100 20 78C20 52 56 28 60 4Z"/></g>
       <circle class="f-eye" cx="42" cy="48.6" r="7.5" fill="#2A0A1E"/>
       <circle class="f-eye2" cx="78" cy="48.6" r="7.5" fill="#2A0A1E"/>
       <path class="f-wink" d="M69 50.4 Q78.9 39 88.8 50.4" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
@@ -330,6 +346,7 @@
           </div>
           <a href="#work" class="hero__scroll" id="heroHint">scroll to proceed <i>↓</i></a>
         </div>
+        <a href="#work" class="hero__cue" id="heroCue" aria-label="Scroll down"><span>Scroll</span><i></i></a>
       </div>
     </header>
   </div>
@@ -862,7 +879,7 @@
       var heroWrap = document.getElementById('home');
       var heroInner = document.getElementById('heroInner');
       var heroStats = document.getElementById('heroStats');
-      var heroHint = document.getElementById('heroHint');
+      var heroHint = document.getElementById('heroHint'), heroCue = document.getElementById('heroCue');
       var heroWords = $('.scrub-hero .w');
       var scrubs = $('.scrub').map(function (el) { return { el: el, words: $('.w', el) }; });
       var photo = document.getElementById('aboutPhoto');
@@ -927,7 +944,59 @@
             splash.remove();
           }, 750);
         };
-        setTimeout(endSplash, 2000);
+        /* heart-drop → face morph, driven by one rAF timeline so every phase stays in sync */
+        var face = document.getElementById('introFace'), gM = document.getElementById('fMorph'), shape = document.getElementById('fShape'), rip = document.getElementById('fRipple');
+        var DROP = [60,4, 64,28,100,52,100,78, 100,100,82,114,60,114, 38,114,20,100,20,78, 20,52,56,28,60,4];
+        var HEART = [60,40, 64,12,114,14,112,54, 110,80,76,98,60,108, 42,100,6,80,8,50, 10,14,54,10,60,40];
+        var CIRCLE = [60,6, 89.8,6,114,30.2,114,60, 114,89.8,89.8,114,60,114, 30.2,114,6,89.8,6,60, 6,30.2,30.2,6,60,6];
+        var T_DROP = 600, T_LAND = 150, T_BEAT = 1300, T_MORPH = 1450, T_END = 2000;
+        var ez = function (a, b, t, f) { t = clamp((t - a) / (b - a)); return f ? f(t) : t; };
+        var inQ = function (t) { return t * t; }, outC = function (t) { return 1 - Math.pow(1 - t, 3); };
+        var inOutC = function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+        var elastic = function (t) { return t <= 0 ? 0 : t >= 1 ? 1 : Math.pow(2, -9 * t) * Math.sin((t * 9 - .75) * (2 * Math.PI / 3.4)) + 1; };
+        var path = function (A, B, m, wob) {
+          var d = 'M' + (A[0] + (B[0] - A[0]) * m).toFixed(2) + ' ' + (A[1] + (B[1] - A[1]) * m).toFixed(2) + 'C', i;
+          for (i = 2; i < 26; i += 2) d += (A[i] + (B[i] - A[i]) * m + (wob ? Math.sin(wob.t * .011 + i * 1.7) * wob.a : 0)).toFixed(2) + ' ' + (A[i + 1] + (B[i + 1] - A[i + 1]) * m + (wob ? Math.cos(wob.t * .013 + i * 2.3) * wob.a : 0)).toFixed(2) + (i < 24 ? ' ' : '');
+          return d + 'Z';
+        };
+        var sT = null, faceOn = false;
+        var dropY = function () { var r = face.getBoundingClientRect(), k = r.width / 120; return -((r.top + r.height / 2 + 90) / k); };
+        var startY = null;
+        function splashTick(now) {
+          if (splashDone) return;
+          if (sT === null) { sT = now; startY = dropY(); }
+          var t = (now - sT), sx = 1, sy = 1, y = 0, grow = 1, rot = 0, d;
+          if (t < T_DROP) {                                 /* liquid droplet: small teardrop, stretching as it falls */
+            var f = t / T_DROP;
+            y = startY * (1 - inQ(f)); grow = .5; sx = .9 - .12 * f; sy = 1 + .1 + .25 * f;
+            d = path(DROP, DROP, 0);
+          } else {
+            var u = t - T_DROP, e = elastic(u / 900);
+            grow = .5 + .5 * ez(0, 700, u, outC);          /* swells to full size once it lands */
+            if (u < T_LAND) { var q = outC(u / T_LAND); sx = .78 + .72 * q; sy = 1.35 - .85 * q; }       /* splat: flattens and spreads */
+            else { sx = 1.5 + (1 - 1.5) * e; sy = .5 + (1 - .5) * e; }                                  /* jelly recovery, overshoots */
+            d = path(DROP, HEART, ez(0, 650, u, outC), { t: t, a: 4.5 * Math.exp(-u / 650) });    /* teardrop pools into a soft blob-heart */
+            if (t > T_BEAT && t < T_MORPH + 120) { var pulse = Math.sin(clamp((t - T_BEAT) / 220) * Math.PI) * .09; sx += pulse; sy += pulse; }
+          }
+          var m = ez(T_MORPH, T_END, t, inOutC);
+          if (m > 0) {
+            d = path(HEART, CIRCLE, m, { t: t, a: 2.2 * Math.sin(m * Math.PI) });
+            rot = Math.sin(m * Math.PI) * -6; grow *= 1 + Math.sin(m * Math.PI) * .05;
+            if (t > T_END) { var w = (t - T_END) / 450; sx += Math.sin(w * 14) * .07 * Math.max(0, 1 - w); sy -= Math.sin(w * 14) * .07 * Math.max(0, 1 - w); }
+          }
+          shape.setAttribute('d', d);
+          y += (1 - sy) * 46;
+          gM.setAttribute('opacity', 1);
+          gM.setAttribute('transform', 'translate(60 ' + (60 + y).toFixed(2) + ') rotate(' + rot.toFixed(2) + ') scale(' + (sx * grow).toFixed(3) + ' ' + (sy * grow).toFixed(3) + ') translate(-60 -60)');
+          var rp = ez(T_DROP, T_DROP + 700, t);             /* landing ripple */
+          rip.setAttribute('opacity', rp > 0 && rp < 1 ? (.55 * (1 - rp)).toFixed(3) : 0);
+          rip.setAttribute('r', (22 + 90 * outC(rp)).toFixed(1));
+          rip.setAttribute('transform', 'translate(0 46) translate(60 60) scale(1 .35) translate(-60 -60)');
+          if (!faceOn && t >= T_END - 150) { faceOn = true; face.classList.add('face-on'); }
+          requestAnimationFrame(splashTick);
+        }
+        requestAnimationFrame(splashTick);
+        setTimeout(endSplash, 3800);
         ['pointerdown', 'keydown'].forEach(function (ev) { splash.addEventListener(ev, endSplash, { once: true }); document.addEventListener(ev, endSplash, { once: true }); });
       } else if (splash) { splash.remove(); }
       var stableVh = window.innerHeight, stableW = window.innerWidth, smoothBase = null;
@@ -948,7 +1017,7 @@
           for (var i = 0; i < n; i++) heroWords[i].style.opacity = (0.16 + 0.84 * clamp(p * (n + 5) - i)).toFixed(3);
           heroStats.style.opacity = clamp((p - 0.82) / 0.18);
           heroStats.style.transform = 'translateY(' + (1 - clamp((p - 0.82) / 0.18)) * 24 + 'px)';
-          heroHint.style.opacity = clamp((intro - 0.9) / 0.1) * (1 - clamp(sp * 6));
+          heroHint.style.opacity = heroCue.style.opacity = clamp((intro - 0.9) / 0.1) * (1 - clamp(sp * 6));
           var q = clamp(-hr.top / vh);
           heroInner.style.transform = 'scale(' + (1 - 0.07 * q).toFixed(4) + ')';
           heroInner.style.opacity = (1 - 0.55 * q).toFixed(3);
