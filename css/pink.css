@@ -91,7 +91,7 @@ body.pg-sharekit, body.pg-gymverse, body.pg-posts { --nav-bg-dark: rgba(14, 18, 
 .pnext:hover span { transform: translateX(10px); }
 .pnext:hover i { transform: translate(6px, -6px); }
 .pfoot__row { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: clamp(1.1rem, 1.8vw, 1.5rem); letter-spacing: -0.02em; }
-.pfoot__row a:hover { font-family: var(--serif); font-style: italic; }
+@media (hover: hover) { .pfoot__row a:hover { opacity: .7; } }
 .pfoot__brand { margin-top: clamp(32px, 5vw, 64px); font-family: var(--serif); font-style: italic; font-size: 17vw; letter-spacing: -0.03em; line-height: .95; white-space: nowrap; padding: .08em .06em .1em; opacity: 0; transform: translateY(40px); transition: opacity 1s var(--pe), transform 1s var(--pe); }
 .pfoot.in .pfoot__brand { opacity: 1; transform: none; }
 .pfoot__legal { margin-top: 18px; font-size: 14px; opacity: .85; }

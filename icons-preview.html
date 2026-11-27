@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Icon Concepts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1600px; height: 900px;
+    overflow: hidden;
+    background: #000;
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0;
+  }
+
+  .bg-glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 50%, rgba(10,132,255,0.05) 0%, transparent 70%),
+      #000;
+  }
+
+  h1 {
+    position: absolute;
+    top: 52px; left: 0; right: 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+
+  .grid {
+    position: relative;
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Each icon card */
+  .icon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 168px;
+  }
+
+  /* The icon box — shows icon at 3 sizes */
+  .icon-box {
+    width: 168px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 24px 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .sizes {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .icon-card h2 {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .size-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.15);
+    text-align: center;
+  }
+
+  svg { display: block; }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<h1>Icon concept exploration — pick any 4</h1>
+
+<div class="grid">
+
+  <!-- 1. AI MODELS -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <!-- 48px -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6"  y="28" width="36" height="10" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.35"/>
+          <rect x="6"  y="17" width="36" height="10" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.6"/>
+          <rect x="6"  y="6"  width="36" height="10" rx="3" stroke="white" stroke-width="1.8"/>
+          <!-- top layer pulse dots -->
+          <circle cx="14" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+          <circle cx="24" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+          <circle cx="34" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+        </svg>
+        <!-- 24px -->
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6"  y="28" width="36" height="10" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.35"/>
+          <rect x="6"  y="17" width="36" height="10" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.6"/>
+          <rect x="6"  y="6"  width="36" height="10" rx="3" stroke="white" stroke-width="1.8"/>
+          <circle cx="14" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+          <circle cx="24" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+          <circle cx="34" cy="11" r="2" fill="white" fill-opacity="0.9"/>
+        </svg>
+        <!-- 16px -->
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6"  y="28" width="36" height="10" rx="3" stroke="white" stroke-width="2.2" stroke-opacity="0.35"/>
+          <rect x="6"  y="17" width="36" height="10" rx="3" stroke="white" stroke-width="2.2" stroke-opacity="0.6"/>
+          <rect x="6"  y="6"  width="36" height="10" rx="3" stroke="white" stroke-width="2.2"/>
+          <circle cx="14" cy="11" r="3" fill="white"/>
+          <circle cx="24" cy="11" r="3" fill="white"/>
+          <circle cx="34" cy="11" r="3" fill="white"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>AI Models</h2>
+  </div>
+
+  <!-- 2. NEW AI CHAT -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 8h32a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H16l-8 8V10a2 2 0 0 1 2-2z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- sparkle -->
+          <line x1="24" y1="16" x2="24" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="19" y1="21" x2="29" y2="21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <!-- star dots -->
+          <circle cx="34" cy="10" r="2.5" fill="white"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 8h32a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H16l-8 8V10a2 2 0 0 1 2-2z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <line x1="24" y1="16" x2="24" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="19" y1="21" x2="29" y2="21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="34" cy="10" r="2.5" fill="white"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 8h32a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H16l-8 8V10a2 2 0 0 1 2-2z"
+                stroke="white" stroke-width="2.4" stroke-linejoin="round"/>
+          <line x1="24" y1="16" x2="24" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="19" y1="21" x2="29" y2="21" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>New AI Chat</h2>
+  </div>
+
+  <!-- 3. AGENT MODE -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- hexagon -->
+          <path d="M24 5 L40 14.5 L40 33.5 L24 43 L8 33.5 L8 14.5 Z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- bolt / autonomy -->
+          <path d="M27 10 L20 24 H26 L21 38 L34 22 H27 L32 10 Z"
+                fill="white" fill-opacity="0.9"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 5 L40 14.5 L40 33.5 L24 43 L8 33.5 L8 14.5 Z"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M27 10 L20 24 H26 L21 38 L34 22 H27 L32 10 Z"
+                fill="white" fill-opacity="0.9"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 5 L40 14.5 L40 33.5 L24 43 L8 33.5 L8 14.5 Z"
+                stroke="white" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M27 10 L20 24 H26 L21 38 L34 22 H27 L32 10 Z"
+                fill="white"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>Agent Mode</h2>
+  </div>
+
+  <!-- 4. BEST AI MODEL -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- circle node -->
+          <circle cx="24" cy="28" r="14" stroke="white" stroke-width="1.8"/>
+          <!-- crown -->
+          <path d="M13 22 L17 14 L24 20 L31 14 L35 22"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="13" y1="22" x2="35" y2="22" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- dots in circle -->
+          <circle cx="18" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+          <circle cx="24" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+          <circle cx="30" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="28" r="14" stroke="white" stroke-width="1.8"/>
+          <path d="M13 22 L17 14 L24 20 L31 14 L35 22"
+                stroke="white" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="13" y1="22" x2="35" y2="22" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="18" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+          <circle cx="24" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+          <circle cx="30" cy="30" r="2" fill="white" fill-opacity="0.7"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="28" r="14" stroke="white" stroke-width="2.4"/>
+          <path d="M13 22 L17 14 L24 20 L31 14 L35 22"
+                stroke="white" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="13" y1="22" x2="35" y2="22" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>Best AI Model</h2>
+  </div>
+
+  <!-- 5. OVERTAKE USERS -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- user behind (smaller, lower) -->
+          <circle cx="17" cy="22" r="5" stroke="white" stroke-width="1.7" stroke-opacity="0.4"/>
+          <path d="M8 40 C8 32 26 32 26 40" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-opacity="0.4"/>
+          <!-- user front (larger) -->
+          <circle cx="30" cy="16" r="6" stroke="white" stroke-width="1.8"/>
+          <path d="M19 40 C19 30 41 30 41 40" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- arrow up-right -->
+          <path d="M34 8 L40 8 L40 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="33" y1="15" x2="40" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17" cy="22" r="5" stroke="white" stroke-width="1.7" stroke-opacity="0.4"/>
+          <path d="M8 40 C8 32 26 32 26 40" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-opacity="0.4"/>
+          <circle cx="30" cy="16" r="6" stroke="white" stroke-width="1.8"/>
+          <path d="M19 40 C19 30 41 30 41 40" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M34 8 L40 8 L40 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="33" y1="15" x2="40" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17" cy="22" r="5" stroke="white" stroke-width="2.2" stroke-opacity="0.4"/>
+          <path d="M8 40 C8 32 26 32 26 40" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-opacity="0.4"/>
+          <circle cx="30" cy="16" r="6" stroke="white" stroke-width="2.2"/>
+          <path d="M19 40 C19 30 41 30 41 40" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M34 8 L40 8 L40 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="33" y1="15" x2="40" y2="8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>Overtake Users</h2>
+  </div>
+
+  <!-- 6. COMPARE RESULTS -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- vertical divider -->
+          <line x1="24" y1="6" x2="24" y2="42" stroke="white" stroke-width="1.4" stroke-opacity="0.3" stroke-dasharray="2 3"/>
+          <!-- left bar -->
+          <rect x="8"  y="20" width="12" height="22" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.5"/>
+          <!-- right bar taller -->
+          <rect x="28" y="10" width="12" height="32" rx="3" stroke="white" stroke-width="1.8"/>
+          <!-- top dot highlight right -->
+          <circle cx="34" cy="8" r="3" fill="white"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="24" y1="6" x2="24" y2="42" stroke="white" stroke-width="1.4" stroke-opacity="0.3" stroke-dasharray="2 3"/>
+          <rect x="8"  y="20" width="12" height="22" rx="3" stroke="white" stroke-width="1.8" stroke-opacity="0.5"/>
+          <rect x="28" y="10" width="12" height="32" rx="3" stroke="white" stroke-width="1.8"/>
+          <circle cx="34" cy="8" r="3" fill="white"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="24" y1="6" x2="24" y2="42" stroke="white" stroke-width="2" stroke-opacity="0.3" stroke-dasharray="3 4"/>
+          <rect x="8"  y="20" width="12" height="22" rx="3" stroke="white" stroke-width="2.4" stroke-opacity="0.5"/>
+          <rect x="28" y="10" width="12" height="32" rx="3" stroke="white" stroke-width="2.4"/>
+          <circle cx="34" cy="7" r="4" fill="white"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>Compare Results</h2>
+  </div>
+
+  <!-- 7. SAVE TO MEMORY -->
+  <div class="icon-card">
+    <div class="icon-box">
+      <div class="sizes">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- chip outline -->
+          <rect x="10" y="10" width="28" height="28" rx="6" stroke="white" stroke-width="1.8"/>
+          <!-- inner square -->
+          <rect x="17" y="17" width="14" height="14" rx="3" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+          <!-- chip pins -->
+          <line x1="16" y1="6"  x2="16" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="24" y1="6"  x2="24" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="32" y1="6"  x2="32" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="16" y1="38" x2="16" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="24" y1="38" x2="24" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="32" y1="38" x2="32" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="16" x2="10" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="24" x2="10" y2="24" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="32" x2="10" y2="32" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="16" x2="42" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="24" x2="42" y2="24" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="32" x2="42" y2="32" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- download arrow into chip -->
+          <path d="M24 18 L24 26 M21 23 L24 26 L27 23" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="28" height="28" rx="6" stroke="white" stroke-width="1.8"/>
+          <rect x="17" y="17" width="14" height="14" rx="3" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+          <line x1="16" y1="6"  x2="16" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="24" y1="6"  x2="24" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="32" y1="6"  x2="32" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="16" y1="38" x2="16" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="24" y1="38" x2="24" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="32" y1="38" x2="32" y2="42" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="16" x2="10" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="24" x2="10" y2="24" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="6"  y1="32" x2="10" y2="32" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="16" x2="42" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="24" x2="42" y2="24" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="38" y1="32" x2="42" y2="32" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M24 18 L24 26 M21 23 L24 26 L27 23" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="28" height="28" rx="6" stroke="white" stroke-width="2.4"/>
+          <line x1="16" y1="6"  x2="16" y2="10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="24" y1="6"  x2="24" y2="10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="32" y1="6"  x2="32" y2="10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="16" y1="38" x2="16" y2="42" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="24" y1="38" x2="24" y2="42" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="32" y1="38" x2="32" y2="42" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="6"  y1="16" x2="10" y2="16" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="6"  y1="24" x2="10" y2="24" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="6"  y1="32" x2="10" y2="32" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="38" y1="16" x2="42" y2="16" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="38" y1="24" x2="42" y2="24" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="38" y1="32" x2="42" y2="32" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M24 18 L24 26 M21 23 L24 26 L27 23" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="size-label">48 · 24 · 16 px</div>
+    </div>
+    <h2>Save to Memory</h2>
+  </div>
+
+</div><!-- grid -->
+
+<!-- bottom note -->
+<p style="position:absolute;bottom:44px;left:0;right:0;text-align:center;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.13)">
+  Stroke · rounded caps · 48 / 24 / 16 px — same geometry, optical weight adjusted per size
+</p>
+
+</body>
+</html>

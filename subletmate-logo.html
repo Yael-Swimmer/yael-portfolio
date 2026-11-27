@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SubletMate — Logo Concepts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0ede8;
+    font-family: 'Inter', sans-serif;
+    padding: 60px 40px;
+    color: #1a1a1a;
+  }
+
+  h1 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 56px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #bbb;
+    align-self: flex-start;
+  }
+
+  .logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* ── CONCEPT A: Key + House ── */
+  .logo-a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .icon-a {
+    width: 46px;
+    height: 46px;
+    position: relative;
+  }
+
+  .wordmark-a {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .wordmark-a .sublet {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+  }
+
+  .wordmark-a .mate {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: #5c6ef7;
+    letter-spacing: -0.02em;
+  }
+
+  .variations-row {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .var-dark {
+    background: #12122a;
+    padding: 20px 28px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .var-color {
+    background: #5c6ef7;
+    padding: 20px 28px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ── CONCEPT B: Bold monogram ── */
+  .logo-b {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .monogram {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #5c6ef7 0%, #a78bfa 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+  }
+
+  .wordmark-b {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.03em;
+  }
+
+  .wordmark-b span {
+    color: #5c6ef7;
+    font-weight: 700;
+  }
+
+  /* ── CONCEPT C: Roof line ── */
+  .logo-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .roof-wordmark {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #1a1a1a;
+    position: relative;
+    padding-top: 14px;
+  }
+
+  .roof-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tagline-c {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  /* ── CONCEPT D: Pin icon ── */
+  .logo-d {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pin-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .wordmark-d {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.03em;
+  }
+
+  .wordmark-d em {
+    font-style: normal;
+    color: #f97316;
+  }
+
+  /* dark/color variants small */
+  .var-sm {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 10px;
+  }
+
+  .sm-mono {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #5c6ef7;
+  }
+
+  .sm-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .sm-text span { color: rgba(255,255,255,0.65); font-weight: 400; }
+
+  /* icon-only row */
+  .icons-only {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .ico-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ico-box span {
+    font-size: 10px;
+    color: #bbb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+    padding: 48px 56px;
+  }
+
+  .full-row {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* colour swatches */
+  .swatches {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .swatch-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .swatch span {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<h1>SubletMate — Logo Concepts</h1>
+
+<div class="grid">
+
+  <!-- ───── CONCEPT A ───── -->
+  <div class="card">
+    <div class="card-label">A — House + Split Weight</div>
+    <div class="logo-area">
+
+      <!-- Main version -->
+      <div class="logo-a">
+        <svg class="icon-a" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- House shape -->
+          <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="#5c6ef7" opacity="0.12"/>
+          <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#5c6ef7" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+          <!-- Key slot in door -->
+          <circle cx="23" cy="23" r="2.5" fill="#5c6ef7"/>
+          <line x1="23" y1="25.5" x2="23" y2="29" stroke="#5c6ef7" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="wordmark-a">
+          <span class="sublet">Sublet</span><span class="mate">Mate</span>
+        </div>
+      </div>
+
+      <!-- Dark bg -->
+      <div class="variations-row">
+        <div class="var-dark">
+          <svg width="30" height="30" viewBox="0 0 46 46" fill="none">
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="rgba(92,110,247,0.25)"/>
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#7c8ff8" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+            <circle cx="23" cy="23" r="2.5" fill="#7c8ff8"/>
+            <line x1="23" y1="25.5" x2="23" y2="29" stroke="#7c8ff8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:20px;color:#fff;font-weight:700;letter-spacing:-0.02em;">Sublet<span style="font-weight:300;color:#7c8ff8">Mate</span></div>
+        </div>
+
+        <div class="var-color">
+          <svg width="28" height="28" viewBox="0 0 46 46" fill="none">
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="rgba(255,255,255,0.2)"/>
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+            <circle cx="23" cy="23" r="2.5" fill="#fff"/>
+            <line x1="23" y1="25.5" x2="23" y2="29" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:20px;color:#fff;font-weight:700;letter-spacing:-0.02em;">Sublet<span style="font-weight:300;opacity:0.75">Mate</span></div>
+        </div>
+      </div>
+
+      <!-- Icon only -->
+      <div class="icons-only">
+        <div class="ico-box">
+          <svg width="48" height="48" viewBox="0 0 46 46" fill="none">
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="#5c6ef7" opacity="0.15"/>
+            <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#5c6ef7" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+            <circle cx="23" cy="23" r="2.5" fill="#5c6ef7"/>
+            <line x1="23" y1="25.5" x2="23" y2="29" stroke="#5c6ef7" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span>light</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:48px;height:48px;background:#5c6ef7;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <svg width="30" height="30" viewBox="0 0 46 46" fill="none">
+              <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="rgba(255,255,255,0.15)"/>
+              <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+              <circle cx="23" cy="23" r="2.5" fill="#fff"/>
+              <line x1="23" y1="25.5" x2="23" y2="29" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>app icon</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:48px;height:48px;background:#12122a;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <svg width="30" height="30" viewBox="0 0 46 46" fill="none">
+              <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" fill="rgba(124,143,248,0.2)"/>
+              <path d="M23 5L4 20V42H18V30H28V42H42V20L23 5Z" stroke="#7c8ff8" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+              <circle cx="23" cy="23" r="2.5" fill="#7c8ff8"/>
+              <line x1="23" y1="25.5" x2="23" y2="29" stroke="#7c8ff8" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>dark</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── CONCEPT B ───── -->
+  <div class="card">
+    <div class="card-label">B — Monogram Tile</div>
+    <div class="logo-area">
+
+      <!-- Main -->
+      <div class="logo-b">
+        <div class="monogram">SM</div>
+        <div class="wordmark-b">Sublet<span>Mate</span></div>
+      </div>
+
+      <!-- Variants -->
+      <div class="variations-row">
+        <div style="background:#12122a;padding:18px 24px;border-radius:12px;display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;background:linear-gradient(135deg,#5c6ef7,#a78bfa);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;">SM</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:#fff;letter-spacing:-0.02em;">Sublet<span style="color:#7c8ff8">Mate</span></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#5c6ef7,#a78bfa);padding:18px 24px;border-radius:12px;display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;">SM</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:#fff;letter-spacing:-0.02em;">Sublet<span style="opacity:0.7">Mate</span></div>
+        </div>
+      </div>
+
+      <!-- Icon only variants -->
+      <div class="icons-only">
+        <div class="ico-box">
+          <div style="width:56px;height:56px;background:linear-gradient(135deg,#5c6ef7,#a78bfa);border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:800;color:#fff;">SM</div>
+          <span>gradient</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:56px;height:56px;background:#5c6ef7;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:800;color:#fff;">SM</div>
+          <span>flat</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:56px;height:56px;background:#12122a;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:800;color:#a78bfa;">SM</div>
+          <span>dark</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── CONCEPT C ───── -->
+  <div class="card">
+    <div class="card-label">C — Roof Bracket</div>
+    <div class="logo-area">
+
+      <!-- Main -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <svg width="220" height="18" viewBox="0 0 220 18">
+          <!-- roof chevron above text -->
+          <polyline points="10,16 110,2 210,16" fill="none" stroke="#5c6ef7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="16" r="3" fill="#5c6ef7"/>
+          <circle cx="210" cy="16" r="3" fill="#5c6ef7"/>
+        </svg>
+        <div style="font-family:'DM Sans',sans-serif;font-size:34px;font-weight:800;letter-spacing:-0.04em;color:#1a1a1a;line-height:1;">
+          Sublet<span style="color:#5c6ef7">Mate</span>
+        </div>
+        <div style="font-size:10.5px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#bbb;margin-top:2px;">Find your next stay</div>
+      </div>
+
+      <div class="variations-row">
+        <!-- dark -->
+        <div style="background:#12122a;padding:24px 32px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <svg width="160" height="14" viewBox="0 0 160 14">
+            <polyline points="6,12 80,2 154,12" fill="none" stroke="#7c8ff8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.03em;">Sublet<span style="color:#7c8ff8">Mate</span></div>
+        </div>
+        <!-- minimal -->
+        <div style="padding:24px 32px;border:2px solid #e8e4de;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <svg width="160" height="14" viewBox="0 0 160 14">
+            <polyline points="6,12 80,2 154,12" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:24px;font-weight:800;color:#1a1a1a;letter-spacing:-0.03em;">SubletMate</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── CONCEPT D ───── -->
+  <div class="card">
+    <div class="card-label">D — Location Pin</div>
+    <div class="logo-area">
+
+      <!-- Main -->
+      <div class="logo-d">
+        <svg class="pin-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pin body -->
+          <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="#f97316" opacity="0.15"/>
+          <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#f97316" stroke-width="2.2" fill="none"/>
+          <!-- House inside pin -->
+          <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#f97316" opacity="0.9"/>
+        </svg>
+        <div class="wordmark-d">Sublet<em>Mate</em></div>
+      </div>
+
+      <div class="variations-row">
+        <div style="background:#1a1a1a;padding:18px 24px;border-radius:12px;display:flex;align-items:center;gap:12px;">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="rgba(249,115,22,0.2)"/>
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#f97316" stroke-width="2.2" fill="none"/>
+            <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#f97316"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;color:#fff;letter-spacing:-0.02em;">Sublet<span style="color:#f97316">Mate</span></div>
+        </div>
+        <div style="background:#f97316;padding:18px 24px;border-radius:12px;display:flex;align-items:center;gap:12px;">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="rgba(255,255,255,0.2)"/>
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#fff" stroke-width="2.2" fill="none"/>
+            <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#fff"/>
+          </svg>
+          <div style="font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;color:#fff;letter-spacing:-0.02em;">Sublet<span style="opacity:0.75">Mate</span></div>
+        </div>
+      </div>
+
+      <!-- icon only -->
+      <div class="icons-only">
+        <div class="ico-box">
+          <svg width="48" height="48" viewBox="0 0 40 40" fill="none">
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="#f97316" opacity="0.15"/>
+            <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#f97316" stroke-width="2.2" fill="none"/>
+            <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#f97316" opacity="0.9"/>
+          </svg>
+          <span>light</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:48px;height:48px;background:#f97316;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+              <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="rgba(255,255,255,0.2)"/>
+              <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#fff" stroke-width="2.5" fill="none"/>
+              <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#fff"/>
+            </svg>
+          </div>
+          <span>app icon</span>
+        </div>
+        <div class="ico-box">
+          <div style="width:48px;height:48px;background:#12122a;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+              <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" fill="rgba(249,115,22,0.2)"/>
+              <path d="M20 3C13.925 3 9 7.925 9 14C9 22.5 20 37 20 37C20 37 31 22.5 31 14C31 7.925 26.075 3 20 3Z" stroke="#f97316" stroke-width="2.5" fill="none"/>
+              <path d="M20 8L13 13.5V22H17V18H23V22H27V13.5L20 8Z" fill="#f97316"/>
+            </svg>
+          </div>
+          <span>dark</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── COLOUR PALETTE ───── -->
+  <div class="card full-width" style="gap:24px;">
+    <div class="card-label">Colour Reference</div>
+    <div style="display:flex;gap:48px;flex-wrap:wrap;justify-content:center;align-items:flex-start;">
+
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px;">Concepts A, B, C</div>
+        <div style="display:flex;gap:14px;">
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#5c6ef7;"></div>
+            <span>#5C6EF7</span>
+          </div>
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#a78bfa;"></div>
+            <span>#A78BFA</span>
+          </div>
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#12122a;"></div>
+            <span>#12122A</span>
+          </div>
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#1a1a1a;"></div>
+            <span>#1A1A1A</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px;">Concept D</div>
+        <div style="display:flex;gap:14px;">
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#f97316;"></div>
+            <span>#F97316</span>
+          </div>
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#1a1a1a;"></div>
+            <span>#1A1A1A</span>
+          </div>
+          <div class="ico-box">
+            <div style="width:44px;height:44px;border-radius:10px;background:#12122a;"></div>
+            <span>#12122A</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px;">Typography</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;color:#1a1a1a;">DM Sans Bold — Headlines</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:16px;font-weight:400;color:#555;">DM Sans Regular — Body</div>
+          <div style="font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#999;">Inter 500 — Labels</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

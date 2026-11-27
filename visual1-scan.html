@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Visual 1 – App Scan</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    overflow: hidden;
+    background: #000;
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+  }
+
+  /* ─── BACKGROUND ─────────────────────────────────────────── */
+  .bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 100% at 60% 50%, #0a0a14 0%, #000 70%);
+  }
+
+  /* Soft ambient colour blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+  }
+  .blob-blue  { width:520px; height:520px; background:rgba(10,132,255,0.18); top:-80px; left:-60px; }
+  .blob-pink  { width:400px; height:400px; background:rgba(255,55,95,0.10);  bottom:-100px; left:260px; }
+  .blob-purple{ width:480px; height:480px; background:rgba(175,82,222,0.12); top:60px; right:340px; }
+  .blob-teal  { width:340px; height:340px; background:rgba(48,209,88,0.08);  bottom:-60px; right:100px; }
+
+  /* ─── PHONE ──────────────────────────────────────────────── */
+  .phone-wrap {
+    position: absolute;
+    left: 186px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .phone {
+    width: 218px;
+    height: 444px;
+    background: linear-gradient(160deg, #1c1c1e 0%, #0d0d0f 100%);
+    border-radius: 44px;
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 60px 120px rgba(0,0,0,0.9),
+      0 0 60px rgba(10,132,255,0.08);
+    overflow: hidden;
+  }
+
+  /* titanium-edge highlight */
+  .phone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 44px;
+    border: 1px solid rgba(255,255,255,0.06);
+    pointer-events: none;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px; height: 28px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 10;
+  }
+
+  .screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 44px;
+    overflow: hidden;
+    background: #0a0a0f;
+  }
+
+  /* App content */
+  .app-chrome {
+    padding: 56px 16px 16px;
+  }
+
+  .app-topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .app-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+    border-radius: 9px;
+    flex-shrink: 0;
+  }
+
+  .app-title-line {
+    flex: 1;
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+  }
+
+  .section-label {
+    height: 7px;
+    width: 55%;
+    background: rgba(255,255,255,0.07);
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+
+  .mini-card {
+    height: 50px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .mini-dot {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    flex-shrink: 0;
+  }
+
+  .mini-lines { flex: 1; }
+  .mini-line { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-bottom: 5px; }
+  .mini-line.s { width: 50%; }
+
+  /* Scan line */
+  .scan-container {
+    position: absolute;
+    inset: 0;
+    border-radius: 44px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .scan-beam {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(10,132,255,0.4) 15%,
+      rgba(100,210,255,1) 45%,
+      rgba(255,255,255,0.95) 50%,
+      rgba(100,210,255,1) 55%,
+      rgba(10,132,255,0.4) 85%,
+      transparent 100%);
+    box-shadow: 0 0 12px 4px rgba(100,210,255,0.5), 0 0 30px 8px rgba(10,132,255,0.2);
+    animation: scanMove 2.8s cubic-bezier(0.45,0,0.55,1) infinite;
+    top: 56px;
+  }
+
+  .scan-glow-trail {
+    position: absolute;
+    left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(180deg,
+      rgba(10,132,255,0.07) 0%,
+      rgba(10,132,255,0.03) 60%,
+      transparent 100%);
+    animation: scanMove 2.8s cubic-bezier(0.45,0,0.55,1) infinite;
+    top: 56px;
+  }
+
+  @keyframes scanMove {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(290px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* ─── SVG CONNECTORS ─────────────────────────────────────── */
+  .svg-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ─── RESULTS PANEL ──────────────────────────────────────── */
+  .results-wrap {
+    position: absolute;
+    right: 96px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 340px;
+  }
+
+  .results-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px;
+    margin-bottom: 10px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: translateX(14px);
+    animation: rowIn 0.5s ease forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle colour wash behind each row */
+  .result-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    opacity: 0.07;
+  }
+
+  .row-music  { animation-delay: 0.05s; }
+  .row-shop   { animation-delay: 0.15s; }
+  .row-nav    { animation-delay: 0.25s; }
+  .row-social { animation-delay: 0.35s; }
+  .row-media  { animation-delay: 0.45s; }
+
+  .row-music::before  { background: linear-gradient(90deg, #ff375f, transparent); }
+  .row-shop::before   { background: linear-gradient(90deg, #0a84ff, transparent); }
+  .row-nav::before    { background: linear-gradient(90deg, #30d158, transparent); }
+  .row-social::before { background: linear-gradient(90deg, #ffd60a, transparent); }
+  .row-media::before  { background: linear-gradient(90deg, #bf5af2, transparent); }
+
+  @keyframes rowIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .result-icon-wrap {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .row-music  .result-icon-wrap { background: rgba(255,55,95,0.14); }
+  .row-shop   .result-icon-wrap { background: rgba(10,132,255,0.14); }
+  .row-nav    .result-icon-wrap { background: rgba(48,209,88,0.14); }
+  .row-social .result-icon-wrap { background: rgba(255,214,10,0.12); }
+  .row-media  .result-icon-wrap { background: rgba(191,90,242,0.14); }
+
+  .result-body { flex: 1; min-width: 0; }
+
+  .result-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 7px;
+    letter-spacing: -0.01em;
+  }
+
+  .bar-track {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    width: 0;
+    animation: barGrow 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .row-music  .bar-fill { background: linear-gradient(90deg,#ff375f,#ff6b86); animation-delay: 0.5s; --w: 72%; }
+  .row-shop   .bar-fill { background: linear-gradient(90deg,#0a84ff,#4eb0ff); animation-delay: 0.6s; --w: 54%; }
+  .row-nav    .bar-fill { background: linear-gradient(90deg,#30d158,#6de897); animation-delay: 0.7s; --w: 38%; }
+  .row-social .bar-fill { background: linear-gradient(90deg,#ffd60a,#ffe85c); animation-delay: 0.8s; --w: 29%; }
+  .row-media  .bar-fill { background: linear-gradient(90deg,#bf5af2,#d78ef5); animation-delay: 0.9s; --w: 21%; }
+
+  @keyframes barGrow {
+    to { width: var(--w); }
+  }
+
+  .result-pct {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: -0.02em;
+    min-width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ─── HEADLINE ───────────────────────────────────────────── */
+  .headline {
+    position: absolute;
+    top: 72px;
+    left: 186px;
+  }
+
+  .headline-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #0a84ff;
+    margin-bottom: 10px;
+  }
+
+  .headline-h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .headline-h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #0a84ff, #bf5af2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .headline-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── ORIGIN DOT (phone right edge) ─────────────────────── */
+  .origin-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #64d2ff;
+    box-shadow: 0 0 10px 4px rgba(100,210,255,0.5);
+    left: 409px;   /* phone right edge */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .origin-ring {
+    position: absolute;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(100,210,255,0.25);
+    left: 402px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%   { opacity:1; transform: translateY(-50%) scale(1); }
+    100% { opacity:0; transform: translateY(-50%) scale(2.4); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg"></div>
+<div class="blob blob-blue"></div>
+<div class="blob blob-pink"></div>
+<div class="blob blob-purple"></div>
+<div class="blob blob-teal"></div>
+
+<!-- Headline -->
+<div class="headline">
+  <div class="headline-eyebrow">Deep Usage Scan</div>
+  <div class="headline-h1">What users<br><em>really</em> do inside.</div>
+  <div class="headline-sub">Scanning Mobile App 1 — use case breakdown</div>
+</div>
+
+<!-- Phone -->
+<div class="phone-wrap">
+  <div class="phone">
+    <div class="dynamic-island"></div>
+    <div class="screen">
+      <div class="app-chrome">
+        <div class="app-topbar">
+          <div class="app-icon"></div>
+          <div class="app-title-line"></div>
+        </div>
+        <div class="section-label"></div>
+        <div class="mini-card">
+          <div class="mini-dot" style="background:linear-gradient(135deg,#ff375f,#ff6b86)"></div>
+          <div class="mini-lines"><div class="mini-line"></div><div class="mini-line s"></div></div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-dot" style="background:linear-gradient(135deg,#0a84ff,#4eb0ff)"></div>
+          <div class="mini-lines"><div class="mini-line"></div><div class="mini-line s"></div></div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-dot" style="background:linear-gradient(135deg,#30d158,#6de897)"></div>
+          <div class="mini-lines"><div class="mini-line"></div><div class="mini-line s"></div></div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-dot" style="background:linear-gradient(135deg,#ffd60a,#ffe85c)"></div>
+          <div class="mini-lines"><div class="mini-line"></div><div class="mini-line s"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Scan animation overlay -->
+    <div class="scan-container">
+      <div class="scan-glow-trail"></div>
+      <div class="scan-beam"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Origin pulse dot -->
+<div class="origin-ring"></div>
+<div class="origin-dot"></div>
+
+<!-- SVG connector lines -->
+<svg class="svg-overlay" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#64d2ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#64d2ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Lines from origin (413, 450) to left edge of each result card (1067, y) -->
+  <!-- Cards are stacked: top of first at 450-5*39 = 255, each card 58+10=68px tall, center at 255+34, 323, 391, 459, 527 -->
+  <line x1="413" y1="450" x2="1067" y2="284" stroke="url(#lineGrad)" stroke-width="1" opacity="0.6"/>
+  <line x1="413" y1="450" x2="1067" y2="352" stroke="url(#lineGrad)" stroke-width="1" opacity="0.6"/>
+  <line x1="413" y1="450" x2="1067" y2="420" stroke="url(#lineGrad)" stroke-width="1" opacity="0.7"/>
+  <line x1="413" y1="450" x2="1067" y2="488" stroke="url(#lineGrad)" stroke-width="1" opacity="0.6"/>
+  <line x1="413" y1="450" x2="1067" y2="556" stroke="url(#lineGrad)" stroke-width="1" opacity="0.5"/>
+
+  <!-- Dots at card left edge -->
+  <circle cx="1067" cy="284" r="2.5" fill="#64d2ff" opacity="0.5"/>
+  <circle cx="1067" cy="352" r="2.5" fill="#64d2ff" opacity="0.5"/>
+  <circle cx="1067" cy="420" r="2.5" fill="#64d2ff" opacity="0.5"/>
+  <circle cx="1067" cy="488" r="2.5" fill="#64d2ff" opacity="0.5"/>
+  <circle cx="1067" cy="556" r="2.5" fill="#64d2ff" opacity="0.5"/>
+</svg>
+
+<!-- Results -->
+<div class="results-wrap">
+  <div class="results-eyebrow">Use Case Breakdown</div>
+
+  <div class="result-row row-music">
+    <div class="result-icon-wrap">🎵</div>
+    <div class="result-body">
+      <div class="result-name">Music & Audio</div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+    </div>
+    <div class="result-pct">72%</div>
+  </div>
+
+  <div class="result-row row-shop">
+    <div class="result-icon-wrap">🛍️</div>
+    <div class="result-body">
+      <div class="result-name">Shopping</div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+    </div>
+    <div class="result-pct">54%</div>
+  </div>
+
+  <div class="result-row row-nav">
+    <div class="result-icon-wrap">🗺️</div>
+    <div class="result-body">
+      <div class="result-name">Navigation</div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+    </div>
+    <div class="result-pct">38%</div>
+  </div>
+
+  <div class="result-row row-social">
+    <div class="result-icon-wrap">💬</div>
+    <div class="result-body">
+      <div class="result-name">Social</div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+    </div>
+    <div class="result-pct">29%</div>
+  </div>
+
+  <div class="result-row row-media">
+    <div class="result-icon-wrap">▶️</div>
+    <div class="result-body">
+      <div class="result-name">Video & Media</div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+    </div>
+    <div class="result-pct">21%</div>
+  </div>
+
+</div>
+
+</body>
+</html>

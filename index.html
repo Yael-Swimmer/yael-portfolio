@@ -47,7 +47,8 @@
     .menu { position: fixed; inset: 0; z-index: 40; background: var(--fuchsia); color: #fff; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 var(--gutter); clip-path: circle(0 at calc(100% - 40px) 40px); transition: clip-path .6s cubic-bezier(.7,0,.2,1); visibility: hidden; }
     .menu.open { clip-path: circle(150% at calc(100% - 40px) 40px); visibility: visible; }
     .menu a { font-size: clamp(2.6rem, 9vw, 6rem); letter-spacing: -0.04em; line-height: 1.05; width: fit-content; }
-    .menu a:hover { font-family: var(--serif); font-style: italic; }
+    .menu a { transition: opacity .25s; }
+    @media (hover: hover) { .menu a:hover { opacity: .7; } }
 
     /* HERO — pinned, words light up as you scroll */
     .hero-wrap { height: 200vh; height: 200svh; position: relative; }
