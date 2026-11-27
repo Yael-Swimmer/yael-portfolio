@@ -261,33 +261,13 @@
 
 
     /* INTRO SPLASH — winking face logo animation, once per visit */
-    .intro { position: fixed; inset: 0; z-index: 300; background: var(--fuchsia); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 30px); clip-path: inset(0 0 0 0); transition: clip-path .8s cubic-bezier(.7, 0, .2, 1); animation: introFailsafe 0s 6s forwards; }
-    .intro.out { clip-path: inset(0 0 100% 0); pointer-events: none; }
-    .intro.out .intro__face, .intro.out .intro__word { opacity: 0; transform: scale(1.18); transition: opacity .35s, transform .6s var(--ease); }
+    .intro { position: fixed; inset: 0; z-index: 300; background: var(--fuchsia); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 3vw, 30px); will-change: transform; transition: transform .85s cubic-bezier(.76, 0, .24, 1); animation: introFailsafe 0s 9s forwards; }
+    .intro.out { transform: translate3d(0, -101%, 0); pointer-events: none; }
     .no-intro .intro { display: none; }
     html.intro-on { overflow: hidden; }
     @keyframes introFailsafe { to { visibility: hidden; pointer-events: none; } }
-    .intro__face { width: clamp(120px, 22vw, 190px); height: auto; overflow: visible; }
-    /* phase 1 (JS-driven): a heart drops in, lands, ripples, beats and morphs into the face circle.
-       phase 2 (.face-on): the face comes alive — eyes, smile, wink, flying heart, wordmark. */
-    .intro__face .f-eye, .intro__face .f-eye2 { transform-box: fill-box; transform-origin: center; transform: scale(0); }
-    .intro__face .f-wink { stroke-dasharray: 60; stroke-dashoffset: 60; }
-    .intro__face .f-smile { stroke-dasharray: 90; stroke-dashoffset: 90; }
-    .intro__face .f-heart { transform-box: fill-box; transform-origin: center; opacity: 0; }
-    .intro__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; letter-spacing: -0.01em; line-height: 1; opacity: 0; }
-    .face-on .f-eye { animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .05s both; }
-    .face-on .f-eye2 { animation: eyeIn .35s cubic-bezier(.3, 1.6, .5, 1) .12s both, eyeClose .22s ease-in .85s forwards; }
-    .face-on .f-smile { animation: draw .45s ease-out .15s forwards; }
-    .face-on .f-wink { animation: draw .25s ease-out .9s forwards; }
-    .face-on .f-heart { animation: heartPop .9s cubic-bezier(.2, .8, .3, 1) .9s forwards; }
-    .face-on { animation: faceTilt .5s ease-in-out .85s both; }
-    .face-on ~ .intro__word { animation: wordIn .7s var(--ease) .85s both; }
-    @keyframes faceTilt { 0%, 100% { transform: rotate(0); } 45% { transform: rotate(-11deg) scale(1.04); } }
-    @keyframes eyeIn { from { transform: scale(0); } to { transform: scale(1); } }
-    @keyframes eyeClose { to { transform: scaleY(.05); opacity: 0; } }
-    @keyframes draw { to { stroke-dashoffset: 0; } }
-    @keyframes heartPop { 0% { opacity: 0; transform: translate(0, 6px) scale(0) rotate(-12deg); } 35% { opacity: 1; transform: translate(10px, -14px) scale(1.3) rotate(8deg); } 100% { opacity: 0; transform: translate(26px, -54px) scale(.85) rotate(14deg); } }
-    @keyframes wordIn { from { opacity: 0; transform: translateY(18px); letter-spacing: .08em; } to { opacity: 1; transform: none; letter-spacing: -0.01em; } }
+    .intro__face { width: clamp(120px, 22vw, 190px); height: auto; overflow: visible; will-change: transform; }
+    .intro__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; letter-spacing: -0.01em; line-height: 1; opacity: 0; will-change: transform, opacity; }
 
     /* reduced motion: static, fully visible */
     .rm .hero-wrap { height: auto; }
@@ -308,13 +288,15 @@
 
   <div class="intro" id="intro" aria-hidden="true">
     <svg class="intro__face" id="introFace" viewBox="0 0 120 120">
-      <circle id="fRipple" cx="60" cy="60" r="20" fill="none" stroke="#fff" stroke-width="2.5" opacity="0"/>
-      <g id="fMorph" opacity="0"><path id="fShape" fill="#fff" d="M60 4C64 28 100 52 100 78C100 100 82 114 60 114C38 114 20 100 20 78C20 52 56 28 60 4Z"/></g>
-      <circle class="f-eye" cx="42" cy="48.6" r="7.5" fill="#2A0A1E"/>
-      <circle class="f-eye2" cx="78" cy="48.6" r="7.5" fill="#2A0A1E"/>
-      <path class="f-wink" d="M69 50.4 Q78.9 39 88.8 50.4" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
-      <path class="f-smile" d="M34.5 69.6 Q60 96.6 85.5 69.6" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
-      <g class="f-heart"><path transform="translate(88 14) scale(1.5)" fill="#fff" d="M12 21s-7.5-4.6-9.6-9.1C.8 8.6 2.7 5 6.2 5c2 0 3.5 1 4.3 2.3C11.3 6 12.8 5 14.8 5c3.5 0 5.4 3.6 3.8 6.9C19.5 16.4 12 21 12 21z"/></g>
+      <g id="fAll">
+        <ellipse id="fRipple" cx="60" cy="106" rx="20" ry="6" fill="none" stroke="#fff" stroke-width="2" opacity="0"/>
+        <g id="fMorph" opacity="0"><path id="fShape" fill="#fff" d="M60 4C64 28 100 52 100 78C100 100 82 114 60 114C38 114 20 100 20 78C20 52 56 28 60 4Z"/></g>
+        <circle id="fEyeL" cx="42" cy="48.6" r="7.5" fill="#2A0A1E" opacity="0"/>
+        <circle id="fEyeR" cx="78" cy="48.6" r="7.5" fill="#2A0A1E" opacity="0"/>
+        <path id="fWink" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" opacity="0" d="M69 50.4 Q78.9 39 88.8 50.4" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
+        <path id="fSmile" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" opacity="0" d="M34.5 69.6 Q60 96.6 85.5 69.6" fill="none" stroke="#2A0A1E" stroke-width="7.8" stroke-linecap="round"/>
+        <g id="fHeart" opacity="0"><path transform="translate(88 14) scale(1.5)" fill="#fff" d="M12 21s-7.5-4.6-9.6-9.1C.8 8.6 2.7 5 6.2 5c2 0 3.5 1 4.3 2.3C11.3 6 12.8 5 14.8 5c3.5 0 5.4 3.6 3.8 6.9C19.5 16.4 12 21 12 21z"/></g>
+      </g>
     </svg>
     <div class="intro__word">Yael Swimmer</div>
   </div>
@@ -942,61 +924,97 @@
             t0 = performance.now();
             document.documentElement.classList.remove('intro-on');
             splash.remove();
-          }, 750);
+          }, 550);
         };
-        /* heart-drop → face morph, driven by one rAF timeline so every phase stays in sync */
-        var face = document.getElementById('introFace'), gM = document.getElementById('fMorph'), shape = document.getElementById('fShape'), rip = document.getElementById('fRipple');
+        /* One master timeline, a pure function of time t (ms): every phase is computed from the same clock,
+           with spring physics for squash/jelly and clamped frame deltas so a slow frame never skips the animation. */
+        var $i = function (id) { return document.getElementById(id); };
+        var face = $i('introFace'), gAll = $i('fAll'), gM = $i('fMorph'), shape = $i('fShape'), rip = $i('fRipple'),
+            eL = $i('fEyeL'), eR = $i('fEyeR'), smile = $i('fSmile'), wink = $i('fWink'), hrt = $i('fHeart'), word = splash.querySelector('.intro__word');
         var DROP = [60,4, 64,28,100,52,100,78, 100,100,82,114,60,114, 38,114,20,100,20,78, 20,52,56,28,60,4];
         var HEART = [60,40, 64,12,114,14,112,54, 110,80,76,98,60,108, 42,100,6,80,8,50, 10,14,54,10,60,40];
         var CIRCLE = [60,6, 89.8,6,114,30.2,114,60, 114,89.8,89.8,114,60,114, 30.2,114,6,89.8,6,60, 6,30.2,30.2,6,60,6];
-        var T_DROP = 600, T_LAND = 150, T_BEAT = 1300, T_MORPH = 1450, T_END = 2000;
-        var ez = function (a, b, t, f) { t = clamp((t - a) / (b - a)); return f ? f(t) : t; };
-        var inQ = function (t) { return t * t; }, outC = function (t) { return 1 - Math.pow(1 - t, 3); };
+        var TF0 = 120, TI = 620, TB1 = 1300, TB2 = 1480, TANT = 1700, TM0 = 1740, TM1 = 2260, TEYE = 2150, TSM = 2200, TWK = 2650, TWD = 2650, TEXIT = 3650;
+        var outC = function (t) { return 1 - Math.pow(1 - t, 3); };
+        var outE = function (t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); };
         var inOutC = function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
-        var elastic = function (t) { return t <= 0 ? 0 : t >= 1 ? 1 : Math.pow(2, -9 * t) * Math.sin((t * 9 - .75) * (2 * Math.PI / 3.4)) + 1; };
+        var gauss = function (t, c, w) { var x = (t - c) / w; return Math.exp(-x * x); };
+        var spring = function (tau, k, w) { return tau <= 0 ? 0 : 1 - Math.exp(-k * tau) * Math.cos(w * tau); };
         var path = function (A, B, m, wob) {
-          var d = 'M' + (A[0] + (B[0] - A[0]) * m).toFixed(2) + ' ' + (A[1] + (B[1] - A[1]) * m).toFixed(2) + 'C', i;
-          for (i = 2; i < 26; i += 2) d += (A[i] + (B[i] - A[i]) * m + (wob ? Math.sin(wob.t * .011 + i * 1.7) * wob.a : 0)).toFixed(2) + ' ' + (A[i + 1] + (B[i + 1] - A[i + 1]) * m + (wob ? Math.cos(wob.t * .013 + i * 2.3) * wob.a : 0)).toFixed(2) + (i < 24 ? ' ' : '');
+          var d = 'M' + (A[0] + (B[0] - A[0]) * m).toFixed(2) + ' ' + (A[1] + (B[1] - A[1]) * m).toFixed(2) + 'C', i, wx = 0, wy = 0;
+          for (i = 2; i < 26; i += 2) {
+            if (wob) { wx = Math.sin(wob.t * .011 + i * 1.7) * wob.a; wy = Math.cos(wob.t * .013 + i * 2.3) * wob.a; }
+            d += (A[i] + (B[i] - A[i]) * m + wx).toFixed(2) + ' ' + (A[i + 1] + (B[i + 1] - A[i + 1]) * m + wy).toFixed(2) + (i < 24 ? ' ' : '');
+          }
           return d + 'Z';
         };
-        var sT = null, faceOn = false;
+        var about = function (cx, cy, sx, sy, extra) { return (extra || '') + 'translate(' + cx + ' ' + cy + ') scale(' + sx.toFixed(3) + ' ' + sy.toFixed(3) + ') translate(' + -cx + ' ' + -cy + ')'; };
+        var startY = -300;
         var dropY = function () { var r = face.getBoundingClientRect(), k = r.width / 120; return -((r.top + r.height / 2 + 90) / k); };
-        var startY = null;
-        function splashTick(now) {
-          if (splashDone) return;
-          if (sT === null) { sT = now; startY = dropY(); }
-          var t = (now - sT), sx = 1, sy = 1, y = 0, grow = 1, rot = 0, d;
-          if (t < T_DROP) {                                 /* liquid droplet: small teardrop, stretching as it falls */
-            var f = t / T_DROP;
-            y = startY * (1 - inQ(f)); grow = .5; sx = .9 - .12 * f; sy = 1 + .1 + .25 * f;
+        function render(t) {
+          if (t < TF0) return;
+          var sx = 1, sy = 1, y = 0, grow = 1, rot = 0, d, u, tau, tq, s;
+          if (t < TI) {                                          /* gravity fall: teardrop stretches with speed */
+            var f = (t - TF0) / (TI - TF0);
+            y = startY * (1 - f * f); grow = .5; sy = 1.08 + .3 * f; sx = .95 / Math.pow(sy, .7);
             d = path(DROP, DROP, 0);
           } else {
-            var u = t - T_DROP, e = elastic(u / 900);
-            grow = .5 + .5 * ez(0, 700, u, outC);          /* swells to full size once it lands */
-            if (u < T_LAND) { var q = outC(u / T_LAND); sx = .78 + .72 * q; sy = 1.35 - .85 * q; }       /* splat: flattens and spreads */
-            else { sx = 1.5 + (1 - 1.5) * e; sy = .5 + (1 - .5) * e; }                                  /* jelly recovery, overshoots */
-            d = path(DROP, HEART, ez(0, 650, u, outC), { t: t, a: 4.5 * Math.exp(-u / 650) });    /* teardrop pools into a soft blob-heart */
-            if (t > T_BEAT && t < T_MORPH + 120) { var pulse = Math.sin(clamp((t - T_BEAT) / 220) * Math.PI) * .09; sx += pulse; sy += pulse; }
+            u = t - TI; tau = u / 1000; tq = Math.max(0, u - 70) / 1000;
+            if (u < 70) s = .38 - .88 * outC(u / 70);              /* impact: stretch → hard squash */
+            else s = -.5 * Math.exp(-5 * tq) * Math.cos(17 * tq);  /* spring release: overshoot, settle */
+            sy = 1 + s; sx = Math.pow(sy, -.7);
+            if (u >= 70) y = -15 * Math.exp(-5 * tq) * Math.max(0, Math.sin(17 * tq));   /* little hop on the rebound */
+            grow = .5 + .5 * outC(Math.min(1, u / 800));
+            d = path(DROP, HEART, spring(tau, 6.5, 13), { t: t, a: 3.5 * Math.exp(-tau * 3.5) });
+            var beat = .06 * gauss(t, TB1, 60) + .09 * gauss(t, TB2, 70);   /* lub-dub */
+            var ant = .07 * gauss(t, TANT, 80);                              /* anticipation before the morph */
+            sx *= 1 + beat + ant * .8; sy *= 1 + beat - ant;
           }
-          var m = ez(T_MORPH, T_END, t, inOutC);
-          if (m > 0) {
-            d = path(HEART, CIRCLE, m, { t: t, a: 2.2 * Math.sin(m * Math.PI) });
-            rot = Math.sin(m * Math.PI) * -6; grow *= 1 + Math.sin(m * Math.PI) * .05;
-            if (t > T_END) { var w = (t - T_END) / 450; sx += Math.sin(w * 14) * .07 * Math.max(0, 1 - w); sy -= Math.sin(w * 14) * .07 * Math.max(0, 1 - w); }
+          if (t >= TM0) {                                         /* heart → circle, then a jelly settle */
+            var m = inOutC(Math.min(1, (t - TM0) / (TM1 - TM0))), pm = Math.sin(m * Math.PI);
+            d = path(HEART, CIRCLE, m, { t: t, a: 2 * pm });
+            rot = -6 * pm; grow *= 1 + .05 * pm;
+            if (t > TM1) { var ts = (t - TM1) / 1000, jig = Math.exp(-6 * ts) * Math.sin(22 * ts) * .09; sx *= 1 + jig; sy *= 1 - jig; }
           }
           shape.setAttribute('d', d);
           y += (1 - sy) * 46;
           gM.setAttribute('opacity', 1);
           gM.setAttribute('transform', 'translate(60 ' + (60 + y).toFixed(2) + ') rotate(' + rot.toFixed(2) + ') scale(' + (sx * grow).toFixed(3) + ' ' + (sy * grow).toFixed(3) + ') translate(-60 -60)');
-          var rp = ez(T_DROP, T_DROP + 700, t);             /* landing ripple */
-          rip.setAttribute('opacity', rp > 0 && rp < 1 ? (.55 * (1 - rp)).toFixed(3) : 0);
-          rip.setAttribute('r', (22 + 90 * outC(rp)).toFixed(1));
-          rip.setAttribute('transform', 'translate(0 46) translate(60 60) scale(1 .35) translate(-60 -60)');
-          if (!faceOn && t >= T_END - 150) { faceOn = true; face.classList.add('face-on'); }
-          requestAnimationFrame(splashTick);
+
+          var rp = Math.min(1, Math.max(0, (t - TI) / 800));      /* landing ripple */
+          if (rp > 0 && rp < 1) { var rx = 18 + 85 * outC(rp); rip.setAttribute('rx', rx.toFixed(1)); rip.setAttribute('ry', (rx * .28).toFixed(1)); rip.setAttribute('opacity', (.5 * Math.pow(1 - rp, 1.5)).toFixed(3)); rip.setAttribute('stroke-width', (2.2 * (1 - rp) + .4).toFixed(2)); }
+          else rip.setAttribute('opacity', 0);
+
+          /* face comes alive: eyes pop on springs, smile draws, then the wink with a tilt, a heart floats off, wordmark rises */
+          var pl = spring((t - TEYE) / 1000, 9, 16), pr = spring((t - TEYE - 50) / 1000, 9, 16), cl = Math.min(1, Math.max(0, (t - TWK) / 160)); cl *= cl;
+          eL.setAttribute('opacity', pl > 0 ? 1 : 0); eL.setAttribute('transform', about(42, 48.6, pl, pl));
+          eR.setAttribute('opacity', pr > 0 && cl < 1 ? 1 : 0); eR.setAttribute('transform', about(78, 48.6, pr * (1 + .1 * cl), pr * (1 - .95 * cl)));
+          var so = 1 - outC(Math.min(1, Math.max(0, (t - TSM) / 420)));
+          smile.setAttribute('opacity', so < .999 ? 1 : 0); smile.setAttribute('stroke-dashoffset', so.toFixed(3));
+          var wo = 1 - outC(Math.min(1, Math.max(0, (t - TWK - 60) / 200)));
+          wink.setAttribute('opacity', wo < .999 ? 1 : 0); wink.setAttribute('stroke-dashoffset', wo.toFixed(3));
+          var tl = Math.sin(Math.min(1, Math.max(0, (t - TWK) / 450)) * Math.PI), k = 1 + .05 * tl;
+          gAll.setAttribute('transform', 'translate(60 60) rotate(' + (-10 * tl).toFixed(2) + ') scale(' + k.toFixed(3) + ') translate(-60 -60)');
+          var hp = Math.min(1, Math.max(0, (t - TWK - 80) / 850));
+          if (hp > 0 && hp < 1) {
+            var e = outC(hp), hs = hp < .35 ? 1.3 * outC(hp / .35) : 1.3 - .45 * ((hp - .35) / .65);
+            hrt.setAttribute('opacity', (hp < .2 ? hp / .2 : 1 - Math.min(1, Math.max(0, (hp - .35) / .65))).toFixed(3));
+            hrt.setAttribute('transform', 'translate(' + (26 * e).toFixed(2) + ' ' + (6 - 60 * e).toFixed(2) + ') translate(106 32) rotate(' + (-12 + 26 * hp).toFixed(1) + ') scale(' + hs.toFixed(3) + ') translate(-106 -32)');
+          } else hrt.setAttribute('opacity', 0);
+          var wp = outE(Math.min(1, Math.max(0, (t - TWD) / 700)));
+          word.style.opacity = wp.toFixed(3); word.style.transform = 'translate3d(0,' + ((1 - wp) * 18).toFixed(1) + 'px,0)';
         }
-        requestAnimationFrame(splashTick);
-        setTimeout(endSplash, 3800);
+        var last = null, T = 0;
+        function tick(now) {
+          if (splashDone) return;
+          if (last === null) startY = dropY(); else T += Math.min(now - last, 34);
+          last = now; render(T);
+          if (T >= TEXIT) endSplash(); else requestAnimationFrame(tick);
+        }
+        /* start only once fonts are ready (no mid-animation font swap), then run on a steady clock */
+        var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+        Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 700); })]).then(function () { requestAnimationFrame(tick); });
+        setTimeout(endSplash, 9000);
         ['pointerdown', 'keydown'].forEach(function (ev) { splash.addEventListener(ev, endSplash, { once: true }); document.addEventListener(ev, endSplash, { once: true }); });
       } else if (splash) { splash.remove(); }
       var stableVh = window.innerHeight, stableW = window.innerWidth, smoothBase = null;
@@ -1004,6 +1022,7 @@
         if (window.innerWidth !== stableW) { stableW = window.innerWidth; stableVh = window.innerHeight; smoothBase = null; }
       });
       function frame(now) {
+        if (t0 === Infinity) { lastY = window.scrollY; lastT = now; requestAnimationFrame(frame); return; }
         var y = window.scrollY, vh = window.innerHeight, d = y - lastY, dt = Math.min(64, now - lastT);
         lastY = y; lastT = now;
 
